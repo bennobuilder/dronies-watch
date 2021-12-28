@@ -21,10 +21,12 @@ const FlappyBird: React.FC = () => {
     document.addEventListener('mousedown', () => {
       switch (game.STATUS.value) {
         case GAME_STATUS.SPLASH:
+          console.log('START GAME');
           game.startGame();
           game.jumpBird();
           break;
         case GAME_STATUS.PLAYING:
+          console.log('JUMP');
           game.jumpBird();
           break;
         default:

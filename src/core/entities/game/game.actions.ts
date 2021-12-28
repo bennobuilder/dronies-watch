@@ -54,6 +54,8 @@ export const updateBird = (bird: Bird): Bird => {
 
 export const jumpBird = () => {
   BIRD.nextStateValue.velocity = -BIRD.value.jump;
+  // BIRD.ingest({ force: true });
+  BIRD.set({ ...BIRD.nextStateValue });
 };
 
 export const updatePipes = (pipes: Pipe[]) => {
