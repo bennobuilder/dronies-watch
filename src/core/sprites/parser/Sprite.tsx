@@ -8,16 +8,14 @@ const Sprite: React.FC<Props> = (props) => {
     return null;
   }
 
-  const style = {
-    backgroundImage: `url(${filename})`,
-    backgroundPosition: `${x * -1}px ${y * -1}px`,
-    width,
-    height,
-  };
-
   return (
     <div
-      style={style}
+      style={{
+        backgroundImage: `url(${filename})`,
+        backgroundPosition: `${x * -1}px ${y * -1}px`,
+        width,
+        height,
+      }}
       // Added new x,y,w,h to easily access them from outside the component
       // https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/data-*
       data-x={x}

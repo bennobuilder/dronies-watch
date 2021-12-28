@@ -10,8 +10,8 @@ const SpriteWrapper: React.FC<Props> = (props) => {
   return (
     <div
       style={{
-        transform: `${translate} ${rotate}`,
         position: 'absolute',
+        transform: `${translate} ${rotate}`,
       }}
       onClick={onClickHandler}
     >
