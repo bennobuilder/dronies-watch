@@ -1,17 +1,14 @@
 import React from 'react';
-import styled from 'styled-components';
+import { foreground_forest, SpriteWrapper } from '../../../core/sprites';
+import { game } from '../../../core';
 
-// Assets
-import ForegroundImage from '../../../assets/map/ground_Forest.png';
-
-const Foreground: React.FC = () => <Body />;
+const Foreground: React.FC<Props> = (props) => {
+  const { sprite } = props;
+  return <SpriteWrapper gameSprite={sprite}>{foreground_forest}</SpriteWrapper>;
+};
 
 export default Foreground;
 
-const Body = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 306px;
-  height: 108px;
-  background: url(${ForegroundImage});
-`;
+type Props = {
+  sprite: game.sprites.Foreground;
+};

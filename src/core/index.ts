@@ -1,18 +1,18 @@
 import { shared } from '@agile-ts/core';
 import reactIntegration from '@agile-ts/react';
 
-import * as bird from './entities/bird';
 import * as game from './entities/game';
-import * as pipes from './entities/pipes';
+import * as device from './entities/device';
+import * as sprites from './sprites';
 
 shared.integrate(reactIntegration);
 
 export const core = {
-  bird,
   game,
-  pipes,
+  device,
+  sprites,
 };
 
 export default core;
 
-export { bird, game, pipes };
+export { game, device, sprites };

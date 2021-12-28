@@ -11,9 +11,18 @@ module.exports = {
   },
   ignorePatterns: ['.eslintrc.js'], // https://stackoverflow.com/questions/63002127/parsing-error-parseroptions-project-has-been-set-for-typescript-eslint-parser
   rules: {
-    'react/prop-types': OFF,
-    'import/prefer-default-export': OFF,
     '@typescript-eslint/no-use-before-define': OFF,
+    '@typescript-eslint/lines-between-class-members': OFF,
+    '@typescript-eslint/naming-convention': WARNING,
+    '@typescript-eslint/no-unused-vars': WARNING,
+    'react/prop-types': OFF,
     'react/no-array-index-key': WARNING,
+    'react/require-default-props': WARNING,
+    'import/prefer-default-export': OFF,
+    'no-param-reassign': WARNING,
+    'no-underscore-dangle': OFF,
+    'spaced-comment': WARNING,
+    'jsx-a11y/click-events-have-key-events': WARNING,
+    'jsx-a11y/no-static-element-interactions': WARNING,
   },
 };
