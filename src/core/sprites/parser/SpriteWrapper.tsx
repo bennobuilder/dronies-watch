@@ -12,6 +12,8 @@ const SpriteWrapper: React.FC<Props> = (props) => {
       style={{
         position: 'absolute',
         transform: `${translate} ${rotate}`,
+        padding: 5, // TODO REMOVE
+        backgroundColor: 'red', // TODO REMOVE
       }}
       onClick={onClickHandler}
     >

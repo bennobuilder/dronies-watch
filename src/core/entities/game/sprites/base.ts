@@ -1,11 +1,11 @@
 import { generateId } from '@agile-ts/core';
 
 export class Base {
-  id: string;
+  public id: string;
 
-  cx: number;
-  cy: number;
-  rotation: number;
+  public cx: number;
+  public cy: number;
+  public rotation: number;
 
   constructor(cx: number, cy: number, rotation?: number) {
     this.cx = cx;

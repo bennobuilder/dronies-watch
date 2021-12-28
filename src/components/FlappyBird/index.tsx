@@ -6,7 +6,7 @@ import Bird from './components/Bird';
 import Background from './components/Background';
 import Pipe from './components/Pipe';
 import Foreground from './components/Foreground';
-import { updateFrame } from '../../core/entities/game';
+import { GAME_STATUS } from '../../core/entities/game';
 
 const FlappyBird: React.FC = () => {
   const [backgrounds, foregrounds, bird, pipes, status] = useAgile([
@@ -18,12 +18,27 @@ const FlappyBird: React.FC = () => {
   ]);
 
   useEffect(() => {
-    game.startGame();
-  }, []);
+    document.addEventListener('mousedown', () => {
+      switch (game.STATUS.value) {
+        case GAME_STATUS.SPLASH:
+          game.startGame();
+          game.jumpBird();
+          break;
+        case GAME_STATUS.PLAYING:
+          game.jumpBird();
+          break;
+        default:
+          break;
+      }
+    });
 
-  useEffect(() => {
-    window.requestAnimationFrame(updateFrame);
-  });
+    const appUpdateFrame = () => {
+      game.updateFrame();
+
+      window.requestAnimationFrame(appUpdateFrame);
+    };
+    appUpdateFrame();
+  }, []);
 
   return (
     <Container>

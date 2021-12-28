@@ -1,10 +1,18 @@
 import { Pipe, Bird } from './sprites';
-import { BIRD, FRAMES, GAME_STATUS, PIPES, STATUS } from './game.controller';
+import {
+  BIRD,
+  FOREGROUND_POSITION,
+  FRAMES,
+  GAME_STATUS,
+  PIPES,
+  STATUS,
+} from './game.controller';
 import { bird_h, bird_w, fg_h, pipe_h, pipe_w } from '../../sprites';
 import { height } from '../device';
 
 export const startGame = () => {
   BIRD.set(new Bird(60, 0));
+  FOREGROUND_POSITION.reset();
   FRAMES.reset();
   PIPES.reset();
 
@@ -18,7 +26,10 @@ export const updateFrame = () => {
   // TODO
 
   // Update Bird
-  BIRD.set((b) => updateBird(b));
+  // BIRD.nextStateValue = updateBird(BIRD.value);
+  // BIRD.ingest({ force: true });
+  // TODO AgileTs is buggy, seems like it always needs a fresh object idk
+  BIRD.set((b) => ({ ...updateBird(b) }), { force: true });
 
   // Update Pipes
   if (STATUS.value === GAME_STATUS.PLAYING) {
