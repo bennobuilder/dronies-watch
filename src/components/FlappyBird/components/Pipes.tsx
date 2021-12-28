@@ -1,14 +1,14 @@
 import React from 'react';
 import { useAgile } from '@agile-ts/react';
 import styled from 'styled-components';
-import { pipe } from '../core';
+import { pipes as _pipes } from '../../../core';
 
 // Assets
-import TopPipeImage from './assets/pipe/pipe_top.png';
-import BottomPipeImage from './assets/pipe/pipe_bottom.png';
+import TopPipeImage from '../../../assets/pipe/pipe_top.png';
+import BottomPipeImage from '../../../assets/pipe/pipe_bottom.png';
 
-const Pipe: React.FC = () => {
-  const [pipes, { x }] = useAgile([pipe.PIPES, pipe.TRANSLATION]);
+const Pipes: React.FC = () => {
+  const [pipes, { x }] = useAgile([_pipes.PIPES, _pipes.TRANSLATION]);
 
   return (
     <Container>
@@ -22,7 +22,7 @@ const Pipe: React.FC = () => {
   );
 };
 
-export default Pipe;
+export default Pipes;
 
 const Container = styled.div`
   position: relative;

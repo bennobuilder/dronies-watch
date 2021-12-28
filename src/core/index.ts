@@ -3,16 +3,16 @@ import reactIntegration from '@agile-ts/react';
 
 import * as bird from './entities/bird';
 import * as game from './entities/game';
-import * as pipe from './entities/pipe';
+import * as pipes from './entities/pipes';
 
 shared.integrate(reactIntegration);
 
 export const core = {
   bird,
   game,
-  pipe,
+  pipes,
 };
 
 export default core;
 
-export { bird, game, pipe };
+export { bird, game, pipes };

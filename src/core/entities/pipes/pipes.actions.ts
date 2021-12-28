@@ -1,5 +1,5 @@
 import { generateId } from '@agile-ts/core';
-import { PIPES, TRANSLATION } from './pipe.controller';
+import { PIPES, TRANSLATION } from './pipes.controller';
 
 export const running = () => {
   TRANSLATION.set((s) => ({ x: s.x - 10 }));

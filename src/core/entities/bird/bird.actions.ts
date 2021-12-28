@@ -1,6 +1,6 @@
 import { TRANSLATION } from './bird.controller';
 
-export const fly = () => {
+export const flap = () => {
   TRANSLATION.set((s) => ({ y: s.y - 50, r: -30 }));
 };
 

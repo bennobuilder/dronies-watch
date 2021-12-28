@@ -1,8 +1,13 @@
 import React from 'react';
+import FlappyDronie from '../flappydronie';
 
 const Main: React.FC = () => {
   console.log('Main');
-  return <div>Main</div>;
+  return (
+    <div>
+      <FlappyDronie />
+    </div>
+  );
 };
 
 export default Main;

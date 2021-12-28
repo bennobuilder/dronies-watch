@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAgile } from '@agile-ts/react';
-import { bird } from '../core';
+import { bird } from '../../../core';
 
 // Assets
-import PlaneImage from './assets/vehicles/plane_default.png';
+import PlaneImage from '../../../assets/vehicles/plane_default.png';
 
 const Bird: React.FC = () => {
   const [{ r, y }] = useAgile([bird.TRANSLATION]);
