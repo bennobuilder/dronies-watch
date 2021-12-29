@@ -10,10 +10,13 @@ const FlappyDronieScreen: React.FC = () => {
   return (
     <Container>
       <Game />
-      <ScoreContainer>
-        <div>Score: {score}</div>
-        <div>High Score: {highScore}</div>
-      </ScoreContainer>
+      <TextContainer>
+        <ScoreContainer>
+          <div>Score: {score}</div>
+          <div>High Score: {highScore}</div>
+        </ScoreContainer>
+        <a href="https://github.com/bennodev19/dronies-watch">Github</a>
+      </TextContainer>
     </Container>
   );
 };
@@ -28,10 +31,16 @@ const Container = styled.div`
   justify-content: center;
 `;
 
+const TextContainer = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  width: ${ui.WIDTH}px;
+`;
+
 const ScoreContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
   align-items: flex-start;
-  width: ${ui.WIDTH}px;
 `;

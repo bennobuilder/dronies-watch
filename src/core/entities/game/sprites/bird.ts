@@ -7,7 +7,7 @@ export class Bird extends Base {
   public gravity = 0.25;
   public jump = 4.6;
   public radius = 16; // Collision radius
-  public skin = Math.floor(Math.random() * 21) + 1;
+  public skin = Math.floor(Math.random() * 20) + 1;
 
   constructor(cx: number, cy: number) {
     super(cx, cy, 0);
