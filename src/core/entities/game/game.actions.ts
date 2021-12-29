@@ -37,16 +37,16 @@ export const updateFrame = () => {
     STATUS.value === GAME_STATUS.SPLASH ||
     STATUS.value === GAME_STATUS.PLAYING
   ) {
-    const newForegroundPos = (FOREGROUND_POSITION.value - 2) % (fg_w - 5);
+    const newForegroundPos = (FOREGROUND_POSITION.value - 2) % (fg_w - 5); // -5 to hide white stripe between the two images
     FOREGROUND_POSITION.set(newForegroundPos);
     FOREGROUNDS.nextStateValue[0].cx = newForegroundPos;
-    FOREGROUNDS.nextStateValue[1].cx = newForegroundPos + (fg_w - 5);
+    FOREGROUNDS.nextStateValue[1].cx = newForegroundPos + (fg_w - 5); // -5 to hide white stripe between the two images
     FOREGROUNDS.ingest();
 
-    const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % (bg_w - 5);
+    const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % (bg_w - 5); // -5 to hide white stripe between the two images
     BACKGROUND_POSITION.set(newBackgroundPos);
     BACKGROUNDS.nextStateValue[0].cx = newBackgroundPos;
-    BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + (bg_w - 5);
+    BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + (bg_w - 5); // -5 to hide white stripe between the two images
     BACKGROUNDS.ingest();
   }
 
@@ -75,7 +75,8 @@ export const updateBird = (bird: Bird): Bird => {
     const bottomCollisionHeight = HEIGHT - fg_h - 10;
     if (bird.cy >= bottomCollisionHeight) {
       bird.cy = bottomCollisionHeight;
-      // sets velocity to jump speed for correct rotation
+
+      // Set velocity to jump speed for correct rotation
       bird.velocity = bird.jump;
 
       // End Game
@@ -83,6 +84,12 @@ export const updateBird = (bird: Bird): Bird => {
     }
 
     // Handle collision with top
+    if (bird.cy <= 0) {
+      bird.cy = 0;
+
+      // Set velocity to jump speed for creating a bounce
+      bird.velocity = bird.jump;
+    }
 
     // Handle rotation
     if (bird.velocity >= bird.jump) {
