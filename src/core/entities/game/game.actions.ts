@@ -3,11 +3,14 @@ import {
   BACKGROUND_POSITION,
   BACKGROUNDS,
   BIRD,
+  BIRD_POSITION,
   FOREGROUND_POSITION,
   FOREGROUNDS,
   FRAMES,
   GAME_STATUS,
+  HIGH_SCORE,
   PIPES,
+  SCORE,
   STATUS,
 } from './game.controller';
 import {
@@ -22,11 +25,24 @@ import {
 import { HEIGHT } from '../ui';
 
 export const startGame = () => {
-  // BIRD.set(new Bird(60, 0));
+  // BIRD.set(new Bird(BIRD_POSITION, 0));
   FRAMES.reset();
   PIPES.reset();
 
   STATUS.set(GAME_STATUS.PLAYING);
+};
+
+export const endGame = () => {
+  if (STATUS.value === GAME_STATUS.PLAYING) {
+    STATUS.set(GAME_STATUS.SCORE);
+
+    // Calculate High Score
+    if (HIGH_SCORE.value < SCORE.value) {
+      HIGH_SCORE.set(SCORE.value);
+    }
+
+    SCORE.reset();
+  }
 };
 
 export const updateFrame = () => {
@@ -82,8 +98,7 @@ export const updateBird = (bird: Bird): Bird => {
       // Set velocity to jump speed for correct rotation
       bird.velocity = bird.jump;
 
-      // End Game
-      if (STATUS.value === GAME_STATUS.PLAYING) STATUS.set(GAME_STATUS.SCORE);
+      endGame();
     }
 
     // Handle collision with top
@@ -120,8 +135,12 @@ export const updatePipes = (pipes: Pipe[]) => {
   // Calculate collision and move Pipes
   pipes.forEach((pipe) => {
     // End Game, if collision with Pipe
-    if (calculateCollisionWithPipe(pipe)) {
-      STATUS.set(GAME_STATUS.SCORE);
+    if (calculateCollisionWithPipe(pipe)) endGame();
+
+    // Calculate Score
+    if (pipe.cx <= BIRD_POSITION && !pipe.scored && pipe.type === 'N') {
+      SCORE.set((v) => v + 1);
+      pipe.scored = true;
     }
 
     // Move the Pipe towards the left

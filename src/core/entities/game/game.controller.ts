@@ -10,13 +10,18 @@ export enum GAME_STATUS {
   SCORE,
 }
 
+// Configuration
+export const BIRD_POSITION = 60;
+
 // General
 export const STATUS = createState<GAME_STATUS>(GAME_STATUS.SPLASH);
-export const FRAMES = createState<number>(1);
+export const FRAMES = createState(1);
+export const SCORE = createState(0);
+export const HIGH_SCORE = createState(0).persist({ key: 'high-score' });
 
 // Objects
 export const PIPES = createState<Pipe[]>([]);
-export const BIRD = createState<Bird>(new Bird(60, 0));
+export const BIRD = createState<Bird>(new Bird(BIRD_POSITION, 0));
 
 // Scenery
 export const BACKGROUNDS = createState([
