@@ -5,6 +5,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:serve": "yarn build && serve -s build\n",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --config .prettierrc --write \"**/*.{js,ts}\"",
@@ -13,8 +14,8 @@
     "install:prod:agile": "yarn add @agile-ts/core @agile-ts/react"
   },
   "dependencies": {
-    "@agile-ts/core": "file:.yalc/@agile-ts/core",
-    "@agile-ts/react": "file:.yalc/@agile-ts/react",
+    "@agile-ts/core": "^0.2.8",
+    "@agile-ts/react": "^0.2.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
@@ -36,6 +37,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "prettier": "^2.3.2",
+    "serve": "^13.0.2",
     "typescript": "^4.1.2"
   },
   "browserslist": {
