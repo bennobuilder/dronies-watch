@@ -5,38 +5,38 @@ export const background_forest = Sprite({
   filename: sheet,
   x: 0,
   y: 0,
-  width: 910,
-  height: 512,
+  width: 1920,
+  height: 1080,
 });
 
 export const foreground_forest = Sprite({
   filename: sheet,
-  x: 910,
-  y: 823,
-  width: 910,
-  height: 100,
+  x: 1920,
+  y: 1738,
+  width: 1920,
+  height: 211,
 });
 
 export const plane = Sprite({
   filename: sheet,
-  x: 1686,
-  y: 743,
+  x: 2130,
+  y: 1658,
   width: 134,
   height: 80,
 });
 
 export const pipe_n = Sprite({
   filename: sheet,
-  x: 1624,
-  y: 0,
+  x: 1920,
+  y: 1088,
   width: 105,
   height: 650,
 });
 
 export const pipe_s = Sprite({
   filename: sheet,
-  x: 1724,
-  y: 0,
+  x: 2025,
+  y: 1088,
   width: 105,
   height: 650,
 });
