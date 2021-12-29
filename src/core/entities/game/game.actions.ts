@@ -66,7 +66,10 @@ export const updateBird = (bird: Bird): Bird => {
     bird.rotation = 0;
   }
 
-  if (STATUS.value === GAME_STATUS.PLAYING) {
+  if (
+    STATUS.value === GAME_STATUS.PLAYING ||
+    STATUS.value === GAME_STATUS.SCORE // Apply physics to the Bird also in the Score status, to drop the bird when hitting a pipe
+  ) {
     // Handle velocity
     bird.velocity += bird.gravity;
     bird.cy += bird.velocity;
