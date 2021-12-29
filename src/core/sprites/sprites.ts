@@ -9,34 +9,50 @@ export const background_forest = Sprite({
   height: 1080,
 });
 
+// export const background_sky = Sprite({
+//   filename: sheet,
+//   x: 0,
+//   y: 1085,
+//   width: 1920,
+//   height: 1080,
+// });
+
 export const foreground_forest = Sprite({
   filename: sheet,
-  x: 1920,
-  y: 1738,
+  x: 0,
+  y: 2170,
   width: 1920,
   height: 211,
 });
 
+// export const foreground_sky = Sprite({
+//   filename: sheet,
+//   x: 0,
+//   y: 2386,
+//   width: 1920,
+//   height: 211,
+// });
+
 export const plane = Sprite({
   filename: sheet,
-  x: 2130,
-  y: 1658,
+  x: 1925,
+  y: 1662,
   width: 134,
   height: 80,
 });
 
 export const pipe_n = Sprite({
   filename: sheet,
-  x: 1920,
-  y: 890,
+  x: 1925,
+  y: 1747,
   width: 105,
   height: 850,
 });
 
 export const pipe_s = Sprite({
   filename: sheet,
-  x: 2021,
-  y: 890,
+  x: 2030,
+  y: 1747,
   width: 105,
   height: 850,
 });

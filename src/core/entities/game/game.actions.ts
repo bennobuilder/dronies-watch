@@ -87,9 +87,9 @@ export const updateBird = (bird: Bird): Bird => {
     // Handle rotation
     if (bird.velocity >= bird.jump) {
       // When bird lacks upward momentum increment the rotation angle
-      bird.rotation = Math.min(Math.PI / 2.5, bird.rotation + 0.3);
+      bird.rotation = Math.min(Math.PI / 2.5, bird.rotation + 0.1);
     } else {
-      bird.rotation = -0.3;
+      bird.rotation = Math.max(-0.3, bird.rotation - 0.1);
     }
   }
 

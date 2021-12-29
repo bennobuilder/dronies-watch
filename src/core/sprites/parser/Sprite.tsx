@@ -1,8 +1,8 @@
 import React from 'react';
 
 const SpriteSheet = {
-  width: 3840,
-  height: 2160,
+  width: 2140,
+  height: 2597,
 };
 
 const Sprite: React.FC<Props> = (props) => {
