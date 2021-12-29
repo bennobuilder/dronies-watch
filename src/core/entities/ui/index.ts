@@ -8,3 +8,8 @@ if (windowWidth >= 500) {
 
 export const WIDTH = windowWidth;
 export const HEIGHT = windowHeight;
+
+export const SPRITE_SHEET = {
+  width: 2145,
+  height: 2600,
+};

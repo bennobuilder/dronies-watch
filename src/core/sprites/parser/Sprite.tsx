@@ -1,9 +1,5 @@
 import React from 'react';
-
-const SpriteSheet = {
-  width: 2140,
-  height: 2597,
-};
+import { SPRITE_SHEET } from '../../entities/ui';
 
 const Sprite: React.FC<Props> = (props) => {
   const { filename } = props;
@@ -24,8 +20,8 @@ const Sprite: React.FC<Props> = (props) => {
     <div
       style={{
         backgroundImage: `url(${filename})`,
-        backgroundSize: `${SpriteSheet.width * scale}px ${
-          SpriteSheet.height * scale
+        backgroundSize: `${SPRITE_SHEET.width * scale}px ${
+          SPRITE_SHEET.height * scale
         }px`,
         backgroundPosition: `${x * -1}px ${y * -1}px`,
         backgroundRepeat: 'no-repeat',

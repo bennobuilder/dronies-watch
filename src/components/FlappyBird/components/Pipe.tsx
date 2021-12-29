@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  background_forest,
-  pipe_n,
-  pipe_s,
-  SpriteWrapper,
-} from '../../../core/sprites';
+import { pipe_n, pipe_s, SpriteWrapper } from '../../../core/sprites';
 import { game } from '../../../core';
 
 const Pipe: React.FC<Props> = (props) => {

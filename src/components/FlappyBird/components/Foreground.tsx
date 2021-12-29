@@ -1,10 +1,14 @@
 import React from 'react';
-import { foreground_forest, SpriteWrapper } from '../../../core/sprites';
+import { foregrounds, SpriteWrapper } from '../../../core/sprites';
 import { game } from '../../../core';
 
 const Foreground: React.FC<Props> = (props) => {
   const { sprite } = props;
-  return <SpriteWrapper gameSprite={sprite}>{foreground_forest}</SpriteWrapper>;
+  return (
+    <SpriteWrapper gameSprite={sprite}>
+      {foregrounds[sprite.skin]}
+    </SpriteWrapper>
+  );
 };
 
 export default Foreground;
