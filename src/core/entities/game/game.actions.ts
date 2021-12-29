@@ -37,16 +37,16 @@ export const updateFrame = () => {
     STATUS.value === GAME_STATUS.SPLASH ||
     STATUS.value === GAME_STATUS.PLAYING
   ) {
-    const newForegroundPos = (FOREGROUND_POSITION.value - 2) % fg_w;
+    const newForegroundPos = (FOREGROUND_POSITION.value - 2) % (fg_w - 5);
     FOREGROUND_POSITION.set(newForegroundPos);
     FOREGROUNDS.nextStateValue[0].cx = newForegroundPos;
-    FOREGROUNDS.nextStateValue[1].cx = newForegroundPos + fg_w;
+    FOREGROUNDS.nextStateValue[1].cx = newForegroundPos + (fg_w - 5);
     FOREGROUNDS.ingest();
 
-    const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % bg_w;
+    const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % (bg_w - 5);
     BACKGROUND_POSITION.set(newBackgroundPos);
     BACKGROUNDS.nextStateValue[0].cx = newBackgroundPos;
-    BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + bg_w;
+    BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + (bg_w - 5);
     BACKGROUNDS.ingest();
   }
 

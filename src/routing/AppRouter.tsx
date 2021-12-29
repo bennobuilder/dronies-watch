@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 // Screens
 import HomeScreen from '../ui/pages/home';
-import FlappyDronieScreen from '../ui/pages/flappydronie';
+import FlappyDronieScreen from '../ui/pages/flappy-dronie';
 import FallbackScreen from '../ui/pages/404';
 
 const AppRouter: React.FC = () => (
