@@ -65,4 +65,5 @@ const Container = styled.div`
   overflow: hidden;
   width: ${ui.WIDTH}px;
   height: ${ui.HEIGHT}px;
+  background: #a79a89;
 `;

@@ -22,7 +22,7 @@ import {
 import { HEIGHT } from '../ui';
 
 export const startGame = () => {
-  BIRD.set(new Bird(60, 0));
+  // BIRD.set(new Bird(60, 0));
   FRAMES.reset();
   PIPES.reset();
 

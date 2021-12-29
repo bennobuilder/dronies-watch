@@ -28,17 +28,17 @@ export const plane = Sprite({
 export const pipe_n = Sprite({
   filename: sheet,
   x: 1920,
-  y: 1088,
+  y: 890,
   width: 105,
-  height: 650,
+  height: 850,
 });
 
 export const pipe_s = Sprite({
   filename: sheet,
-  x: 2025,
-  y: 1088,
+  x: 2021,
+  y: 890,
   width: 105,
-  height: 650,
+  height: 850,
 });
 
 export const bg_h = background_forest?.props['data-h']; // all backgrounds maintain the same height
