@@ -19,12 +19,10 @@ import {
   pipe_h,
   pipe_w,
 } from '../../sprites';
-import { height } from '../device';
+import { HEIGHT } from '../ui';
 
 export const startGame = () => {
   BIRD.set(new Bird(60, 0));
-  FOREGROUND_POSITION.reset();
-  BACKGROUND_POSITION.reset();
   FRAMES.reset();
   PIPES.reset();
 
@@ -59,7 +57,7 @@ export const updateFrame = () => {
 export const updateBird = (bird: Bird): Bird => {
   // If Splash Screen make the Bird hover
   if (STATUS.value === GAME_STATUS.SPLASH) {
-    bird.cy = height - 280 + 5 * Math.cos(FRAMES.value / 10); // ~199 - ~201
+    bird.cy = HEIGHT - 280 + 5 * Math.cos(FRAMES.value / 10); // ~199 - ~201
     bird.rotation = 0;
   }
 
@@ -69,7 +67,7 @@ export const updateBird = (bird: Bird): Bird => {
     bird.cy += bird.velocity;
 
     // Handle collision with bottom
-    const bottomCollisionHeight = height - fg_h - 100;
+    const bottomCollisionHeight = HEIGHT - fg_h - 100;
     if (bird.cy >= bottomCollisionHeight) {
       bird.cy = bottomCollisionHeight;
       // sets velocity to jump speed for correct rotation
@@ -145,7 +143,7 @@ export const calculateCollision = (pipe: Pipe): boolean => {
 };
 
 export const generatePipeSet = () => {
-  const randomYPos = height - (pipe_h + fg_h + 120 + 200 * Math.random());
+  const randomYPos = HEIGHT - (pipe_h + fg_h + 120 + 200 * Math.random());
   return [
     new Pipe(pipe_h, randomYPos, 'S'),
     new Pipe(pipe_h, randomYPos + 100 + pipe_h, 'N'),

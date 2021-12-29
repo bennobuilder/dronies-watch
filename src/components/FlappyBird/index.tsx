@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useAgile } from '@agile-ts/react';
 import styled from 'styled-components';
-import { device, game } from '../../core';
+import { ui, game } from '../../core';
 import Bird from './components/Bird';
 import Background from './components/Background';
 import Pipe from './components/Pipe';
@@ -43,7 +43,7 @@ const FlappyBird: React.FC = () => {
   }, []);
 
   return (
-    <Container id="fakingcanvas">
+    <Container id="flappybird">
       {backgrounds.map((bg) => (
         <Background sprite={bg} key={bg.id} />
       ))}
@@ -63,6 +63,6 @@ export default FlappyBird;
 const Container = styled.div`
   position: relative;
   overflow: hidden;
-  width: ${device.width}px;
-  height: ${device.height}px;
+  width: ${ui.WIDTH}px;
+  height: ${ui.HEIGHT}px;
 `;
