@@ -1,4 +1,4 @@
-import { Pipe, Bird } from './sprites';
+import { Bird, Pipe } from './sprites';
 import {
   BACKGROUND_POSITION,
   BACKGROUNDS,
@@ -33,17 +33,22 @@ export const updateFrame = () => {
   FRAMES.set((f) => f + 1);
 
   // Update Scenery
-  const newForegroundPos = (FOREGROUND_POSITION.value - 2) % fg_w;
-  FOREGROUND_POSITION.set(newForegroundPos);
-  FOREGROUNDS.nextStateValue[0].cx = newForegroundPos;
-  FOREGROUNDS.nextStateValue[1].cx = newForegroundPos + fg_w;
-  FOREGROUNDS.ingest();
+  if (
+    STATUS.value === GAME_STATUS.SPLASH ||
+    STATUS.value === GAME_STATUS.PLAYING
+  ) {
+    const newForegroundPos = (FOREGROUND_POSITION.value - 2) % fg_w;
+    FOREGROUND_POSITION.set(newForegroundPos);
+    FOREGROUNDS.nextStateValue[0].cx = newForegroundPos;
+    FOREGROUNDS.nextStateValue[1].cx = newForegroundPos + fg_w;
+    FOREGROUNDS.ingest();
 
-  const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % bg_w;
-  BACKGROUND_POSITION.set(newBackgroundPos);
-  BACKGROUNDS.nextStateValue[0].cx = newBackgroundPos;
-  BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + bg_w;
-  BACKGROUNDS.ingest();
+    const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % bg_w;
+    BACKGROUND_POSITION.set(newBackgroundPos);
+    BACKGROUNDS.nextStateValue[0].cx = newBackgroundPos;
+    BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + bg_w;
+    BACKGROUNDS.ingest();
+  }
 
   // Update Bird
   BIRD.set((b) => updateBird(b), { force: true });
@@ -67,19 +72,22 @@ export const updateBird = (bird: Bird): Bird => {
     bird.cy += bird.velocity;
 
     // Handle collision with bottom
-    const bottomCollisionHeight = HEIGHT - fg_h - 100;
+    const bottomCollisionHeight = HEIGHT - fg_h - 10;
     if (bird.cy >= bottomCollisionHeight) {
       bird.cy = bottomCollisionHeight;
       // sets velocity to jump speed for correct rotation
       bird.velocity = bird.jump;
+
+      // End Game
+      if (STATUS.value === GAME_STATUS.PLAYING) STATUS.set(GAME_STATUS.SCORE);
     }
 
     // Handle collision with top
 
     // Handle rotation
-    // When bird lacks upward momentum increment the rotation angle
     if (bird.velocity >= bird.jump) {
-      bird.rotation = Math.min(Math.PI / 2, bird.rotation + 0.1);
+      // When bird lacks upward momentum increment the rotation angle
+      bird.rotation = Math.min(Math.PI / 2.5, bird.rotation + 0.3);
     } else {
       bird.rotation = -0.3;
     }
@@ -101,14 +109,15 @@ export const updatePipes = (pipes: Pipe[]) => {
 
   // Calculate collision and move Pipes
   pipes.forEach((pipe) => {
-    if (calculateCollision(pipe)) {
+    // End Game, if collision with Pipe
+    if (calculateCollisionWithPipe(pipe)) {
       STATUS.set(GAME_STATUS.SCORE);
     }
 
     // Move the Pipe towards the left
     pipe.cx -= 2;
 
-    // If the Pipe isn't visible, remove it
+    // If the Pipe isn't visible anymore, remove it
     if (pipe.cx < -pipe_w) {
       pipes.splice(0, 2); // remove first 2 pipe
     }
@@ -119,7 +128,7 @@ export const updatePipes = (pipes: Pipe[]) => {
   return pipes;
 };
 
-export const calculateCollision = (pipe: Pipe): boolean => {
+export const calculateCollisionWithPipe = (pipe: Pipe): boolean => {
   const bird = BIRD.value;
   const cx = Math.min(
     Math.max(bird.cx + bird_w / 2, pipe.cx),
