@@ -6,7 +6,7 @@ export class Bird extends Base {
   // Static properties, that doesn't change over time
   public gravity = 0.25;
   public jump = 4.6;
-  public radius = 12; // Collision radius
+  public radius = 57; // Collision radius
 
   constructor(cx: number, cy: number) {
     super(cx, cy, 0);

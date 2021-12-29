@@ -1,18 +1,30 @@
 import { Pipe, Bird } from './sprites';
 import {
+  BACKGROUND_POSITION,
+  BACKGROUNDS,
   BIRD,
   FOREGROUND_POSITION,
+  FOREGROUNDS,
   FRAMES,
   GAME_STATUS,
   PIPES,
   STATUS,
 } from './game.controller';
-import { bird_h, bird_w, fg_h, pipe_h, pipe_w } from '../../sprites';
+import {
+  bg_w,
+  bird_h,
+  bird_w,
+  fg_h,
+  fg_w,
+  pipe_h,
+  pipe_w,
+} from '../../sprites';
 import { height } from '../device';
 
 export const startGame = () => {
   BIRD.set(new Bird(60, 0));
   FOREGROUND_POSITION.reset();
+  BACKGROUND_POSITION.reset();
   FRAMES.reset();
   PIPES.reset();
 
@@ -23,13 +35,20 @@ export const updateFrame = () => {
   FRAMES.set((f) => f + 1);
 
   // Update Scenery
-  // TODO
+  const newForegroundPos = (FOREGROUND_POSITION.value - 2) % fg_w;
+  FOREGROUND_POSITION.set(newForegroundPos);
+  FOREGROUNDS.nextStateValue[0].cx = newForegroundPos;
+  FOREGROUNDS.nextStateValue[1].cx = newForegroundPos + fg_w;
+  FOREGROUNDS.ingest();
+
+  const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % bg_w;
+  BACKGROUND_POSITION.set(newBackgroundPos);
+  BACKGROUNDS.nextStateValue[0].cx = newBackgroundPos;
+  BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + bg_w;
+  BACKGROUNDS.ingest();
 
   // Update Bird
-  // BIRD.nextStateValue = updateBird(BIRD.value);
-  // BIRD.ingest({ force: true });
-  // TODO AgileTs is buggy, seems like it always needs a fresh object idk
-  BIRD.set((b) => ({ ...updateBird(b) }), { force: true });
+  BIRD.set((b) => updateBird(b), { force: true });
 
   // Update Pipes
   if (STATUS.value === GAME_STATUS.PLAYING) {
@@ -45,8 +64,27 @@ export const updateBird = (bird: Bird): Bird => {
   }
 
   if (STATUS.value === GAME_STATUS.PLAYING) {
+    // Handle velocity
     bird.velocity += bird.gravity;
     bird.cy += bird.velocity;
+
+    // Handle collision with bottom
+    const bottomCollisionHeight = height - fg_h - 100;
+    if (bird.cy >= bottomCollisionHeight) {
+      bird.cy = bottomCollisionHeight;
+      // sets velocity to jump speed for correct rotation
+      bird.velocity = bird.jump;
+    }
+
+    // Handle collision with top
+
+    // Handle rotation
+    // When bird lacks upward momentum increment the rotation angle
+    if (bird.velocity >= bird.jump) {
+      bird.rotation = Math.min(Math.PI / 2, bird.rotation + 0.1);
+    } else {
+      bird.rotation = -0.3;
+    }
   }
 
   return bird;
@@ -54,14 +92,13 @@ export const updateBird = (bird: Bird): Bird => {
 
 export const jumpBird = () => {
   BIRD.nextStateValue.velocity = -BIRD.value.jump;
-  // BIRD.ingest({ force: true });
-  BIRD.set({ ...BIRD.nextStateValue });
+  BIRD.ingest({ force: true });
 };
 
 export const updatePipes = (pipes: Pipe[]) => {
   // Generate a Pipe every 100 frame
   if (FRAMES.value % 100 === 0) {
-    pipes.concat(generatePipeSet());
+    pipes = pipes.concat(generatePipeSet());
   }
 
   // Calculate collision and move Pipes

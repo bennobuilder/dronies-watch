@@ -28,3 +28,4 @@ export const FOREGROUNDS = createState([
   new Foreground(fg_w, height - fg_h),
 ]);
 export const FOREGROUND_POSITION = createState(0);
+export const BACKGROUND_POSITION = createState(0);

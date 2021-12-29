@@ -1,8 +1,7 @@
 import React from 'react';
 
 const Sprite: React.FC<Props> = (props) => {
-  const { filename } = props;
-  const { x, y, width, height } = props;
+  const { filename, x, y, width, height } = props;
 
   if (!filename) {
     return null;

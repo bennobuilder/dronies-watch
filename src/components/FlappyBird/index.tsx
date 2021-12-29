@@ -43,8 +43,7 @@ const FlappyBird: React.FC = () => {
   }, []);
 
   return (
-    <Container>
-      <div>{status}</div>
+    <Container id="fakingcanvas">
       {backgrounds.map((bg) => (
         <Background sprite={bg} key={bg.id} />
       ))}
@@ -62,6 +61,7 @@ const FlappyBird: React.FC = () => {
 export default FlappyBird;
 
 const Container = styled.div`
+  position: relative;
   overflow: hidden;
   width: ${device.width}px;
   height: ${device.height}px;

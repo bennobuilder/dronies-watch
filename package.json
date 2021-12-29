@@ -8,11 +8,13 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prettier": "prettier --config .prettierrc --write \"**/*.{js,ts}\"",
-    "lint": "eslint --cache \"**/*.{js,jsx,ts,tsx}\""
+    "lint": "eslint --cache \"**/*.{js,jsx,ts,tsx}\"",
+    "install:dev:agile": "yalc add @agile-ts/core @agile-ts/react",
+    "install:prod:agile": "yarn add @agile-ts/core @agile-ts/react"
   },
   "dependencies": {
-    "@agile-ts/core": "^0.2.7",
-    "@agile-ts/react": "^0.2.3",
+    "@agile-ts/core": "file:.yalc/@agile-ts/core",
+    "@agile-ts/react": "file:.yalc/@agile-ts/react",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",

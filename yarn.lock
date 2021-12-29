@@ -2,17 +2,13 @@
 # yarn lockfile v1
 
 
-"@agile-ts/core@^0.2.7":
+"@agile-ts/core@file:.yalc/@agile-ts/core":
   version "0.2.7"
-  resolved "https://registry.yarnpkg.com/@agile-ts/core/-/core-0.2.7.tgz#a10b5db283238f791234650c049485dd7883ffe7"
-  integrity sha512-qiU5DQFeZ7ImozyxwTU7EUOgFO+uIXFgqZMpGTttbPUkNZ8RWw2BQHgx/VHe2JY1sxvzmEN09n1mcP/TDo/aIw==
   dependencies:
     "@agile-ts/utils" "^0.0.11"
 
-"@agile-ts/react@^0.2.3":
+"@agile-ts/react@file:.yalc/@agile-ts/react":
   version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@agile-ts/react/-/react-0.2.3.tgz#d01472b3ca8210976aad945e64bf611ab1cd5e7a"
-  integrity sha512-sDY5PZulGa2+d8fTnVKWzqDGxBktOU51INJ+ZMM89J9V+2KRs26/sEYnUivk/6vJFyA6t//R0+OQ0yGZCqTeLA==
 
 "@agile-ts/utils@^0.0.11":
   version "0.0.11"

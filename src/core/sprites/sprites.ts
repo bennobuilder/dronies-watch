@@ -19,10 +19,10 @@ export const foreground_forest = Sprite({
 
 export const plane = Sprite({
   filename: sheet,
-  x: 1628,
-  y: 708,
-  width: 192,
-  height: 114,
+  x: 1686,
+  y: 743,
+  width: 134,
+  height: 80,
 });
 
 export const pipe_n = Sprite({
@@ -35,7 +35,7 @@ export const pipe_n = Sprite({
 
 export const pipe_s = Sprite({
   filename: sheet,
-  x: 1829,
+  x: 1724,
   y: 0,
   width: 105,
   height: 650,
