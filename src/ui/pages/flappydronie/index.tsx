@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import FlappyBird from '../../components/FlappyBird';
+import Game from './components/Game';
 
-const FlappyDronie: React.FC = () => (
+const FlappyDronieScreen: React.FC = () => (
   <Container>
-    <FlappyBird />
+    <Game />
   </Container>
 );
 
-export default FlappyDronie;
+export default FlappyDronieScreen;
 
 const Container = styled.div`
   display: flex;

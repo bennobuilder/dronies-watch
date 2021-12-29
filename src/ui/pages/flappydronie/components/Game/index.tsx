@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { useAgile } from '@agile-ts/react';
 import styled from 'styled-components';
-import { ui, game } from '../../core';
+import { ui, game } from '../../../../../core';
 import Bird from './components/Bird';
 import Background from './components/Background';
 import Pipe from './components/Pipe';
 import Foreground from './components/Foreground';
-import { GAME_STATUS } from '../../core/entities/game';
+import { GAME_STATUS } from '../../../../../core/entities/game';
 
 const FlappyBird: React.FC = () => {
   const [backgrounds, foregrounds, bird, pipes, status] = useAgile([

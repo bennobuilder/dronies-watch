@@ -1,6 +1,6 @@
 import React from 'react';
-import { backgrounds, SpriteWrapper } from '../../../core/sprites';
-import { game } from '../../../core';
+import { backgrounds, SpriteWrapper } from '../../../../../../core/sprites';
+import { game } from '../../../../../../core';
 
 const Background: React.FC<Props> = (props) => {
   const { sprite } = props;

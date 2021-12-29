@@ -1,6 +1,6 @@
 import React from 'react';
-import { plane, SpriteWrapper, dronies } from '../../../core/sprites';
-import { game } from '../../../core';
+import { plane, SpriteWrapper, dronies } from '../../../../../../core/sprites';
+import { game } from '../../../../../../core';
 
 const Bird: React.FC<Props> = (props) => {
   const { sprite } = props;
