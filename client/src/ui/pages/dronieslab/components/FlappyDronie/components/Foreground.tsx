@@ -1,6 +1,6 @@
 import React from 'react';
 import { foregrounds, SpriteWrapper } from '../../../../../../core/sprites';
-import { game } from '../../../../../../core';
+import { flappydronie } from '../../../../../../core';
 
 const Foreground: React.FC<Props> = (props) => {
   const { sprite } = props;
@@ -14,5 +14,5 @@ const Foreground: React.FC<Props> = (props) => {
 export default Foreground;
 
 type Props = {
-  sprite: game.sprites.Foreground;
+  sprite: flappydronie.sprites.Foreground;
 };

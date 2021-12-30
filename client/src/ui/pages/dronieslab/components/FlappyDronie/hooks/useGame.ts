@@ -1,32 +1,32 @@
 import React from 'react';
 import { useAgile } from '@agile-ts/react';
-import { game } from '../../../../../../core';
-import { GAME_STATUS } from '../../../../../../core/entities/game';
+import { flappydronie } from '../../../../../../core';
+import { GAME_STATUS } from '../../../../../../core/entities/flappydronie';
 
 const useGame = () => {
   const [backgrounds, foregrounds, bird, pipes, status] = useAgile([
-    game.BACKGROUNDS,
-    game.FOREGROUNDS,
-    game.BIRD,
-    game.PIPES,
-    game.STATUS,
+    flappydronie.BACKGROUNDS,
+    flappydronie.FOREGROUNDS,
+    flappydronie.BIRD,
+    flappydronie.PIPES,
+    flappydronie.STATUS,
   ]);
 
   React.useEffect(() => {
     document.addEventListener('mousedown', () => {
-      switch (game.STATUS.value) {
+      switch (flappydronie.STATUS.value) {
         case GAME_STATUS.SPLASH:
           console.log('START GAME');
-          game.startGame();
-          game.jumpBird();
+          flappydronie.startGame();
+          flappydronie.jumpBird();
           break;
         case GAME_STATUS.PLAYING:
           console.log('JUMP');
-          game.jumpBird();
+          flappydronie.jumpBird();
           break;
         case GAME_STATUS.SCORE:
           console.log('RESTART');
-          game.resetGame();
+          flappydronie.resetGame();
           break;
         default:
           break;
@@ -34,7 +34,7 @@ const useGame = () => {
     });
 
     const appUpdateFrame = () => {
-      game.updateFrame();
+      flappydronie.updateFrame();
 
       window.requestAnimationFrame(appUpdateFrame);
     };

@@ -13,3 +13,5 @@ export const SPRITE_SHEET = {
   width: 2145,
   height: 2600,
 };
+
+export const DRONIES_URL = 'https://www.droniesnft.com/';

@@ -1,15 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAgile } from '@agile-ts/react';
-import Game from './components/Game';
-import { game, ui } from '../../../core';
+import FlappyDronie from './components/FlappyDronie';
+import { flappydronie, ui } from '../../../core';
 
 const FlappyDronieScreen: React.FC = () => {
-  const [score, highScore] = useAgile([game.SCORE, game.HIGH_SCORE]);
+  const [score, highScore] = useAgile([
+    flappydronie.SCORE,
+    flappydronie.HIGH_SCORE,
+  ]);
 
   return (
-     <Container>
-      <Game />
+    <Container>
+      <FlappyDronie />
       <TextContainer>
         <ScoreContainer>
           <div>Score: {score}</div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { pipe_n, pipe_s, SpriteWrapper } from '../../../../../../core/sprites';
-import { game } from '../../../../../../core';
+import { flappydronie } from '../../../../../../core';
 
 const Pipe: React.FC<Props> = (props) => {
   const { sprite } = props;
@@ -24,5 +24,5 @@ const Pipe: React.FC<Props> = (props) => {
 export default Pipe;
 
 type Props = {
-  sprite: game.sprites.Pipe;
+  sprite: flappydronie.sprites.Pipe;
 };

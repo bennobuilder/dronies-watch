@@ -15,6 +15,7 @@ export enum GAME_STATUS {
 export const BIRD_POSITION = 60;
 
 // General
+export const PLAY_ONLINE = createState(false);
 export const STATUS = createState<GAME_STATUS>(GAME_STATUS.SPLASH);
 export const FRAMES = createState(1);
 export const SCORE = createState(0);
@@ -24,7 +25,8 @@ export const HIGH_SCORE = createState(0).persist({ key: 'high-score' });
 export const PIPES = createState<Pipe[]>([]);
 export const BIRD = createState<Bird>(new Bird(BIRD_POSITION, 0));
 BIRD.watch((v) => {
-  socketService.socket?.emit('bird', { cx: v.cx, cy: v.cy });
+  if (PLAY_ONLINE.value)
+    socketService.socket?.emit('bird', { cx: v.cx, cy: v.cy });
 });
 
 // Scenery

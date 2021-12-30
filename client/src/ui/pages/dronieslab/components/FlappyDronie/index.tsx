@@ -1,25 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useAgile } from '@agile-ts/react';
 import { socket, ui } from '../../../../../core';
 import Bird from './components/Bird';
 import Background from './components/Background';
 import Pipe from './components/Pipe';
 import Foreground from './components/Foreground';
 import useGame from './hooks/useGame';
+import { PLAY_ONLINE } from '../../../../../core/entities/flappydronie';
 
 const FlappyBird: React.FC = () => {
-  const { backgrounds, foregrounds, bird, pipes, status } = useGame();
+  const { backgrounds, foregrounds, bird, pipes } = useGame();
+  const [playonline] = useAgile([PLAY_ONLINE]);
 
   React.useEffect(() => {
-    const connectSocket = async () => {
-      await socket.socketService
-        .connect('http://localhost:9000')
-        .catch((err) => {
-          console.log('Error: ', err);
-        });
-    };
-    connectSocket();
-  }, []);
+    if (playonline) {
+      const connectSocket = async () => {
+        await socket.socketService
+          .connect('http://localhost:9000')
+          .catch((err) => {
+            console.log('Error: ', err);
+          });
+      };
+      connectSocket();
+    }
+  }, [playonline]);
 
   return (
     <Container id="flappybird">

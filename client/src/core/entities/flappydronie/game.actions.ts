@@ -70,12 +70,12 @@ export const updateFrame = () => {
     BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + (bg_w - 5); // -5 to hide white stripe between the two images
     BACKGROUNDS.ingest();
 
-    // Update Bird
-    BIRD.set((b) => updateBird(b), { force: true });
-
     // Update Pipes
     if (STATUS.value === GAME_STATUS.PLAYING) PIPES.set((p) => updatePipes(p));
   }
+
+  // Update Bird
+  BIRD.set((b) => updateBird(b), { force: true });
 };
 
 export const updateBird = (bird: Bird): Bird => {

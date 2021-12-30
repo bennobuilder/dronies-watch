@@ -1,8 +1,31 @@
+/* Fonts */
+/* https://stackoverflow.com/questions/41676054/how-to-add-fonts-to-create-react-app-based-projects */
+
+@font-face {
+  font-family: 'Furore';
+  src: local('Furore'), url(./fonts/Furore.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'IBMPlexMono-Regular';
+  src: local('IBMPlexMono-Regular'), url(./fonts/IBMPlexMono-Regular.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'IBMPlexMono-Light';
+  src: local('IBMPlexMono-Light'), url(./fonts/IBMPlexMono-Light.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'IBMPlexMono-Bold';
+  src: local('IBMPlexMono-Bold'), url(./fonts/IBMPlexMono-Bold.ttf) format('truetype');
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: IBMPlexMono-Regular -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
