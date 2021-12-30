@@ -25,10 +25,10 @@ const FlappyDronieScreen: React.FC = () => {
             <div>High Score: {highScore}</div>
           </ScoreContainer>
           <a href="https://github.com/bennodev19/dronies-watch">Github</a>
-          <Icon.Discord />
-          <Icon.Dronies />
-          <Icon.Lab />
-          <Icon.Twitter />
+          <Icon.Discord width={100} height={100} />
+          <Icon.Dronies width={100} height={100} />
+          <Icon.Lab width={100} height={100} />
+          <Icon.Twitter width={100} height={100} />
         </TextContainer>
       </Container>
     </PageLayout>
