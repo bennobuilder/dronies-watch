@@ -17,7 +17,11 @@ const Navbar: React.FC<Props> = (props) => {
           navigate('/');
         }}
       >
-        <Icon.Dronies color={theme.colors.layout.hc} width={30} height={30} />
+        <div style={{ position: 'relative' }}>
+          <Logo color={theme.colors.layout.hc} width={38} height={38} />
+          <LogoEye width={38} height={38} />
+        </div>
+
         <AppName>Dronies</AppName>
       </LogoContainer>
     </Container>
@@ -55,6 +59,25 @@ const Container = styled.div<{ absolute: boolean; maxWidth: number }>`
     !absolute ? theme.colors.layout.bg : 'transparent'};
 `;
 
+const Logo = styled(Icon.Dronies)`
+  transform: rotateZ(0deg);
+
+  transition: transform ${({ theme }) => theme.transitionTimingFunction} 500ms;
+`;
+
+const LogoEye = styled(Icon.DroniesEye)`
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+
+  opacity: 0;
+
+  transition: opacity ${({ theme }) => theme.transitionTimingFunction} 500ms;
+`;
+
 const LogoContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -62,10 +85,23 @@ const LogoContainer = styled.div`
   justify-content: flex-start;
 
   cursor: pointer;
+
+  :hover {
+    ${Logo} {
+      transform: rotateZ(-45deg);
+    }
+
+    ${LogoEye} {
+      opacity: 1;
+    }
+  }
 `;
 
 const AppName = styled.div`
-  margin: 0 0 0 10px;
+  margin: 0 0 0 12px;
 
   color: ${({ theme }) => theme.colors.layout.hc};
+  font-family: ${({ theme }) => theme.fontFamily};
+  font-weight: bold;
+  font-size: 30px;
 `;

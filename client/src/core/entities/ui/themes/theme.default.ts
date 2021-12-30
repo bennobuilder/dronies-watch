@@ -6,7 +6,7 @@ export const DEFAULT_THEME: DefaultTheme = {
   colors: {} as any, // Colors need to be overwritten all the time
   primitiveColors,
   fontFamily:
-    'IBMPlexMono-Regular -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+    'IBMPlexMono-Regular, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
   lineHeight: 1.55,
   transitionTimingFunction: 'cubic-bezier(.51,.3,0,1.21)',
 
@@ -44,7 +44,7 @@ export const DEFAULT_THEME: DefaultTheme = {
 
   headings: {
     fontFamily:
-      'Furore -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+      'Furore, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
     fontWeight: 700,
     sizes: {
       h1: { fontSize: 34, lineHeight: 1.3 },
