@@ -24,5 +24,9 @@ module.exports = {
     'spaced-comment': WARNING,
     'jsx-a11y/click-events-have-key-events': WARNING,
     'jsx-a11y/no-static-element-interactions': WARNING,
+    'import/no-extraneous-dependencies': WARNING,
+    'no-restricted-syntax': WARNING,
+    'react/destructuring-assignment': OFF,
+    'import/no-named-as-default': OFF,
   },
 };

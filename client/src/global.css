@@ -3,22 +3,22 @@
 
 @font-face {
   font-family: 'Furore';
-  src: local('Furore'), url(./fonts/Furore.ttf) format('truetype');
+  src: local('Furore'), url(./assets/fonts/Furore.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'IBMPlexMono-Regular';
-  src: local('IBMPlexMono-Regular'), url(./fonts/IBMPlexMono-Regular.ttf) format('truetype');
+  src: local('IBMPlexMono-Regular'), url(./assets/fonts/IBMPlexMono-Regular.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'IBMPlexMono-Light';
-  src: local('IBMPlexMono-Light'), url(./fonts/IBMPlexMono-Light.ttf) format('truetype');
+  src: local('IBMPlexMono-Light'), url(./assets/fonts/IBMPlexMono-Light.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'IBMPlexMono-Bold';
-  src: local('IBMPlexMono-Bold'), url(./fonts/IBMPlexMono-Bold.ttf) format('truetype');
+  src: local('IBMPlexMono-Bold'), url(./assets/fonts/IBMPlexMono-Bold.ttf) format('truetype');
 }
 
 html,

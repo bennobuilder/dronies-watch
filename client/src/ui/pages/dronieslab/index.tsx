@@ -3,12 +3,15 @@ import styled from 'styled-components';
 import { useAgile } from '@agile-ts/react';
 import FlappyDronie from './components/FlappyDronie';
 import { flappydronie, ui } from '../../../core';
+import { useTheme } from '../../theme/useTheme';
 
 const FlappyDronieScreen: React.FC = () => {
   const [score, highScore] = useAgile([
     flappydronie.SCORE,
     flappydronie.HIGH_SCORE,
   ]);
+  const theme = useTheme();
+  console.log(theme);
 
   return (
     <Container>
