@@ -2,6 +2,7 @@ import { createState } from '@agile-ts/core';
 import { Pipe, Bird, Background, Foreground } from './sprites';
 import { bg_h, bg_w, fg_h, fg_w } from '../../sprites';
 import { HEIGHT } from '../ui';
+import { socketService } from '../../socket';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export enum GAME_STATUS {
@@ -22,6 +23,9 @@ export const HIGH_SCORE = createState(0).persist({ key: 'high-score' });
 // Objects
 export const PIPES = createState<Pipe[]>([]);
 export const BIRD = createState<Bird>(new Bird(BIRD_POSITION, 0));
+BIRD.watch((v) => {
+  socketService.socket?.emit('bird', { cx: v.cx, cy: v.cy });
+});
 
 // Scenery
 export const BACKGROUNDS = createState([

@@ -25,9 +25,7 @@ import {
 import { HEIGHT } from '../ui';
 
 export const startGame = () => {
-  // BIRD.set(new Bird(BIRD_POSITION, 0));
-  FRAMES.reset();
-  PIPES.reset();
+  if (STATUS.value !== GAME_STATUS.SPLASH) BIRD.set(new Bird(BIRD_POSITION, 0));
 
   STATUS.set(GAME_STATUS.PLAYING);
 };
@@ -43,6 +41,13 @@ export const endGame = () => {
 
     SCORE.reset();
   }
+};
+
+export const resetGame = () => {
+  BIRD.set(new Bird(BIRD_POSITION, 0));
+  FRAMES.reset();
+  PIPES.reset();
+  STATUS.set(GAME_STATUS.SPLASH);
 };
 
 export const updateFrame = () => {
@@ -64,14 +69,12 @@ export const updateFrame = () => {
     BACKGROUNDS.nextStateValue[0].cx = newBackgroundPos;
     BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + (bg_w - 5); // -5 to hide white stripe between the two images
     BACKGROUNDS.ingest();
-  }
 
-  // Update Bird
-  BIRD.set((b) => updateBird(b), { force: true });
+    // Update Bird
+    BIRD.set((b) => updateBird(b), { force: true });
 
-  // Update Pipes
-  if (STATUS.value === GAME_STATUS.PLAYING) {
-    PIPES.set((p) => updatePipes(p));
+    // Update Pipes
+    if (STATUS.value === GAME_STATUS.PLAYING) PIPES.set((p) => updatePipes(p));
   }
 };
 

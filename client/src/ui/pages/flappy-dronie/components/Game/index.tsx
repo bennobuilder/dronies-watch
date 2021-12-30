@@ -1,45 +1,24 @@
-import React, { useEffect } from 'react';
-import { useAgile } from '@agile-ts/react';
+import React from 'react';
 import styled from 'styled-components';
-import { ui, game } from '../../../../../core';
+import { socket, ui } from '../../../../../core';
 import Bird from './components/Bird';
 import Background from './components/Background';
 import Pipe from './components/Pipe';
 import Foreground from './components/Foreground';
-import { GAME_STATUS } from '../../../../../core/entities/game';
+import useGame from './hooks/useGame';
 
 const FlappyBird: React.FC = () => {
-  const [backgrounds, foregrounds, bird, pipes, status] = useAgile([
-    game.BACKGROUNDS,
-    game.FOREGROUNDS,
-    game.BIRD,
-    game.PIPES,
-    game.STATUS,
-  ]);
+  const { backgrounds, foregrounds, bird, pipes, status } = useGame();
 
-  useEffect(() => {
-    document.addEventListener('mousedown', () => {
-      switch (game.STATUS.value) {
-        case GAME_STATUS.SPLASH:
-          console.log('START GAME');
-          game.startGame();
-          game.jumpBird();
-          break;
-        case GAME_STATUS.PLAYING:
-          console.log('JUMP');
-          game.jumpBird();
-          break;
-        default:
-          break;
-      }
-    });
-
-    const appUpdateFrame = () => {
-      game.updateFrame();
-
-      window.requestAnimationFrame(appUpdateFrame);
+  React.useEffect(() => {
+    const connectSocket = async () => {
+      await socket.socketService
+        .connect('http://localhost:9000')
+        .catch((err) => {
+          console.log('Error: ', err);
+        });
     };
-    appUpdateFrame();
+    connectSocket();
   }, []);
 
   return (
