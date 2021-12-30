@@ -8,7 +8,7 @@ const FlappyDronieScreen: React.FC = () => {
   const [score, highScore] = useAgile([game.SCORE, game.HIGH_SCORE]);
 
   return (
-    <Container>
+     <Container>
       <Game />
       <TextContainer>
         <ScoreContainer>
