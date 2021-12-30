@@ -20,6 +20,7 @@ module.exports = {
     'react/require-default-props': WARNING,
     'react/jsx-props-no-spreading': WARNING,
     'react/destructuring-assignment': OFF,
+    'react/jsx-no-comment-textnodes': OFF,
     'import/prefer-default-export': OFF,
     'import/no-extraneous-dependencies': WARNING,
     'import/no-named-as-default': OFF,

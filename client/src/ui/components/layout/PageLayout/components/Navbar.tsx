@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../../../../theme/useTheme';
 import { ui } from '../../../../../core';
 import Icon from '../../../icons';
@@ -21,9 +22,37 @@ const Navbar: React.FC<Props> = (props) => {
           <Logo color={theme.colors.layout.hc} width={38} height={38} />
           <LogoEye width={38} height={38} />
         </div>
-
         <AppName>Dronies</AppName>
       </LogoContainer>
+      <RightContainer>
+        <MenuContainer>
+          <MenuText>GITHUB</MenuText>
+          <MenuText>DISCLAIMER</MenuText>
+        </MenuContainer>
+        <SocialContainer>
+          <Slash>//</Slash>
+          <Link
+            to={{ pathname: 'https://discord.com/invite/8naUgEcYEx' }}
+            target="_blank"
+          >
+            <DiscordIcon
+              width={26}
+              height={26}
+              color={theme.colors.layout.hc}
+            />
+          </Link>
+          <Link
+            to={{ pathname: 'https://twitter.com/DroniesNFT' }}
+            target="_blank"
+          >
+            <TwitterIcon
+              width={26}
+              height={26}
+              color={theme.colors.layout.hc}
+            />
+          </Link>
+        </SocialContainer>
+      </RightContainer>
     </Container>
   );
 };
@@ -45,7 +74,7 @@ const Container = styled.div<{ absolute: boolean; maxWidth: number }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
 
   max-width: ${({ maxWidth }) => maxWidth}px;
   width: 100%;
@@ -81,9 +110,11 @@ const LogoContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 
   cursor: pointer;
+
+  justify-self: flex-start;
 
   :hover {
     ${Logo} {
@@ -103,4 +134,59 @@ const AppName = styled.div`
   font-family: ${({ theme }) => theme.fontFamily};
   font-weight: bold;
   font-size: 30px;
+`;
+
+const RightContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const MenuContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  margin-right: 50px;
+`;
+
+const MenuText = styled.div`
+  margin: 0 20px 0 20px;
+
+  color: ${({ theme }) => theme.colors.interactive.primary.p0};
+  font-family: ${({ theme }) => theme.fontFamily};
+  font-size: 16px;
+
+  cursor: pointer;
+
+  :hover {
+    color: ${({ theme }) => theme.colors.layout.hc};
+  }
+`;
+
+const SocialContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const Slash = styled.div`
+  margin: 0 24px 0 0;
+
+  color: ${({ theme }) => theme.colors.layout.hc};
+  font-family: ${({ theme }) => theme.fontFamily};
+  font-weight: bold;
+  font-size: 16px;
+`;
+
+const TwitterIcon = styled(Icon.Twitter)`
+  margin-left: 20px;
+  cursor: pointer;
+`;
+
+const DiscordIcon = styled(Icon.Discord)`
+  cursor: pointer;
+
+  :hover {
+  }
 `;

@@ -6,7 +6,7 @@ export const THEME_TYPE = createState<ThemeTypes>('dark').persist({
 });
 
 export const MAX_WIDTH = 1100;
-export const NAVBAR_HEIGHT = 70;
+export const NAVBAR_HEIGHT = 100;
 
 let windowWidth = window.innerWidth;
 let windowHeight = window.innerHeight;
