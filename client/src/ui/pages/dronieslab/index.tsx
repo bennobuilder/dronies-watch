@@ -4,6 +4,8 @@ import { useAgile } from '@agile-ts/react';
 import FlappyDronie from './components/FlappyDronie';
 import { flappydronie, ui } from '../../../core';
 import { useTheme } from '../../theme/useTheme';
+import PageLayout from '../../components/layout/PageLayout';
+import Icon from '../../components/icons';
 
 const FlappyDronieScreen: React.FC = () => {
   const [score, highScore] = useAgile([
@@ -14,16 +16,22 @@ const FlappyDronieScreen: React.FC = () => {
   console.log(theme);
 
   return (
-    <Container>
-      <FlappyDronie />
-      <TextContainer>
-        <ScoreContainer>
-          <div>Score: {score}</div>
-          <div>High Score: {highScore}</div>
-        </ScoreContainer>
-        <a href="https://github.com/bennodev19/dronies-watch">Github</a>
-      </TextContainer>
-    </Container>
+    <PageLayout>
+      <Container>
+        <FlappyDronie />
+        <TextContainer>
+          <ScoreContainer>
+            <div>Score: {score}</div>
+            <div>High Score: {highScore}</div>
+          </ScoreContainer>
+          <a href="https://github.com/bennodev19/dronies-watch">Github</a>
+          <Icon.Discord />
+          <Icon.Dronies />
+          <Icon.Lab />
+          <Icon.Twitter />
+        </TextContainer>
+      </Container>
+    </PageLayout>
   );
 };
 
