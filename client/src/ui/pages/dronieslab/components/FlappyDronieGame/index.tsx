@@ -7,6 +7,7 @@ import FlappyDronie from '../../../../components/games/FlappyDronie';
 import LabelText from './components/LabelText';
 import { Button } from '../../../../components/primitive';
 import Icon from '../../../../components/icons';
+import InfoBox from '../../../../components/other/InfoBox';
 
 const FlappyDronieGame: React.FC = () => {
   const [score, latestScore, highScore] = useAgile([
@@ -37,6 +38,7 @@ const FlappyDronieGame: React.FC = () => {
               target="_blank"
             />
           )}
+          <StyledInfoBox text="Some new features like a Leaderboard might come in the near future." />
         </LeftContent>
 
         <Game linesCount={20}>
@@ -120,4 +122,8 @@ const StatsContainer = styled.div`
 
 const ShareScoreButton = styled(Button)`
   margin-top: 50px;
+`;
+
+const StyledInfoBox = styled(InfoBox)`
+  margin-top: 100px;
 `;
