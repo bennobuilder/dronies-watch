@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { pipe_n, pipe_s, SpriteWrapper } from '../../../../../../core/sprites';
+import {
+  pipe_n,
+  pipe_s,
+  SpriteWrapper,
+} from '../../../../../../core/entities/flappydronie/sprites';
 import { flappydronie } from '../../../../../../core';
 
 const Pipe: React.FC<Props> = (props) => {

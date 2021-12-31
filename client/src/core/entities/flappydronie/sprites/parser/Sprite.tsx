@@ -1,5 +1,9 @@
 import React from 'react';
-import { SPRITE_SHEET } from '../../entities/ui';
+
+export const SPRITE_SHEET = {
+  width: 2145,
+  height: 2600,
+};
 
 const Sprite: React.FC<Props> = (props) => {
   const { filename } = props;

@@ -1,5 +1,8 @@
 import React from 'react';
-import { backgrounds, SpriteWrapper } from '../../../../../../core/sprites';
+import {
+  backgrounds,
+  SpriteWrapper,
+} from '../../../../../../core/entities/flappydronie/sprites';
 import { flappydronie } from '../../../../../../core';
 
 const Background: React.FC<Props> = (props) => {

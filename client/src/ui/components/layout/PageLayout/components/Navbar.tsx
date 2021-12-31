@@ -18,13 +18,11 @@ const Navbar: React.FC<Props> = (props) => {
           navigate('/');
         }}
       >
-        <div style={{ position: 'relative' }}>
-          <Logo color={theme.colors.layout.hc} width={34} height={34} />
-          <LogoEye width={34} height={34} />
-        </div>
+        <Logo color={theme.colors.layout.hc} width={34} height={34} />
+        <LogoEye width={34} height={34} />
         <AppName>Dronies</AppName>
       </LogoContainer>
-      <RightContainer>
+      <RightContent>
         <MenuContainer>
           <ButtonWrapper
             to="https://github.com/bennodev19/dronies-watch"
@@ -53,7 +51,7 @@ const Navbar: React.FC<Props> = (props) => {
             icon={TwitterIcon}
           />
         </SocialContainer>
-      </RightContainer>
+      </RightContent>
     </Container>
   );
 };
@@ -108,6 +106,8 @@ const LogoEye = styled(Icon.DroniesEye)`
 `;
 
 const LogoContainer = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -138,7 +138,7 @@ const AppName = styled.div`
   text-transform: uppercase;
 `;
 
-const RightContainer = styled.div`
+const RightContent = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;

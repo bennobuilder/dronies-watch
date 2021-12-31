@@ -1,5 +1,9 @@
 import React from 'react';
-import { plane, SpriteWrapper, dronies } from '../../../../../../core/sprites';
+import {
+  plane,
+  SpriteWrapper,
+  dronies,
+} from '../../../../../../core/entities/flappydronie/sprites';
 import { flappydronie } from '../../../../../../core';
 
 const Bird: React.FC<Props> = (props) => {

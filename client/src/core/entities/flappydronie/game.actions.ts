@@ -1,9 +1,21 @@
-import { Bird, Pipe } from './sprites';
+import {
+  Bird,
+  Pipe,
+  bg_w,
+  bird_h,
+  bird_w,
+  fg_h,
+  fg_w,
+  pipe_h,
+  pipe_w,
+  bg_h,
+} from './sprites';
 import {
   BACKGROUND_POSITION,
   BACKGROUNDS,
   BIRD,
   BIRD_POSITION,
+  CANVAS_DIMENSIONS,
   FOREGROUND_POSITION,
   FOREGROUNDS,
   FRAMES,
@@ -13,16 +25,6 @@ import {
   SCORE,
   STATUS,
 } from './game.controller';
-import {
-  bg_w,
-  bird_h,
-  bird_w,
-  fg_h,
-  fg_w,
-  pipe_h,
-  pipe_w,
-} from '../../sprites';
-import { HEIGHT } from '../ui';
 
 export const startGame = () => {
   if (STATUS.value !== GAME_STATUS.SPLASH) BIRD.set(new Bird(BIRD_POSITION, 0));
@@ -61,13 +63,17 @@ export const updateFrame = () => {
     const newForegroundPos = (FOREGROUND_POSITION.value - 2) % (fg_w - 5); // -5 to hide white stripe between the two images
     FOREGROUND_POSITION.set(newForegroundPos);
     FOREGROUNDS.nextStateValue[0].cx = newForegroundPos;
+    FOREGROUNDS.nextStateValue[0].cy = CANVAS_DIMENSIONS.value.height - fg_h; // Required when resizing
     FOREGROUNDS.nextStateValue[1].cx = newForegroundPos + (fg_w - 5); // -5 to hide white stripe between the two images
+    FOREGROUNDS.nextStateValue[1].cy = CANVAS_DIMENSIONS.value.height - fg_h; // Required when resizing
     FOREGROUNDS.ingest();
 
     const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % (bg_w - 5); // -5 to hide white stripe between the two images
     BACKGROUND_POSITION.set(newBackgroundPos);
     BACKGROUNDS.nextStateValue[0].cx = newBackgroundPos;
+    BACKGROUNDS.nextStateValue[0].cy = CANVAS_DIMENSIONS.value.height - bg_h; // Required when resizing
     BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + (bg_w - 5); // -5 to hide white stripe between the two images
+    BACKGROUNDS.nextStateValue[1].cy = CANVAS_DIMENSIONS.value.height - bg_h; // Required when resizing
     BACKGROUNDS.ingest();
 
     // Update Pipes
@@ -81,7 +87,8 @@ export const updateFrame = () => {
 export const updateBird = (bird: Bird): Bird => {
   // If Splash Screen make the Bird hover
   if (STATUS.value === GAME_STATUS.SPLASH) {
-    bird.cy = HEIGHT - 280 + 5 * Math.cos(FRAMES.value / 10); // ~199 - ~201
+    bird.cy =
+      CANVAS_DIMENSIONS.value.height - 280 + 5 * Math.cos(FRAMES.value / 10); // ~199 - ~201
     bird.rotation = 0;
   }
 
@@ -94,7 +101,7 @@ export const updateBird = (bird: Bird): Bird => {
     bird.cy += bird.velocity;
 
     // Handle collision with bottom
-    const bottomCollisionHeight = HEIGHT - fg_h - 10;
+    const bottomCollisionHeight = CANVAS_DIMENSIONS.value.height - fg_h - 10;
     if (bird.cy >= bottomCollisionHeight) {
       bird.cy = bottomCollisionHeight;
 
@@ -184,7 +191,9 @@ export const calculateCollisionWithPipe = (pipe: Pipe): boolean => {
 };
 
 export const generatePipeSet = () => {
-  const randomYPos = HEIGHT - (pipe_h + fg_h + 120 + 200 * Math.random());
+  const randomYPos =
+    CANVAS_DIMENSIONS.value.height -
+    (pipe_h + fg_h + 120 + 200 * Math.random());
   return [
     new Pipe(pipe_h, randomYPos, 'S'),
     new Pipe(pipe_h, randomYPos + 100 + pipe_h, 'N'),

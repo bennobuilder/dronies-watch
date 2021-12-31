@@ -1,7 +1,8 @@
 import React from 'react';
 import { useAgile } from '@agile-ts/react';
 import { flappydronie } from '../../../../../../core';
-import { GAME_STATUS } from '../../../../../../core/entities/flappydronie';
+import { CANVAS_DIMENSIONS } from '../../../../../../core/entities/flappydronie';
+import { useWindowSize } from '../../../../../hooks/useWindowSize';
 
 const useGame = () => {
   const [backgrounds, foregrounds, bird, pipes, status] = useAgile([
@@ -11,34 +12,23 @@ const useGame = () => {
     flappydronie.PIPES,
     flappydronie.STATUS,
   ]);
+  const { windowWidth, windowHeight } = useWindowSize();
 
   React.useEffect(() => {
-    document.addEventListener('mousedown', () => {
-      switch (flappydronie.STATUS.value) {
-        case GAME_STATUS.SPLASH:
-          console.log('START GAME');
-          flappydronie.startGame();
-          flappydronie.jumpBird();
-          break;
-        case GAME_STATUS.PLAYING:
-          console.log('JUMP');
-          flappydronie.jumpBird();
-          break;
-        case GAME_STATUS.SCORE:
-          console.log('RESTART');
-          flappydronie.resetGame();
-          break;
-        default:
-          break;
-      }
-    });
+    if (windowWidth >= 500) {
+      CANVAS_DIMENSIONS.set({ width: 320, height: 480 });
+    } else {
+      CANVAS_DIMENSIONS.set({ width: windowWidth, height: windowHeight });
+    }
+  }, [windowHeight, windowWidth]);
 
-    const appUpdateFrame = () => {
+  React.useEffect(() => {
+    // Dynamically update Game and thus render it
+    const updateFrame = () => {
       flappydronie.updateFrame();
-
-      window.requestAnimationFrame(appUpdateFrame);
+      window.requestAnimationFrame(updateFrame);
     };
-    appUpdateFrame();
+    updateFrame();
   }, []);
 
   return { backgrounds, foregrounds, bird, pipes, status };

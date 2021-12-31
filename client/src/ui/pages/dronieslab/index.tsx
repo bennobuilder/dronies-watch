@@ -7,6 +7,7 @@ import { useTheme } from '../../theme/useTheme';
 import PageLayout from '../../components/layout/PageLayout';
 import Icon from '../../components/icons';
 import { Button } from '../../components/primitive';
+import { useWindowSize } from '../../hooks/useWindowSize';
 
 const FlappyDronieScreen: React.FC = () => {
   const [score, highScore] = useAgile([
@@ -14,24 +15,19 @@ const FlappyDronieScreen: React.FC = () => {
     flappydronie.HIGH_SCORE,
   ]);
   const theme = useTheme();
-  console.log(theme);
+  const { windowWidth } = useWindowSize();
 
+  // Mobile
+  if (windowWidth <= 500) {
+    return <FlappyDronie />;
+  }
+
+  // Desktop
   return (
     <PageLayout>
       <Container>
+        <Button text="Twitter" icon={Icon.Twitter} />
         <FlappyDronie />
-        <TextContainer>
-          <ScoreContainer>
-            <div>Score: {score}</div>
-            <div>High Score: {highScore}</div>
-          </ScoreContainer>
-          <a href="https://github.com/bennodev19/dronies-watch">Github</a>
-          <Icon.Discord width={100} height={100} />
-          <Icon.Dronies width={100} height={100} />
-          <Icon.Lab width={100} height={100} />
-          <Icon.Twitter width={100} height={100} />
-          <Button text="Twitter" icon={Icon.Twitter} />
-        </TextContainer>
       </Container>
     </PageLayout>
   );
@@ -45,18 +41,4 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-const TextContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: row;
-  width: ${ui.WIDTH}px;
-`;
-
-const ScoreContainer = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-items: flex-start;
 `;

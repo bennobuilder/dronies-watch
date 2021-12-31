@@ -1,5 +1,5 @@
 import React from 'react';
-import { Base } from '../../entities/flappydronie/sprites';
+import { Base } from '../logic';
 
 const SpriteWrapper: React.FC<Props> = (props) => {
   const { gameSprite, onClickHandler, children } = props;

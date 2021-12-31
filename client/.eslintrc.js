@@ -28,6 +28,7 @@ module.exports = {
     'no-underscore-dangle': OFF,
     'no-restricted-syntax': WARNING,
     'no-nested-ternary': WARNING,
+    'import/no-cycle': WARNING,
     'jsx-a11y/click-events-have-key-events': WARNING,
     'jsx-a11y/no-static-element-interactions': WARNING,
     'spaced-comment': WARNING,

@@ -1,5 +1,5 @@
-import Sprite from './parser/Sprite';
-import sheet from '../../assets/games/flappydronie/sheet.png';
+import sheet from '../../../../assets/games/flappydronie/sheet.png';
+import { Sprite } from './parser';
 
 export const backgrounds = Array.from(Array(2)).map((v, i) =>
   Sprite({
