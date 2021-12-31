@@ -5,6 +5,7 @@ import { ui } from '../../../../../core';
 import { Button } from '../../../../components/primitive';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 import { useTheme } from '../../../../theme/useTheme';
+import LinesBackground from '../../../../components/primitive/background/LinesBackground';
 
 // Assets
 import TrainingProtocolImg from '../../../../../assets/app/training_protocol.png';
@@ -17,7 +18,9 @@ const Header: React.FC = () => {
     <Container>
       {/* Left */}
       <LeftContent>
-        <Title>DRONIES LAB</Title>
+        <TitleContainer linesCount={5}>
+          <Title>DRONIES LAB</Title>
+        </TitleContainer>
         <TrainingProtocolContainer>
           <img
             src={TrainingProtocolImg}
@@ -55,6 +58,8 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+
+  z-index: 1;
   margin-top: 30px;
 
   width: 100%;
@@ -65,8 +70,13 @@ const LeftContent = styled.div`
   flex-direction: column;
 `;
 
-const Title = styled.h1`
+const TitleContainer = styled(LinesBackground)`
   margin: 0 0 80px 0;
+  padding: 0 40px;
+`;
+
+const Title = styled.h1`
+  margin: 0;
 
   color: ${({ theme }) => theme.colors.layout.p};
   font-size: 6rem;

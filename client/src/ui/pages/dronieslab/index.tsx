@@ -7,6 +7,7 @@ import PageLayout from '../../components/layout/PageLayout';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { useTheme } from '../../theme/useTheme';
 import Header from './components/Header';
+import LinesBackground from '../../components/primitive/background/LinesBackground';
 
 // Assets
 import HeaderBackgroundImg from '../../../assets/app/dronies_background.png';
@@ -28,9 +29,11 @@ const FlappyDronieScreen: React.FC = () => {
   return (
     <PageLayout>
       <Container>
-        <HeaderBackgrround src={HeaderBackgroundImg} alt="HeaderBackground" />
         <Header />
-        <FlappyDronie />
+        <HeaderBackground src={HeaderBackgroundImg} alt="HeaderBackground" />
+        <LinesBackground linesCount={10}>
+          <FlappyDronie />
+        </LinesBackground>
         <p style={{ color: theme.colors.layout.hc }}>Score: {score}</p>
         <p style={{ color: theme.colors.layout.hc }}>HighScore: {highScore}</p>
       </Container>
@@ -51,7 +54,7 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const HeaderBackgrround = styled.img`
+const HeaderBackground = styled.img`
   position: absolute;
   top: 300px;
 
