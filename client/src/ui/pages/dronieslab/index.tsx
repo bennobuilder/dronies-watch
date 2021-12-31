@@ -2,20 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import { useAgile } from '@agile-ts/react';
 import FlappyDronie from './components/FlappyDronie';
-import { flappydronie, ui } from '../../../core';
-import { useTheme } from '../../theme/useTheme';
+import { flappydronie } from '../../../core';
 import PageLayout from '../../components/layout/PageLayout';
-import Icon from '../../components/icons';
-import { Button } from '../../components/primitive';
 import { useWindowSize } from '../../hooks/useWindowSize';
+import { useTheme } from '../../theme/useTheme';
 
 const FlappyDronieScreen: React.FC = () => {
   const [score, highScore] = useAgile([
     flappydronie.SCORE,
     flappydronie.HIGH_SCORE,
   ]);
-  const theme = useTheme();
   const { windowWidth } = useWindowSize();
+  const theme = useTheme();
 
   // Mobile
   if (windowWidth <= 500) {
@@ -27,6 +25,8 @@ const FlappyDronieScreen: React.FC = () => {
     <PageLayout>
       <Container>
         <FlappyDronie />
+        <p style={{ color: theme.colors.layout.hc }}>Score: {score}</p>
+        <p style={{ color: theme.colors.layout.hc }}>HighScore: {highScore}</p>
       </Container>
     </PageLayout>
   );
