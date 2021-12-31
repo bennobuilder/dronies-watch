@@ -33,6 +33,7 @@ const Button: React.FC<Props> = (props) => {
     color = theme.colors.interactive.primary.p0,
     hoverColor = theme.colors.layout.rHc,
     target = '_self',
+    className,
   } = props;
   const _size = ui.getSizeValue(size, iconSizes);
 
@@ -44,6 +45,7 @@ const Button: React.FC<Props> = (props) => {
       color={color}
       hoverColor={hoverColor}
       size={size}
+      className={className}
     >
       {(isHovering: boolean) => (
         <>
@@ -76,6 +78,10 @@ type ExtractComponents<T> = {
   [K in keyof T]: T[K] extends typeof Icon.Dronies ? T[K] : never;
 }[keyof T];
 
+const ButtonIcon = styled(Icon.Twitter)`
+  margin-right: 14px;
+`;
+
 const Container = styled(ButtonWrapper)<{
   color: string;
   hoverColor: string;
@@ -104,9 +110,14 @@ const Container = styled(ButtonWrapper)<{
   :hover {
     border-color: ${({ hoverColor }) => hoverColor};
     color: ${({ hoverColor }) => hoverColor};
-  }
-`;
+    filter: drop-shadow(
+      0px 0px 5px ${({ hoverColor }) => ui.hexToRgba(hoverColor, 0.5)}
+    );
 
-const ButtonIcon = styled(Icon.Twitter)`
-  margin-right: 14px;
+    ${ButtonIcon} {
+      filter: drop-shadow(
+        0px 0px 5px ${({ hoverColor }) => ui.hexToRgba(hoverColor, 0.5)}
+      );
+    }
+  }
 `;

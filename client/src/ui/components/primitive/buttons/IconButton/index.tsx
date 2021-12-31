@@ -23,16 +23,27 @@ const IconButton: React.FC<Props> = (props) => {
     color = theme.colors.layout.hc,
     hoverColor = theme.colors.layout.rHc,
     target = '_self',
+    className,
   } = props;
   const _size = ui.getSizeValue(size, iconSizes);
 
   return (
-    <ButtonWrapper target={target} to={to} onClick={onClick}>
+    <ButtonWrapper
+      target={target}
+      to={to}
+      onClick={onClick}
+      className={className}
+    >
       {(isHovering: boolean) => (
         <DeclaredIcon
           width={_size}
           height={_size}
           color={isHovering ? hoverColor : color}
+          style={
+            isHovering
+              ? { filter: `drop-shadow(0px 0px 10px ${hoverColor})` }
+              : undefined
+          }
         />
       )}
     </ButtonWrapper>

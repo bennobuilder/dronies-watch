@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MAX_WIDTH } from '../../../../core/entities/ui';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import Head from './components/Head';
+import { INNER_PADDING } from './static';
+import { ui } from '../../../../core';
 
 // Assets
 import PageRulerImg from '../../../../assets/app/side_decoration.png';
@@ -20,12 +21,12 @@ const PageLayout: React.FC<Props> = (props) => {
   return (
     <Container>
       <PageRuler src={PageRulerImg} loading="lazy" />
-      <InnerContainer maxWidth={MAX_WIDTH}>
-        {shouldRenderHeader && <Head />}
-        {shouldRenderNavbar && <Navbar />}
+      {shouldRenderHeader && <Head />}
+      {shouldRenderNavbar && <Navbar />}
+      <InnerContainer maxWidth={ui.MAX_WIDTH}>
         <Main>{children}</Main>
-        {shouldRenderFooter && <Footer />}
       </InnerContainer>
+      {shouldRenderFooter && <Footer />}
     </Container>
   );
 };
@@ -46,14 +47,13 @@ type Props = {
 
 const Container = styled.div`
   position: relative;
+
   display: flex;
   flex: 1;
 
   width: 100%;
-  height: 100vh;
   overflow: hidden;
 
-  background-color: ${({ theme }) => theme.colors.layout.bg};
   background-image: url(${BackgroundRepeat}),
     linear-gradient(
       120deg,
@@ -74,15 +74,19 @@ const PageRuler = styled.img`
 `;
 
 const InnerContainer = styled.div<{ maxWidth: number }>`
+  position: relative;
+
   display: flex;
   flex: 1;
+  flex-direction: column;
 
   max-width: ${({ maxWidth }) => maxWidth}px;
+  width: 100%;
 
   margin-left: auto;
   margin-right: auto;
-  padding-left: 16px;
-  padding-right: 16px;
+
+  padding: 0 ${INNER_PADDING}px;
 `;
 
 const Main = styled.main`
