@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 export const SPRITE_SHEET = {
   width: 2145,
@@ -21,14 +22,13 @@ const Sprite: React.FC<Props> = (props) => {
   height *= scale;
 
   return (
-    <div
+    <Content
       style={{
         backgroundImage: `url(${filename})`,
         backgroundSize: `${SPRITE_SHEET.width * scale}px ${
           SPRITE_SHEET.height * scale
         }px`,
         backgroundPosition: `${x * -1}px ${y * -1}px`,
-        backgroundRepeat: 'no-repeat',
         width,
         height,
       }}
@@ -51,3 +51,15 @@ type Props = {
   width: number;
   height: number;
 };
+
+const Content = styled.div`
+  background-repeat: no-repeat;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+`;
