@@ -4,8 +4,9 @@ import { useAgile } from '@agile-ts/react';
 import { flappydronie, ui } from '../../../../../core';
 import LinesBackground from '../../../../components/primitive/background/LinesBackground';
 import FlappyDronie from '../../../../components/games/FlappyDronie';
-import { useTheme } from '../../../../theme/useTheme';
 import LabelText from './components/LabelText';
+import { Button } from '../../../../components/primitive';
+import Icon from '../../../../components/icons';
 
 const FlappyDronieGame: React.FC = () => {
   const [score, latestScore, highScore] = useAgile([
@@ -13,7 +14,6 @@ const FlappyDronieGame: React.FC = () => {
     flappydronie.LATEST_SCORE,
     flappydronie.HIGH_SCORE,
   ]);
-  const theme = useTheme();
 
   return (
     <Container>
@@ -23,11 +23,21 @@ const FlappyDronieGame: React.FC = () => {
       </HeaderContainer>
 
       <GameContainer>
-        <StatsContainer>
-          <LabelText label="Score: " value={score.toString()} />
-          <LabelText label="Latest Score: " value={latestScore.toString()} />
-          <LabelText label="High Score: " value={highScore.toString()} />
-        </StatsContainer>
+        <LeftContent>
+          <StatsContainer>
+            <LabelText label="Score: " value={score.toString()} />
+            <LabelText label="Latest Score: " value={latestScore.toString()} />
+            <LabelText label="High Score: " value={highScore.toString()} />
+          </StatsContainer>
+          {highScore > 5 && (
+            <ShareScoreButton
+              text="Share Score"
+              icon={Icon.Twitter}
+              to={flappydronie.getScoreTweet(highScore)}
+              target="_blank"
+            />
+          )}
+        </LeftContent>
 
         <Game linesCount={20}>
           <FlappyDronie />
@@ -98,7 +108,16 @@ const Game = styled(LinesBackground)`
   justify-self: flex-end;
 `;
 
+const LeftContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const StatsContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const ShareScoreButton = styled(Button)`
+  margin-top: 50px;
 `;
