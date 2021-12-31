@@ -123,6 +123,7 @@ const TrainingProtocolText = styled.p`
   max-width: 450px;
   margin-left: 25px;
 
+  text-align: left;
   font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.colors.layout.p};
   font-size: 1rem;

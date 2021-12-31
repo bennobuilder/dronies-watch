@@ -6,9 +6,10 @@ import { flappydronie, ui } from '../../../core';
 import PageLayout from '../../components/layout/PageLayout';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { useTheme } from '../../theme/useTheme';
-import { Button } from '../../components/primitive';
-import Icon from '../../components/icons';
 import Header from './components/Header';
+
+// Assets
+import HeaderBackgroundImg from '../../../assets/app/dronies_background.png';
 
 const FlappyDronieScreen: React.FC = () => {
   const [score, highScore] = useAgile([
@@ -27,6 +28,7 @@ const FlappyDronieScreen: React.FC = () => {
   return (
     <PageLayout>
       <Container>
+        <HeaderBackgrround src={HeaderBackgroundImg} alt="HeaderBackground" />
         <Header />
         <FlappyDronie />
         <p style={{ color: theme.colors.layout.hc }}>Score: {score}</p>
@@ -47,4 +49,14 @@ const Container = styled.div`
   justify-content: center;
 
   width: 100%;
+`;
+
+const HeaderBackgrround = styled.img`
+  position: absolute;
+  top: 300px;
+
+  max-width: ${ui.MAX_WIDTH}px;
+  width: 90vw;
+
+  opacity: 1;
 `;
