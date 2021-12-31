@@ -69,13 +69,13 @@ const Subtitle = styled.h3`
   margin: 0;
 
   color: ${({ theme }) => theme.colors.interactive.primary.p0};
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-family: ${({ theme }) => theme.fontFamily};
   white-space: nowrap;
   text-transform: uppercase;
 
   @media (max-width: ${ui.BREAK_POINTS[0]}px) {
-    font-size: 0.5rem;
+    font-size: 1rem;
   }
 `;
 

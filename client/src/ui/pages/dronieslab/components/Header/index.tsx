@@ -6,9 +6,7 @@ import { Button } from '../../../../components/primitive';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 import { useTheme } from '../../../../theme/useTheme';
 import LinesBackground from '../../../../components/primitive/background/LinesBackground';
-
-// Assets
-import TrainingProtocolImg from '../../../../../assets/app/training_protocol.png';
+import TrainingProtocol from './components/TrainingProtocol';
 
 const Header: React.FC = () => {
   const { windowWidth } = useWindowSize();
@@ -21,21 +19,8 @@ const Header: React.FC = () => {
         <TitleContainer linesCount={5}>
           <Title>DRONIES LAB</Title>
         </TitleContainer>
-        <TrainingProtocolContainer>
-          <img
-            src={TrainingProtocolImg}
-            loading="lazy"
-            alt="TrainingProtocolImg"
-          />
-          <TrainingProtocolText>
-            <span style={{ fontWeight: 'bold' }}>
-              Dronies Lab is an initiative
-            </span>{' '}
-            that was founded after some Dronies were discovered and destroied by
-            humanity. Train your Dronie here to give it a better chance of
-            survival.
-          </TrainingProtocolText>
-        </TrainingProtocolContainer>
+        <TrainingProtocol />
+
         <SocialButtonContainer>
           <SocialButton text="Twitter" icon={Icon.Twitter} />
           <SocialButton text="Discord" icon={Icon.Discord} />
@@ -82,6 +67,7 @@ const Title = styled.h1`
   font-size: 6rem;
   font-family: ${({ theme }) => theme.headings.fontFamily};
   white-space: nowrap;
+  text-transform: uppercase;
 
   text-shadow: 0 0 50px
     ${({ theme }) => ui.hexToRgba(theme.colors.layout.p, 0.5)};
@@ -119,24 +105,6 @@ const LabIcon = styled(Icon.Lab)`
   @media (max-width: 1200px) {
     margin-right: 0;
   }
-`;
-
-const TrainingProtocolContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  margin-bottom: 80px;
-`;
-
-const TrainingProtocolText = styled.p`
-  max-width: 450px;
-  margin-left: 25px;
-
-  text-align: left;
-  font-family: ${({ theme }) => theme.fontFamily};
-  color: ${({ theme }) => theme.colors.layout.p};
-  font-size: 1rem;
 `;
 
 const SocialButtonContainer = styled.div`
