@@ -38,7 +38,7 @@ const FlappyDronieGame: React.FC = () => {
               target="_blank"
             />
           )}
-          <StyledInfoBox text="Some new features like a Leaderboard might come in the near future." />
+          <StyledInfoBox text="Some new features like a Leaderboard might be added in the near future." />
         </LeftContent>
 
         <Game linesCount={20}>
