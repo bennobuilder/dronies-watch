@@ -57,7 +57,7 @@ const LeftContent = styled.div`
 
 const TitleContainer = styled(LinesBackground)`
   margin: 0 0 80px 0;
-  padding: 0 40px;
+  padding: 10px 40px;
 `;
 
 const Title = styled.h1`

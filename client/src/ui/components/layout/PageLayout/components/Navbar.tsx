@@ -1,31 +1,24 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { useTheme } from '../../../../theme/useTheme';
 import { ui } from '../../../../../core';
 import Icon from '../../../icons';
 import { IconButton, ButtonWrapper } from '../../../primitive';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 import { INNER_PADDING } from '../static';
+import LogoText from '../../../other/LogoText';
 
 const Navbar: React.FC<Props> = (props) => {
   const { fixed } = props;
-  const theme = useTheme();
-  const navigate = useNavigate();
   const { windowWidth } = useWindowSize();
+
+  const navigate = useNavigate();
+  const goToHome = () => navigate('/');
 
   return (
     <Container fixed={fixed as any}>
       <InnerContainer maxWidth={ui.MAX_WIDTH}>
-        <LogoContainer
-          onClick={() => {
-            navigate('/');
-          }}
-        >
-          <Logo color={theme.colors.layout.hc} width={34} height={34} />
-          <LogoEye width={34} height={34} />
-          <AppName>Dronies</AppName>
-        </LogoContainer>
+        <LogoText onClick={goToHome} />
         <RightContent>
           {windowWidth > ui.BREAK_POINTS[0] && (
             <MenuContainer>
@@ -87,6 +80,9 @@ const Container = styled.div<{ fixed: boolean }>`
 
 const InnerContainer = styled.div<{ maxWidth: number }>`
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
   width: 100%;
   max-width: ${({ maxWidth }) => maxWidth}px;
@@ -94,62 +90,9 @@ const InnerContainer = styled.div<{ maxWidth: number }>`
   margin-left: auto;
   margin-right: auto;
 
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-
   @media (max-width: ${ui.MAX_WIDTH}px) {
     padding: 0 ${INNER_PADDING}px;
   }
-`;
-
-const Logo = styled(Icon.Dronies)`
-  transform: rotateZ(0deg);
-
-  transition: transform ${({ theme }) => theme.transitionTimingFunction} 500ms;
-`;
-
-const LogoEye = styled(Icon.DroniesEye)`
-  position: absolute;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-
-  opacity: 0;
-
-  transition: opacity ${({ theme }) => theme.transitionTimingFunction} 500ms;
-`;
-
-const LogoContainer = styled.div`
-  position: relative;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-
-  cursor: pointer;
-
-  :hover {
-    ${Logo} {
-      transform: rotateZ(-45deg);
-    }
-
-    ${LogoEye} {
-      opacity: 1;
-    }
-  }
-`;
-
-const AppName = styled.div`
-  margin-left: 12px;
-
-  color: ${({ theme }) => theme.colors.layout.hc};
-  font-family: ${({ theme }) => theme.fontFamily};
-  font-weight: bold;
-  font-size: 26px;
-  text-transform: uppercase;
 `;
 
 const RightContent = styled.div`
