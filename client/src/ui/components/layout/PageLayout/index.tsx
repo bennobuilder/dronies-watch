@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
-import Head from './components/Head';
+import Head, { HeadProps } from './components/Head';
 import { INNER_PADDING } from './static';
 import { ui } from '../../../../core';
 
@@ -15,13 +15,14 @@ const PageLayout: React.FC<Props> = (props) => {
     shouldRenderNavbar,
     shouldRenderHeader,
     shouldRenderFooter,
+    meta: metaConfig,
     children,
   } = props;
 
   return (
     <Container>
       <PageRuler src={PageRulerImg} loading="lazy" />
-      {shouldRenderHeader && <Head />}
+      {shouldRenderHeader && <Head {...metaConfig} />}
       {shouldRenderNavbar && <Navbar />}
       <InnerContainer maxWidth={ui.MAX_WIDTH}>
         <Main>{children}</Main>
@@ -35,6 +36,7 @@ PageLayout.defaultProps = {
   shouldRenderHeader: true,
   shouldRenderNavbar: true,
   shouldRenderFooter: true,
+  meta: {},
 };
 
 export default PageLayout;
@@ -43,6 +45,7 @@ type Props = {
   shouldRenderNavbar?: boolean;
   shouldRenderHeader?: boolean;
   shouldRenderFooter?: boolean;
+  meta?: HeadProps;
 };
 
 const Container = styled.div`

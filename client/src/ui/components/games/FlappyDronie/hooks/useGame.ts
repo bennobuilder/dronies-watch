@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAgile } from '@agile-ts/react';
-import { flappydronie } from '../../../../../../core';
-import { useWindowSize } from '../../../../../hooks/useWindowSize';
+import { flappydronie } from '../../../../../core';
+import { useWindowSize } from '../../../../hooks/useWindowSize';
 
 const useGame = () => {
   const [backgrounds, foregrounds, bird, pipes, status] = useAgile([

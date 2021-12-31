@@ -1,24 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAgile } from '@agile-ts/react';
-import FlappyDronie from './components/FlappyDronie';
 import { flappydronie, ui } from '../../../core';
 import PageLayout from '../../components/layout/PageLayout';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { useTheme } from '../../theme/useTheme';
 import Header from './components/Header';
-import LinesBackground from '../../components/primitive/background/LinesBackground';
+import FlappyDronie from '../../components/games/FlappyDronie';
 
 // Assets
 import HeaderBackgroundImg from '../../../assets/app/dronies_background.png';
+import FlappyDronieGame from './components/FlappyDronieGame';
+import Spacer from '../../components/other/Spacer';
 
 const FlappyDronieScreen: React.FC = () => {
-  const [score, highScore] = useAgile([
-    flappydronie.SCORE,
-    flappydronie.HIGH_SCORE,
-  ]);
   const { windowWidth } = useWindowSize();
-  const theme = useTheme();
 
   // Mobile
   if (windowWidth <= 500) {
@@ -27,15 +23,12 @@ const FlappyDronieScreen: React.FC = () => {
 
   // Desktop
   return (
-    <PageLayout>
+    <PageLayout meta={{ title: 'Lab' }}>
       <Container>
         <Header />
         <HeaderBackground src={HeaderBackgroundImg} alt="HeaderBackground" />
-        <LinesBackground linesCount={10}>
-          <FlappyDronie />
-        </LinesBackground>
-        <p style={{ color: theme.colors.layout.hc }}>Score: {score}</p>
-        <p style={{ color: theme.colors.layout.hc }}>HighScore: {highScore}</p>
+        <Spacer height={200} />
+        <FlappyDronieGame />
       </Container>
     </PageLayout>
   );

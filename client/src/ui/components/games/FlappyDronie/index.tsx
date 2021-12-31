@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAgile } from '@agile-ts/react';
-import { flappydronie, socket } from '../../../../../core';
+import { flappydronie, socket } from '../../../../core';
 import Bird from './components/Bird';
 import Background from './components/Background';
 import Pipe from './components/Pipe';

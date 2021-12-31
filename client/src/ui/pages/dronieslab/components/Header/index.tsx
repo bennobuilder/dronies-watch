@@ -60,7 +60,7 @@ const Container = styled.div`
   align-items: flex-start;
 
   z-index: 1;
-  margin-top: 30px;
+  margin-top: 80px;
 
   width: 100%;
 `;
@@ -76,7 +76,7 @@ const TitleContainer = styled(LinesBackground)`
 `;
 
 const Title = styled.h1`
-  margin: 0;
+  margin: -10px 0 0 0;
 
   color: ${({ theme }) => theme.colors.layout.p};
   font-size: 6rem;
