@@ -34,7 +34,7 @@ export const CANVAS_DIMENSIONS = createState<{ width: number; height: number }>(
     height: window.innerHeight,
   },
 );
-export const FPS_CONTROLLER = new FpsController(60);
+export const FPS_CONTROLLER = new FpsController(120);
 
 // Objects
 export const PIPES = createState<Pipe[]>([]);

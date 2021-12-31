@@ -38,6 +38,7 @@ export type ButtonWrapperProps = {
   to?: string;
   onClick?: () => void;
   target?: React.HTMLAttributeAnchorTarget;
+  className?: string; // Required to apply styling via Styled-Components
 } & React.ComponentProps<'div'>;
 
 const Container = styled.div`

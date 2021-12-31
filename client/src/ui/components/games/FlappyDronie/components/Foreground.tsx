@@ -2,8 +2,8 @@ import React from 'react';
 import {
   foregrounds,
   SpriteWrapper,
-} from '../../../../../../core/entities/flappydronie/sprites';
-import { flappydronie } from '../../../../../../core';
+} from '../../../../../core/entities/flappydronie/sprites';
+import { flappydronie } from '../../../../../core';
 
 const Foreground: React.FC<Props> = (props) => {
   const { sprite } = props;

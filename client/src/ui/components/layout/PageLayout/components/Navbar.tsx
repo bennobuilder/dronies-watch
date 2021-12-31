@@ -5,82 +5,102 @@ import { useTheme } from '../../../../theme/useTheme';
 import { ui } from '../../../../../core';
 import Icon from '../../../icons';
 import { IconButton, ButtonWrapper } from '../../../primitive';
+import { useWindowSize } from '../../../../hooks/useWindowSize';
+import { INNER_PADDING } from '../static';
 
 const Navbar: React.FC<Props> = (props) => {
-  const { absolute } = props;
+  const { fixed } = props;
   const theme = useTheme();
   const navigate = useNavigate();
+  const { windowWidth } = useWindowSize();
 
   return (
-    <Container absolute={absolute as any} maxWidth={ui.MAX_WIDTH}>
-      <LogoContainer
-        onClick={() => {
-          navigate('/');
-        }}
-      >
-        <Logo color={theme.colors.layout.hc} width={34} height={34} />
-        <LogoEye width={34} height={34} />
-        <AppName>Dronies</AppName>
-      </LogoContainer>
-      <RightContent>
-        <MenuContainer>
-          <ButtonWrapper
-            to="https://github.com/bennodev19/dronies-watch"
-            target="_blank"
-          >
-            <MenuText>Github</MenuText>
-          </ButtonWrapper>
-          <ButtonWrapper to="/disclaimer" target="_blank">
-            <MenuText>Disclaimer</MenuText>
-          </ButtonWrapper>
-        </MenuContainer>
-        <SocialContainer>
-          <Slash>//</Slash>
-          <IconButton
-            to="https://discord.com/invite/8naUgEcYEx"
-            target="_blank"
-            icon={DiscordIcon}
-          />
-          <IconButton
-            to="https://twitter.com/DroniesNFT"
-            target="_blank"
-            icon={TwitterIcon}
-          />
-        </SocialContainer>
-      </RightContent>
+    <Container fixed={fixed as any}>
+      <InnerContainer maxWidth={ui.MAX_WIDTH}>
+        <LogoContainer
+          onClick={() => {
+            navigate('/');
+          }}
+        >
+          <Logo color={theme.colors.layout.hc} width={34} height={34} />
+          <LogoEye width={34} height={34} />
+          <AppName>Dronies</AppName>
+        </LogoContainer>
+        <RightContent>
+          {windowWidth > ui.BREAK_POINTS[0] && (
+            <MenuContainer>
+              <ButtonWrapper
+                to="https://github.com/bennodev19/dronies-watch"
+                target="_blank"
+              >
+                <MenuText>Github</MenuText>
+              </ButtonWrapper>
+              <ButtonWrapper to="/disclaimer" target="_blank">
+                <MenuText>Disclaimer</MenuText>
+              </ButtonWrapper>
+            </MenuContainer>
+          )}
+
+          <SocialContainer>
+            <Slash>//</Slash>
+            <IconButton
+              to="https://discord.com/invite/8naUgEcYEx"
+              target="_blank"
+              icon={DiscordIcon}
+            />
+            <IconButton
+              to="https://twitter.com/DroniesNFT"
+              target="_blank"
+              icon={TwitterIcon}
+            />
+          </SocialContainer>
+        </RightContent>
+      </InnerContainer>
     </Container>
   );
 };
 
 Navbar.defaultProps = {
-  absolute: true,
+  fixed: true,
 };
 
 export default Navbar;
 
 type Props = {
-  absolute?: boolean;
+  fixed?: boolean;
 };
 
-const Container = styled.div<{ absolute: boolean; maxWidth: number }>`
-  position: ${({ absolute }) => (absolute ? 'absolute' : 'relative')};
-  top: 0;
+const Container = styled.div<{ fixed: boolean }>`
+  position: ${({ fixed }) => (fixed ? 'fixed' : 'relative')};
 
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  z-index: 1000;
 
-  max-width: ${({ maxWidth }) => maxWidth}px;
   width: 100%;
   height: ${ui.NAVBAR_HEIGHT}px;
 
   padding: 20px 0;
+
+  background: ${({ theme, fixed }) =>
+    fixed ? ui.hexToRgba(theme.colors.layout.bg, 0.8) : 'transparent'};
+`;
+
+const InnerContainer = styled.div<{ maxWidth: number }>`
+  display: flex;
+
+  width: 100%;
+  max-width: ${({ maxWidth }) => maxWidth}px;
+
   margin-left: auto;
   margin-right: auto;
 
-  background-color: ${({ theme, absolute }) =>
-    !absolute ? theme.colors.layout.bg : 'transparent'};
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  @media (max-width: ${ui.MAX_WIDTH}px) {
+    padding: 0 ${INNER_PADDING}px;
+  }
 `;
 
 const Logo = styled(Icon.Dronies)`
@@ -111,8 +131,6 @@ const LogoContainer = styled.div`
 
   cursor: pointer;
 
-  justify-self: flex-start;
-
   :hover {
     ${Logo} {
       transform: rotateZ(-45deg);
@@ -135,6 +153,8 @@ const AppName = styled.div`
 `;
 
 const RightContent = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: row;
   align-items: center;

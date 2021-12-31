@@ -3,8 +3,8 @@ import {
   plane,
   SpriteWrapper,
   dronies,
-} from '../../../../../../core/entities/flappydronie/sprites';
-import { flappydronie } from '../../../../../../core';
+} from '../../../../../core/entities/flappydronie/sprites';
+import { flappydronie } from '../../../../../core';
 
 const Bird: React.FC<Props> = (props) => {
   const { sprite } = props;

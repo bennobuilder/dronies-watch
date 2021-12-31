@@ -1,5 +1,5 @@
-import { flappydronie } from '../../../../../core';
-import { GAME_STATUS } from '../../../../../core/entities/flappydronie';
+import { flappydronie } from '../../../../core';
+import { GAME_STATUS } from '../../../../core/entities/flappydronie';
 
 export const inputHandler = () => {
   switch (flappydronie.STATUS.value) {
