@@ -29,6 +29,7 @@ const FlappyDronieScreen: React.FC = () => {
         <HeaderBackground src={HeaderBackgroundImg} alt="HeaderBackground" />
         <Spacer height={200} />
         <FlappyDronieGame />
+        <Spacer height={200} />
       </Container>
     </PageLayout>
   );
