@@ -6,6 +6,7 @@ import { flappydronie, ui } from '../../../core';
 import { useTheme } from '../../theme/useTheme';
 import PageLayout from '../../components/layout/PageLayout';
 import Icon from '../../components/icons';
+import { Button } from '../../components/primitive';
 
 const FlappyDronieScreen: React.FC = () => {
   const [score, highScore] = useAgile([
@@ -29,6 +30,7 @@ const FlappyDronieScreen: React.FC = () => {
           <Icon.Dronies width={100} height={100} />
           <Icon.Lab width={100} height={100} />
           <Icon.Twitter width={100} height={100} />
+          <Button text="Twitter" icon={Icon.Twitter} />
         </TextContainer>
       </Container>
     </PageLayout>

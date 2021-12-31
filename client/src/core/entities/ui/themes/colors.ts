@@ -1,5 +1,6 @@
 export const primitiveColors = {
-  black: '#111213',
+  black: '#080E0BFF',
+  gray: '#222627',
 
   white: '#f8f9fc',
 

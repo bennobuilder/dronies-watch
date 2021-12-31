@@ -1,10 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { useTheme } from '../../../../theme/useTheme';
 import { ui } from '../../../../../core';
 import Icon from '../../../icons';
+import { IconButton, ButtonWrapper } from '../../../primitive';
 
 const Navbar: React.FC<Props> = (props) => {
   const { absolute } = props;
@@ -19,38 +19,39 @@ const Navbar: React.FC<Props> = (props) => {
         }}
       >
         <div style={{ position: 'relative' }}>
-          <Logo color={theme.colors.layout.hc} width={38} height={38} />
-          <LogoEye width={38} height={38} />
+          <Logo color={theme.colors.layout.hc} width={34} height={34} />
+          <LogoEye width={34} height={34} />
         </div>
         <AppName>Dronies</AppName>
       </LogoContainer>
       <RightContainer>
         <MenuContainer>
-          <MenuText>GITHUB</MenuText>
-          <MenuText>DISCLAIMER</MenuText>
+          <ButtonWrapper
+            to="https://github.com/bennodev19/dronies-watch"
+            target="_blank"
+          >
+            <MenuText>Github</MenuText>
+          </ButtonWrapper>
+          <ButtonWrapper
+            onClick={() => {
+              console.log('Disclaimer pressed');
+            }}
+          >
+            <MenuText>Disclaimer</MenuText>
+          </ButtonWrapper>
         </MenuContainer>
         <SocialContainer>
           <Slash>//</Slash>
-          <Link
-            to={{ pathname: 'https://discord.com/invite/8naUgEcYEx' }}
+          <IconButton
+            to="https://discord.com/invite/8naUgEcYEx"
             target="_blank"
-          >
-            <DiscordIcon
-              width={26}
-              height={26}
-              color={theme.colors.layout.hc}
-            />
-          </Link>
-          <Link
-            to={{ pathname: 'https://twitter.com/DroniesNFT' }}
+            icon={DiscordIcon}
+          />
+          <IconButton
+            to="https://twitter.com/DroniesNFT"
             target="_blank"
-          >
-            <TwitterIcon
-              width={26}
-              height={26}
-              color={theme.colors.layout.hc}
-            />
-          </Link>
+            icon={TwitterIcon}
+          />
         </SocialContainer>
       </RightContainer>
     </Container>
@@ -128,12 +129,13 @@ const LogoContainer = styled.div`
 `;
 
 const AppName = styled.div`
-  margin: 0 0 0 12px;
+  margin-left: 12px;
 
   color: ${({ theme }) => theme.colors.layout.hc};
   font-family: ${({ theme }) => theme.fontFamily};
   font-weight: bold;
-  font-size: 30px;
+  font-size: 26px;
+  text-transform: uppercase;
 `;
 
 const RightContainer = styled.div`
@@ -142,7 +144,7 @@ const RightContainer = styled.div`
   align-items: center;
 `;
 
-const MenuContainer = styled.div`
+const MenuContainer = styled.nav`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -151,16 +153,71 @@ const MenuContainer = styled.div`
 `;
 
 const MenuText = styled.div`
-  margin: 0 20px 0 20px;
+  position: relative;
+  margin: 0 10px 0 10px;
+  padding: 20px;
 
   color: ${({ theme }) => theme.colors.interactive.primary.p0};
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 16px;
+  font-size: ${({ theme }) => theme.fontSizes.md}px;
+  text-transform: uppercase;
 
   cursor: pointer;
 
   :hover {
     color: ${({ theme }) => theme.colors.layout.hc};
+
+    background: linear-gradient(
+          to right,
+          ${({ theme }) => theme.colors.layout.rHc} 3px,
+          transparent 3px
+        )
+        0 0,
+      linear-gradient(
+          to right,
+          ${({ theme }) => theme.colors.layout.rHc} 3px,
+          transparent 3px
+        )
+        0 100%,
+      linear-gradient(
+          to left,
+          ${({ theme }) => theme.colors.layout.rHc} 3px,
+          transparent 3px
+        )
+        100% 0,
+      linear-gradient(
+          to left,
+          ${({ theme }) => theme.colors.layout.rHc} 3px,
+          transparent 3px
+        )
+        100% 100%,
+      linear-gradient(
+          to bottom,
+          ${({ theme }) => theme.colors.layout.rHc} 3px,
+          transparent 3px
+        )
+        0 0,
+      linear-gradient(
+          to bottom,
+          ${({ theme }) => theme.colors.layout.rHc} 3px,
+          transparent 3px
+        )
+        100% 0,
+      linear-gradient(
+          to top,
+          ${({ theme }) => theme.colors.layout.rHc} 3px,
+          transparent 3px
+        )
+        0 100%,
+      linear-gradient(
+          to top,
+          ${({ theme }) => theme.colors.layout.rHc} 3px,
+          transparent 3px
+        )
+        100% 100%;
+
+    background-repeat: no-repeat;
+    background-size: 10px 10px;
   }
 `;
 
@@ -171,7 +228,7 @@ const SocialContainer = styled.div`
 `;
 
 const Slash = styled.div`
-  margin: 0 24px 0 0;
+  margin-right: 24px;
 
   color: ${({ theme }) => theme.colors.layout.hc};
   font-family: ${({ theme }) => theme.fontFamily};
@@ -186,7 +243,4 @@ const TwitterIcon = styled(Icon.Twitter)`
 
 const DiscordIcon = styled(Icon.Discord)`
   cursor: pointer;
-
-  :hover {
-  }
 `;
