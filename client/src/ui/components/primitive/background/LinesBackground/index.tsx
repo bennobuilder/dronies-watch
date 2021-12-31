@@ -2,28 +2,41 @@ import React from 'react';
 import styled from 'styled-components';
 
 const LinesBackground: React.FC<Props> = (props) => {
-  const { linesCount = 10, className, children } = props;
+  const { linesCount = 10, opacity = 1, className, children } = props;
 
   return (
     <Container className={className}>
       <ContentContainer>{children}</ContentContainer>
 
-      <LinesContainer>
-        {Array.from(Array(linesCount)).map(() => (
-          <DottedLine />
-        ))}
-
-        <LeftEdgeContainer>
-          {Array.from(Array(linesCount)).map((v, i) =>
-            i === 0 || i === linesCount - 1 ? <EdgeEnd /> : <EdgeMiddle />,
-          )}
-        </LeftEdgeContainer>
-
-        <RightEdgeContainer>
-          {Array.from(Array(linesCount)).map((v, i) =>
-            i === 0 || i === linesCount - 1 ? <EdgeEnd /> : <EdgeMiddle />,
-          )}
-        </RightEdgeContainer>
+      <LinesContainer opacity={opacity}>
+        {linesCount !== 0 ? (
+          <>
+            {Array.from(Array(linesCount)).map(() => (
+              <DottedLine />
+            ))}
+            <LeftEdgeContainer>
+              {Array.from(Array(linesCount)).map((v, i) =>
+                i === 0 || i === linesCount - 1 ? <EdgeEnd /> : <EdgeMiddle />,
+              )}
+            </LeftEdgeContainer>
+            <RightEdgeContainer>
+              {Array.from(Array(linesCount)).map((v, i) =>
+                i === 0 || i === linesCount - 1 ? <EdgeEnd /> : <EdgeMiddle />,
+              )}
+            </RightEdgeContainer>
+          </>
+        ) : (
+          <>
+            <LeftEdgeContainer>
+              <EdgeEnd />
+              <EdgeEnd />
+            </LeftEdgeContainer>
+            <RightEdgeContainer>
+              <EdgeEnd />
+              <EdgeEnd />
+            </RightEdgeContainer>
+          </>
+        )}
       </LinesContainer>
     </Container>
   );
@@ -33,6 +46,7 @@ export default LinesBackground;
 
 type Props = {
   linesCount?: number;
+  opacity?: number;
   className?: string; // Required to apply styling via Styled-Components
 };
 
@@ -53,7 +67,7 @@ const ContentContainer = styled.div`
   z-index: 2;
 `;
 
-const LinesContainer = styled.div`
+const LinesContainer = styled.div<{ opacity: number }>`
   position: absolute;
   left: 0;
   top: 0;
@@ -66,6 +80,7 @@ const LinesContainer = styled.div`
 
   width: 100%;
 
+  opacity: ${({ opacity }) => opacity};
   z-index: 1;
 `;
 
