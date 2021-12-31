@@ -21,6 +21,7 @@ import {
   FRAMES,
   GAME_STATUS,
   HIGH_SCORE,
+  LATEST_SCORE,
   PIPES,
   SCORE,
   STATUS,
@@ -41,6 +42,7 @@ export const endGame = () => {
       HIGH_SCORE.set(SCORE.value);
     }
 
+    LATEST_SCORE.set(SCORE.value);
     SCORE.reset();
   }
 };
@@ -199,3 +201,6 @@ export const generatePipeSet = () => {
     new Pipe(pipe_h, randomYPos + 100 + pipe_h, 'N'),
   ];
 };
+
+export const getScoreTweet = (score: number) =>
+  `https://twitter.com/intent/tweet?text=I%20just%20played%20Flappy%20Dronie%20and%20managed%20to%20score%20${score}%21%20Can%20you%20beat%20me%3F%20Try%20it%20here%20https%3A//dronies.watch/lab%20and%20train%20the%20Dronies%21&hashtags=%23DroniesNFT%20%23SolanaNFTs`;

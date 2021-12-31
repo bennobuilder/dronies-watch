@@ -1,12 +1,5 @@
 import React from 'react';
 
-type Props = {
-  color?: string;
-  width?: number | string;
-  height?: number | string;
-  className?: string; // Required to apply styling via Styled-Components
-} & React.SVGProps<SVGSVGElement>;
-
 const Twitter = React.forwardRef<SVGSVGElement, Props>((props, ref) => {
   const { width, height, color, ...others } = props;
 
@@ -35,3 +28,10 @@ Twitter.defaultProps = {
 };
 
 export default Twitter;
+
+type Props = {
+  color?: string;
+  width?: number | string;
+  height?: number | string;
+  className?: string; // Required to apply styling via Styled-Components
+} & React.SVGProps<SVGSVGElement>;

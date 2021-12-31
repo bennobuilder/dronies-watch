@@ -4,14 +4,17 @@ import { useAgile } from '@agile-ts/react';
 import { flappydronie, ui } from '../../../../../core';
 import LinesBackground from '../../../../components/primitive/background/LinesBackground';
 import FlappyDronie from '../../../../components/games/FlappyDronie';
-import { useTheme } from '../../../../theme/useTheme';
+import LabelText from './components/LabelText';
+import { Button } from '../../../../components/primitive';
+import Icon from '../../../../components/icons';
+import InfoBox from '../../../../components/other/InfoBox';
 
 const FlappyDronieGame: React.FC = () => {
-  const [score, highScore] = useAgile([
+  const [score, latestScore, highScore] = useAgile([
     flappydronie.SCORE,
+    flappydronie.LATEST_SCORE,
     flappydronie.HIGH_SCORE,
   ]);
-  const theme = useTheme();
 
   return (
     <Container>
@@ -21,8 +24,22 @@ const FlappyDronieGame: React.FC = () => {
       </HeaderContainer>
 
       <GameContainer>
-        <p style={{ color: theme.colors.layout.hc }}>Score: {score}</p>
-        <p style={{ color: theme.colors.layout.hc }}>HighScore: {highScore}</p>
+        <LeftContent>
+          <StatsContainer>
+            <LabelText label="Score: " value={score.toString()} />
+            <LabelText label="Latest Score: " value={latestScore.toString()} />
+            <LabelText label="High Score: " value={highScore.toString()} />
+          </StatsContainer>
+          {highScore > 5 && (
+            <ShareScoreButton
+              text="Share Score"
+              icon={Icon.Twitter}
+              to={flappydronie.getScoreTweet(highScore)}
+              target="_blank"
+            />
+          )}
+          <StyledInfoBox text="Some new features like a Leaderboard might come in the near future." />
+        </LeftContent>
 
         <Game linesCount={20}>
           <FlappyDronie />
@@ -91,4 +108,22 @@ const GameContainer = styled.div`
 
 const Game = styled(LinesBackground)`
   justify-self: flex-end;
+`;
+
+const LeftContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const StatsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ShareScoreButton = styled(Button)`
+  margin-top: 50px;
+`;
+
+const StyledInfoBox = styled(InfoBox)`
+  margin-top: 100px;
 `;

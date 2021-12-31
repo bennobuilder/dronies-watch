@@ -1,12 +1,5 @@
 import React from 'react';
 
-type Props = {
-  color?: string;
-  width?: number | string;
-  height?: number | string;
-  className?: string; // Required to apply styling via Styled-Components
-} & React.SVGProps<SVGSVGElement>;
-
 const Lab = React.forwardRef<SVGSVGElement, Props>((props, ref) => {
   const { width, height, color, ...others } = props;
 
@@ -35,3 +28,10 @@ Lab.defaultProps = {
 };
 
 export default Lab;
+
+type Props = {
+  color?: string;
+  width?: number | string;
+  height?: number | string;
+  className?: string; // Required to apply styling via Styled-Components
+} & React.SVGProps<SVGSVGElement>;
