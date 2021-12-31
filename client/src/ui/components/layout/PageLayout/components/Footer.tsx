@@ -37,8 +37,17 @@ const Footer: React.FC = () => {
         </TopContainer>
         <StyledDivider />
         <BottomContainer>
-          <CopyRightText>© {new Date().getFullYear()} BennoDev</CopyRightText>
-          <CreatedByText>
+          <TextWithLink>
+            Inspired by{' '}
+            <a
+              href="https://twitter.com/DroniesNFT"
+              target="_blank"
+              rel="noreferrer"
+            >
+              @DroniesNFT
+            </a>
+          </TextWithLink>
+          <TextWithLink>
             Created By{' '}
             <a
               href="https://twitter.com/DevBenno"
@@ -47,7 +56,7 @@ const Footer: React.FC = () => {
             >
               @BennoDev
             </a>
-          </CreatedByText>
+          </TextWithLink>
         </BottomContainer>
       </InnerContainer>
     </Container>
@@ -118,14 +127,7 @@ const BottomContainer = styled.div`
   justify-content: space-between;
 `;
 
-const CopyRightText = styled.p`
-  text-align: left;
-  font-family: ${({ theme }) => theme.fontFamily};
-  color: ${({ theme }) => theme.colors.layout.p};
-  font-size: 1rem;
-`;
-
-const CreatedByText = styled.p`
+const TextWithLink = styled.p`
   text-align: left;
   font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.colors.layout.p};

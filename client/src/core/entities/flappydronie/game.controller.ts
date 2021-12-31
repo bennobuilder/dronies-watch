@@ -27,6 +27,7 @@ export const PLAY_ONLINE = createState(false);
 export const STATUS = createState<GAME_STATUS>(GAME_STATUS.SPLASH);
 export const FRAMES = createState(1);
 export const SCORE = createState(0);
+export const LATEST_SCORE = createState(0).persist({ key: 'latest-score' });
 export const HIGH_SCORE = createState(0).persist({ key: 'high-score' });
 export const CANVAS_DIMENSIONS = createState<{ width: number; height: number }>(
   {

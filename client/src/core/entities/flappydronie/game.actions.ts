@@ -21,6 +21,7 @@ import {
   FRAMES,
   GAME_STATUS,
   HIGH_SCORE,
+  LATEST_SCORE,
   PIPES,
   SCORE,
   STATUS,
@@ -41,6 +42,7 @@ export const endGame = () => {
       HIGH_SCORE.set(SCORE.value);
     }
 
+    LATEST_SCORE.set(SCORE.value);
     SCORE.reset();
   }
 };

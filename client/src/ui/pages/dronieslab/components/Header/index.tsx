@@ -29,7 +29,7 @@ const Header: React.FC = () => {
 
       {/* Right */}
       {windowWidth > ui.BREAK_POINTS[1] && (
-        <LabIcon width={500} height={500} color={theme.colors.layout.p} />
+        <LabIcon width={500} height={500} color={theme.colors.layout.rHc} />
       )}
     </Container>
   );
@@ -78,7 +78,7 @@ const Title = styled.h1`
 `;
 
 const LabIcon = styled(Icon.Lab)`
-  filter: drop-shadow(0 0 20px ${({ theme }) => theme.colors.layout.p});
+  filter: drop-shadow(0 0 20px ${({ theme }) => theme.colors.layout.rHc});
 
   margin-right: -100px;
 
