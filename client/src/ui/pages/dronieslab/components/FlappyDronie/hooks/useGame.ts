@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAgile } from '@agile-ts/react';
 import { flappydronie } from '../../../../../../core';
-import { CANVAS_DIMENSIONS } from '../../../../../../core/entities/flappydronie';
 import { useWindowSize } from '../../../../../hooks/useWindowSize';
 
 const useGame = () => {
@@ -16,19 +15,18 @@ const useGame = () => {
 
   React.useEffect(() => {
     if (windowWidth >= 500) {
-      CANVAS_DIMENSIONS.set({ width: 320, height: 480 });
+      flappydronie.CANVAS_DIMENSIONS.set({ width: 320, height: 480 });
     } else {
-      CANVAS_DIMENSIONS.set({ width: windowWidth, height: windowHeight });
+      flappydronie.CANVAS_DIMENSIONS.set({
+        width: windowWidth,
+        height: windowHeight,
+      });
     }
   }, [windowHeight, windowWidth]);
 
   React.useEffect(() => {
-    // Dynamically update Game and thus render it
-    const updateFrame = () => {
-      flappydronie.updateFrame();
-      window.requestAnimationFrame(updateFrame);
-    };
-    updateFrame();
+    flappydronie.FPS_CONTROLLER.startDrawing(flappydronie.updateFrame);
+    return flappydronie.FPS_CONTROLLER.stopDrawing;
   }, []);
 
   return { backgrounds, foregrounds, bird, pipes, status };

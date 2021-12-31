@@ -10,6 +10,7 @@ import {
   Foreground,
 } from './sprites';
 import { socketService } from '../../socket';
+import { FpsController } from './utils/FpsController';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export enum GAME_STATUS {
@@ -33,6 +34,7 @@ export const CANVAS_DIMENSIONS = createState<{ width: number; height: number }>(
     height: window.innerHeight,
   },
 );
+export const FPS_CONTROLLER = new FpsController(60);
 
 // Objects
 export const PIPES = createState<Pipe[]>([]);

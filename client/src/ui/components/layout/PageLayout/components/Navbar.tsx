@@ -30,11 +30,7 @@ const Navbar: React.FC<Props> = (props) => {
           >
             <MenuText>Github</MenuText>
           </ButtonWrapper>
-          <ButtonWrapper
-            onClick={() => {
-              console.log('Disclaimer pressed');
-            }}
-          >
+          <ButtonWrapper to="/disclaimer" target="_blank">
             <MenuText>Disclaimer</MenuText>
           </ButtonWrapper>
         </MenuContainer>
