@@ -1,6 +1,9 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { DRONIES_URL } from '../../../core/entities/ui';
 
-const HomeScreen: React.FC = () => <Navigate to="flappy-dronie" />;
+const HomeScreen: React.FC = () => {
+  window.location.href = DRONIES_URL;
+  return null;
+};
 
 export default HomeScreen;
