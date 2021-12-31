@@ -26,7 +26,6 @@ const FlappyDronieScreen: React.FC = () => {
   return (
     <PageLayout>
       <Container>
-        <Button text="Twitter" icon={Icon.Twitter} />
         <FlappyDronie />
       </Container>
     </PageLayout>
