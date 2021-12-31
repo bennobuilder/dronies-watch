@@ -7,6 +7,9 @@ import metaConfig from '../../../../../config/metaconfig';
 import Favicon from '../../../../../assets/meta/favicon.ico';
 import Image from '../../../../../assets/meta/metaBanner.png';
 
+// TODO to work properly server side rendering is required!
+//  For now all meta properties that can't be configured without ssr are directly written in the 'index.html'
+// https://github.com/nfl/react-helmet/issues/213
 const Head: React.FC<HeadProps> = (props) => {
   const {
     title: siteTitle,
@@ -48,7 +51,7 @@ const Head: React.FC<HeadProps> = (props) => {
       {/* Permalink */}
       <link rel="canonical" href={`${metaConfig.url}${canonical}/`} />
       <meta property="og:url" content={`${metaConfig.url}${canonical}/`} />
-      <meta property="forem:domain" content="agile-ts.org" />
+      <meta property="forem:domain" content={metaConfig.url} />
 
       {/* Description */}
       {description && <meta name="description" content={description} />}
