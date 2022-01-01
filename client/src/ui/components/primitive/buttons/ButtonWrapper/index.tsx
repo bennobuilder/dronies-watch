@@ -22,7 +22,8 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = (props) => {
     <Container
       {...other}
       as={Element}
-      {...(isRedirect ? (isExternalTo ? { href: to } : { to }) : { onClick })}
+      onClick={onClick}
+      {...(isRedirect ? (isExternalTo ? { href: to } : { to }) : {})}
       target={target}
       onMouseEnter={() => setIsHovering(true)}
       onMouseLeave={() => setIsHovering(false)}

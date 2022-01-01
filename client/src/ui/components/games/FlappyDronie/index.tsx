@@ -6,7 +6,7 @@ import Bird from './components/Bird';
 import Background from './components/Background';
 import Pipe from './components/Pipe';
 import Foreground from './components/Foreground';
-import useGame from './hooks/useGame';
+import { useGame } from './hooks/useGame';
 import { inputHandler } from './controller';
 
 const FlappyBird: React.FC = () => {

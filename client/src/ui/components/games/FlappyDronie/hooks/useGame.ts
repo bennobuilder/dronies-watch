@@ -3,7 +3,7 @@ import { useAgile } from '@agile-ts/react';
 import { flappydronie } from '../../../../../core';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 
-const useGame = () => {
+export function useGame() {
   const [backgrounds, foregrounds, bird, pipes, status] = useAgile([
     flappydronie.BACKGROUNDS,
     flappydronie.FOREGROUNDS,
@@ -30,6 +30,4 @@ const useGame = () => {
   }, []);
 
   return { backgrounds, foregrounds, bird, pipes, status };
-};
-
-export default useGame;
+}

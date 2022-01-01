@@ -8,6 +8,7 @@ import LabelText from './components/LabelText';
 import { Button } from '../../../../components/primitive';
 import Icon from '../../../../components/icons';
 import InfoBox from '../../../../components/other/InfoBox';
+import { useGAEventsTracker } from '../../../../hooks/useGAEventsTracker';
 
 const FlappyDronieGame: React.FC = () => {
   const [score, latestScore, highScore] = useAgile([
@@ -15,6 +16,7 @@ const FlappyDronieGame: React.FC = () => {
     flappydronie.LATEST_SCORE,
     flappydronie.HIGH_SCORE,
   ]);
+  const GAEventsTracker = useGAEventsTracker('FlappyDronieGame Section');
 
   return (
     <Container>
@@ -35,6 +37,12 @@ const FlappyDronieGame: React.FC = () => {
               text="Share Score"
               icon={Icon.Twitter}
               to={flappydronie.getScoreTweet(highScore)}
+              onClick={() =>
+                GAEventsTracker(
+                  'share-score',
+                  `Clicked Flappy Dronie share score button`,
+                )
+              }
               target="_blank"
             />
           )}
