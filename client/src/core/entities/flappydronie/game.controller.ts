@@ -39,6 +39,7 @@ export const CANVAS_DIMENSIONS = createState<{ width: number; height: number }>(
 export const FPS_CONTROLLER = new FpsController(120);
 export const DRONIE_SKIN = createState(0);
 export const MAP_SKIN = createState(0);
+export const GAP = createState(120);
 
 // Objects
 export const PIPES = createState<Pipe[]>([]);

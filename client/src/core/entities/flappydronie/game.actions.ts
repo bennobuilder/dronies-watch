@@ -1,14 +1,14 @@
 import {
-  Bird,
-  Pipe,
+  bg_h,
   bg_w,
+  Bird,
   bird_h,
   bird_w,
   fg_h,
   fg_w,
+  Pipe,
   pipe_h,
   pipe_w,
-  bg_h,
 } from './sprites';
 import {
   BACKGROUND_POSITION,
@@ -20,6 +20,7 @@ import {
   FOREGROUNDS,
   FRAMES,
   GAME_STATUS,
+  GAP,
   HIGH_SCORE,
   LATEST_SCORE,
   PIPES,
@@ -101,6 +102,7 @@ export const updateBird = (bird: Bird): Bird => {
   ) {
     // Handle velocity
     bird.velocity += bird.gravity;
+    if (bird.velocity > bird.maxVelocity) bird.velocity = bird.maxVelocity;
     bird.cy += bird.velocity;
 
     // Handle collision with bottom
@@ -118,17 +120,16 @@ export const updateBird = (bird: Bird): Bird => {
     if (bird.cy <= 0) {
       bird.cy = 0;
 
-      // Set velocity to jump speed for creating a bounce
-      bird.velocity = bird.jump;
+      // Bounce
+      bird.velocity = 2;
     }
 
     // Handle rotation
-    if (bird.velocity >= bird.jump) {
+    if (bird.velocity > 5) {
       // When bird lacks upward momentum increment the rotation angle
       bird.rotation = Math.min(Math.PI / 2.5, bird.rotation + 0.1);
-    } else {
+    } else if (STATUS.value === GAME_STATUS.PLAYING)
       bird.rotation = Math.max(-0.3, bird.rotation - 0.1);
-    }
   }
 
   return bird;
@@ -141,9 +142,7 @@ export const jumpBird = () => {
 
 export const updatePipes = (pipes: Pipe[]) => {
   // Generate a Pipe every 100 frame
-  if (FRAMES.value % 100 === 0) {
-    pipes = pipes.concat(generatePipeSet());
-  }
+  if (FRAMES.value % 100 === 0) pipes = pipes.concat(generatePipeSet());
 
   // Calculate collision and move Pipes
   pipes.forEach((pipe) => {
@@ -159,10 +158,8 @@ export const updatePipes = (pipes: Pipe[]) => {
     // Move the Pipe towards the left
     pipe.cx -= 2;
 
-    // If the Pipe isn't visible anymore, remove it
-    if (pipe.cx < -pipe_w) {
-      pipes.splice(0, 2); // remove first 2 pipe
-    }
+    // If the Pipe Set isn't visible anymore, remove it
+    if (pipe.cx < -pipe_w && pipe.type === 'N') pipes.splice(0, 2); // Remove leading Pipe Set
 
     return pipe;
   });
@@ -194,12 +191,15 @@ export const calculateCollisionWithPipe = (pipe: Pipe): boolean => {
 };
 
 export const generatePipeSet = () => {
+  const minHeight = 140;
+  const variationRange = 180;
   const randomYPos =
     CANVAS_DIMENSIONS.value.height -
-    (pipe_h + fg_h + 120 + 200 * Math.random());
+    (pipe_h + fg_h + minHeight + variationRange * Math.random());
+
   return [
     new Pipe(pipe_h, randomYPos, 'S'),
-    new Pipe(pipe_h, randomYPos + 100 + pipe_h, 'N'),
+    new Pipe(pipe_h, randomYPos + pipe_h + GAP.value, 'N'),
   ];
 };
 
