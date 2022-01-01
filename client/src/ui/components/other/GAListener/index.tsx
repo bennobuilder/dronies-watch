@@ -1,5 +1,5 @@
 import React from 'react';
-import { initialize, set, pageview } from 'react-ga';
+import { initialize, pageview } from 'react-ga';
 import { useLocation } from 'react-router';
 
 const GAListener: React.FC<Props> = (props) => {
@@ -10,6 +10,7 @@ const GAListener: React.FC<Props> = (props) => {
   // Initialize Google Analytics
   React.useEffect(() => {
     if (trackingId != null && !initialized) {
+      console.log('Initialized Google Analytics');
       initialize(trackingId);
       setInitialized(true);
     }
@@ -17,12 +18,11 @@ const GAListener: React.FC<Props> = (props) => {
 
   // Track Pages with Google Analytics
   React.useEffect(() => {
-    console.log('Updated Location', { location });
     if (initialized) {
-      set({ page: location.pathname });
+      console.log('Updated Page Location', { location, initialized });
       pageview(`${location.pathname}${location.search}`);
     }
-  }, [location]);
+  }, [location, initialized]);
 
   // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33006
   return <>{children}</>;

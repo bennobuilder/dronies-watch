@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Footer from './components/Footer';
 import Navbar from './components/Navbar';
 import Head, { HeadProps } from './components/Head';
-import { INNER_PADDING } from './static';
 import { ui } from '../../../../core';
+import { useWindowSize } from '../../../hooks/useWindowSize';
 
 // Assets
 import PageRulerImg from '../../../../assets/app/side_decoration.png';
@@ -18,10 +18,14 @@ const PageLayout: React.FC<Props> = (props) => {
     meta: metaConfig,
     children,
   } = props;
+  const { windowWidth } = useWindowSize();
 
   return (
     <Container>
-      <PageRuler src={PageRulerImg} loading="lazy" />
+      {windowWidth > ui.WIDTH_BREAK_POINTS[1] && (
+        <PageRuler src={PageRulerImg} loading="lazy" />
+      )}
+
       {shouldRenderHeader && <Head {...metaConfig} />}
       {shouldRenderNavbar && <Navbar />}
       <InnerContainer maxWidth={ui.MAX_WIDTH}>
@@ -90,7 +94,7 @@ const InnerContainer = styled.div<{ maxWidth: number }>`
   margin-left: auto;
   margin-right: auto;
 
-  padding: 0 ${INNER_PADDING}px;
+  padding: 0 ${ui.INNER_PADDING}px;
 `;
 
 const Main = styled.main`

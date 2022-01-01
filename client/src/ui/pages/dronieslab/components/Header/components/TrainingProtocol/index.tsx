@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import LinesBackground from '../../../../../../components/primitive/background/LinesBackground';
+import { ui } from '../../../../../../../core';
 
 // Assets
 import TrainingProtocolImg from '../../../../../../../assets/app/training_protocol.png';
@@ -30,6 +31,10 @@ const InnerContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    flex-direction: column;
+  }
 `;
 
 const Text = styled.p`
@@ -40,4 +45,8 @@ const Text = styled.p`
   font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.colors.layout.p};
   font-size: 1rem;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    text-align: center;
+  }
 `;

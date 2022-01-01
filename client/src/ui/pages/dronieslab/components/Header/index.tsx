@@ -28,7 +28,7 @@ const Header: React.FC = () => {
       </LeftContent>
 
       {/* Right */}
-      {windowWidth > ui.BREAK_POINTS[1] && (
+      {windowWidth > ui.WIDTH_BREAK_POINTS[2] && (
         <LabIcon width={500} height={500} color={theme.colors.layout.rHc} />
       )}
     </Container>
@@ -38,8 +38,9 @@ const Header: React.FC = () => {
 export default Header;
 
 const Container = styled.div`
+  position: relative;
+
   display: flex;
-  flex: 1;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
@@ -48,14 +49,28 @@ const Container = styled.div`
   margin-top: 80px;
 
   width: 100%;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  }
 `;
 
 const LeftContent = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: column;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    align-items: center;
+  }
 `;
 
 const TitleContainer = styled(LinesBackground)`
+  position: relative;
+
   margin: 0 0 80px 0;
   padding: 10px 40px;
 `;
@@ -63,17 +78,24 @@ const TitleContainer = styled(LinesBackground)`
 const Title = styled.h1`
   margin: -10px 0 0 0;
 
-  color: ${({ theme }) => theme.colors.layout.p};
   font-size: 6rem;
   font-family: ${({ theme }) => theme.headings.fontFamily};
   white-space: nowrap;
   text-transform: uppercase;
+  color: ${({ theme }) => theme.colors.layout.p};
 
   text-shadow: 0 0 50px
     ${({ theme }) => ui.hexToRgba(theme.colors.layout.p, 0.5)};
 
-  @media (max-width: ${ui.BREAK_POINTS[0]}px) {
+  transition: font-size ${({ theme }) => theme.transitionTimingFunction} 500ms;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
     font-size: 4rem;
+    white-space: pre-wrap;
+  }
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
+    font-size: 3rem;
   }
 `;
 
@@ -102,7 +124,10 @@ const LabIcon = styled(Icon.Lab)`
     }
   }
 
-  @media (max-width: 1200px) {
+  transition: margin-right ${({ theme }) => theme.transitionTimingFunction}
+    500ms;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[3]}) {
     margin-right: 0;
   }
 `;
@@ -110,8 +135,18 @@ const LabIcon = styled(Icon.Lab)`
 const SocialButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
 
 const SocialButton = styled(Button)`
-  margin-right: 50px;
+  margin: 0 0 0 50px;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
+    margin: 20px 0 0 0;
+    width: 100%;
+  }
 `;

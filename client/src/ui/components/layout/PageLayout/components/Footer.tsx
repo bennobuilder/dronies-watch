@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import { useTheme } from '../../../../theme/useTheme';
 import { ui } from '../../../../../core';
-import { INNER_PADDING } from '../static';
 import LogoText from '../../../other/LogoText';
 import { IconButton } from '../../../primitive';
 import Icon from '../../../icons';
@@ -37,7 +36,7 @@ const Footer: React.FC = () => {
         </TopContainer>
         <StyledDivider />
         <BottomContainer>
-          <TextWithLink>
+          <TextWithLink textAlign="left">
             Inspired by{' '}
             <a
               href="https://twitter.com/DroniesNFT"
@@ -47,7 +46,7 @@ const Footer: React.FC = () => {
               @DroniesNFT
             </a>
           </TextWithLink>
-          <TextWithLink>
+          <TextWithLink textAlign="right">
             Created By{' '}
             <a
               href="https://twitter.com/DevBenno"
@@ -88,7 +87,7 @@ const InnerContainer = styled.div<{ maxWidth: number }>`
   margin-right: auto;
 
   @media (max-width: ${ui.MAX_WIDTH}px) {
-    padding: 0 ${INNER_PADDING}px;
+    padding: 0 ${ui.INNER_PADDING}px;
   }
 `;
 
@@ -127,8 +126,8 @@ const BottomContainer = styled.div`
   justify-content: space-between;
 `;
 
-const TextWithLink = styled.p`
-  text-align: left;
+const TextWithLink = styled.p<{ textAlign: 'left' | 'right' }>`
+  text-align: ${({ textAlign }) => textAlign};
   font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.colors.layout.p};
   font-size: 1rem;
