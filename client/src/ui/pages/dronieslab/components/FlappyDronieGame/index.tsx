@@ -16,7 +16,7 @@ const FlappyDronieGame: React.FC = () => {
     flappydronie.LATEST_SCORE,
     flappydronie.HIGH_SCORE,
   ]);
-  const GAEventsTracker = useGAEventsTracker('FlappyDronieGame Section');
+  const GAEventsTracker = useGAEventsTracker('Lab - FlappyDronieGame Section');
 
   return (
     <Container>
@@ -38,10 +38,7 @@ const FlappyDronieGame: React.FC = () => {
               icon={Icon.Twitter}
               to={flappydronie.getScoreTweet(highScore)}
               onClick={() =>
-                GAEventsTracker(
-                  'share-score',
-                  `Clicked Flappy Dronie share score button`,
-                )
+                GAEventsTracker('share-score', `Shared Flappy Dronie Score`)
               }
               target="_blank"
             />

@@ -28,7 +28,7 @@ const Navbar: React.FC<Props> = (props) => {
               >
                 <MenuText>Github</MenuText>
               </ButtonWrapper>
-              <ButtonWrapper to="/disclaimer" target="_blank">
+              <ButtonWrapper to="/disclaimer">
                 <MenuText>Disclaimer</MenuText>
               </ButtonWrapper>
             </MenuContainer>
