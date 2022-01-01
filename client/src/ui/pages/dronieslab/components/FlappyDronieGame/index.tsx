@@ -8,7 +8,7 @@ import LabelText from './components/LabelText';
 import { Button } from '../../../../components/primitive';
 import Icon from '../../../../components/icons';
 import InfoBox from '../../../../components/other/InfoBox';
-import { useGAEventsTracker } from '../../../../hooks/useGAEventsTracker';
+import { useEventTracker } from '../../../../hooks/useEventTracker';
 
 const FlappyDronieGame: React.FC = () => {
   const [score, latestScore, highScore] = useAgile([
@@ -16,7 +16,7 @@ const FlappyDronieGame: React.FC = () => {
     flappydronie.LATEST_SCORE,
     flappydronie.HIGH_SCORE,
   ]);
-  const GAEventsTracker = useGAEventsTracker('Lab - FlappyDronieGame Section');
+  const trackEvent = useEventTracker('Lab - FlappyDronieGame Section');
 
   return (
     <Container>
@@ -37,10 +37,14 @@ const FlappyDronieGame: React.FC = () => {
               text="Share Score"
               icon={Icon.Twitter}
               to={flappydronie.getScoreTweet(highScore)}
-              onClick={() =>
-                GAEventsTracker('share-score', `Shared Flappy Dronie Score`)
-              }
               target="_blank"
+              // Analytics
+              onClick={() =>
+                trackEvent({
+                  action: 'share-score',
+                  label: `Shared Flappy Dronie Score`,
+                })
+              }
             />
           )}
           <StyledInfoBox text="Some new features like a Leaderboard might be added in the near future." />

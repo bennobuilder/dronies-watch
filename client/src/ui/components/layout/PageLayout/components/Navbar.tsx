@@ -6,10 +6,12 @@ import Icon from '../../../icons';
 import { IconButton, ButtonWrapper } from '../../../primitive';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 import LogoText from '../../../other/LogoText';
+import { useEventTracker } from '../../../../hooks/useEventTracker';
 
 const Navbar: React.FC<Props> = (props) => {
   const { fixed } = props;
   const { windowWidth } = useWindowSize();
+  const trackEvent = useEventTracker('Navbar');
 
   const navigate = useNavigate();
   const goToHome = () => navigate('/');
@@ -24,10 +26,26 @@ const Navbar: React.FC<Props> = (props) => {
               <ButtonWrapper
                 to="https://github.com/bennodev19/dronies-watch"
                 target="_blank"
+                // Analytics
+                onClick={() =>
+                  trackEvent({
+                    action: 'pressed-github-btn',
+                    label: `Pressed Github Button`,
+                  })
+                }
               >
                 <MenuText>Github</MenuText>
               </ButtonWrapper>
-              <ButtonWrapper to="/disclaimer">
+              <ButtonWrapper
+                to="/disclaimer"
+                // Analytics
+                onClick={() =>
+                  trackEvent({
+                    action: 'pressed-disclaimer-btn',
+                    label: `Pressed Disclaimer Button`,
+                  })
+                }
+              >
                 <MenuText>Disclaimer</MenuText>
               </ButtonWrapper>
             </MenuContainer>

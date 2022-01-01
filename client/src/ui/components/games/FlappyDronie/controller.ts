@@ -1,10 +1,19 @@
 import { flappydronie } from '../../../../core';
 import { GAME_STATUS } from '../../../../core/entities/flappydronie';
+import { trackEvent } from '../../../hooks/useEventTracker';
 
 export const inputHandler = () => {
   switch (flappydronie.STATUS.value) {
     case GAME_STATUS.SPLASH:
       console.log('START GAME');
+
+      // Analytics
+      trackEvent({
+        category: 'Flappy Dronie',
+        action: 'start-game',
+        label: 'Start Game',
+      });
+
       flappydronie.startGame();
       flappydronie.jumpBird();
       break;

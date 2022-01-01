@@ -83,6 +83,7 @@ export const updateFrame = () => {
   }
 
   // Update Bird
+  // TODO optimize as the screen is also re-rendered although the bird doesn't move
   BIRD.set((b) => updateBird(b), { force: true });
 };
 

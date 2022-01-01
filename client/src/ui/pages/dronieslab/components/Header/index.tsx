@@ -143,7 +143,7 @@ const SocialButtonContainer = styled.div`
 `;
 
 const SocialButton = styled(Button)`
-  margin: 0 0 0 50px;
+  margin: 0 50px 0 0;
 
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
     margin: 20px 0 0 0;
