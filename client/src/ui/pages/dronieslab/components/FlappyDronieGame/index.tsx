@@ -9,6 +9,7 @@ import { Button } from '../../../../components/primitive';
 import Icon from '../../../../components/icons';
 import InfoBox from '../../../../components/other/InfoBox';
 import { useEventTracker } from '../../../../hooks/useEventTracker';
+import { useTheme } from '../../../../theme/useTheme';
 
 const FlappyDronieGame: React.FC = () => {
   const [score, latestScore, highScore] = useAgile([
@@ -17,6 +18,7 @@ const FlappyDronieGame: React.FC = () => {
     flappydronie.HIGH_SCORE,
   ]);
   const trackEvent = useEventTracker('Lab - FlappyDronieGame Section');
+  const theme = useTheme();
 
   return (
     <Container>
@@ -25,7 +27,7 @@ const FlappyDronieGame: React.FC = () => {
         <Subtitle>With Flappy Dronie</Subtitle>
       </HeaderContainer>
 
-      <GameContainer>
+      <ContentContainer>
         <InfoContainer>
           <StatsContainer>
             <LabelText label="Score: " value={score.toString()} />
@@ -50,10 +52,16 @@ const FlappyDronieGame: React.FC = () => {
           <StyledInfoBox text="Some new features like a Leaderboard might be added in the near future." />
         </InfoContainer>
 
-        <Game linesCount={20}>
-          <FlappyDronie />
-        </Game>
-      </GameContainer>
+        <GameContainer>
+          <Game linesCount={20}>
+            <FlappyDronie />
+          </Game>
+          <ClickToStartContainer>
+            <Icon.Click width={30} height={30} color={theme.colors.layout.hc} />
+            <ClickToStartText>Click to Start</ClickToStartText>
+          </ClickToStartContainer>
+        </GameContainer>
+      </ContentContainer>
     </Container>
   );
 };
@@ -122,7 +130,7 @@ const Subtitle = styled.h3`
   }
 `;
 
-const GameContainer = styled.div`
+const ContentContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -147,6 +155,10 @@ const Game = styled(LinesBackground)`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    margin-top: 30px;
+  }
 `;
 
 const StatsContainer = styled.div`
@@ -160,4 +172,43 @@ const ShareScoreButton = styled(Button)`
 
 const StyledInfoBox = styled(InfoBox)`
   margin-top: 100px;
+`;
+
+const GameContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const ClickToStartContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  margin-top: 20px;
+
+  animation: pulse 1s linear infinite;
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1, 1);
+    }
+
+    50% {
+      transform: scale(1.05, 1.05);
+    }
+
+    100% {
+      transform: scale(1, 1);
+    }
+  }
+`;
+
+const ClickToStartText = styled.p`
+  margin: 0 0 0 10px;
+
+  color: ${({ theme }) => theme.colors.layout.hc};
+  font-size: 1rem;
+  font-family: ${({ theme }) => theme.fontFamily};
+  text-align: center;
 `;
