@@ -11,17 +11,25 @@ const LinesBackground: React.FC<Props> = (props) => {
       <LinesContainer opacity={opacity}>
         {linesCount !== 0 ? (
           <>
-            {Array.from(Array(linesCount)).map(() => (
-              <DottedLine />
+            {Array.from(Array(linesCount)).map((v, i) => (
+              <DottedLine key={i} />
             ))}
             <LeftEdgeContainer>
               {Array.from(Array(linesCount)).map((v, i) =>
-                i === 0 || i === linesCount - 1 ? <EdgeEnd /> : <EdgeMiddle />,
+                i === 0 || i === linesCount - 1 ? (
+                  <EdgeEnd key={i} />
+                ) : (
+                  <EdgeMiddle key={i} />
+                ),
               )}
             </LeftEdgeContainer>
             <RightEdgeContainer>
               {Array.from(Array(linesCount)).map((v, i) =>
-                i === 0 || i === linesCount - 1 ? <EdgeEnd /> : <EdgeMiddle />,
+                i === 0 || i === linesCount - 1 ? (
+                  <EdgeEnd key={i} />
+                ) : (
+                  <EdgeMiddle key={i} />
+                ),
               )}
             </RightEdgeContainer>
           </>

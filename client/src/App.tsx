@@ -4,7 +4,6 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import AppRouter from './routing/AppRouter';
 import ThemeProvider from './ui/theme/ThemeProvider';
 import { ui } from './core';
-import { useAnalytics } from './ui/hooks/useAnalytics';
 
 // UI-Themes
 const themes = {
@@ -13,7 +12,6 @@ const themes = {
 
 const App: React.FC = () => {
   const activeTheme = useAgile(ui.THEME_TYPE);
-  useAnalytics();
 
   return (
     <ThemeProvider activeThemeKey={activeTheme} themes={themes}>

@@ -35,12 +35,15 @@ export class FpsController {
   }
 
   public stopDrawing() {
-    this.stop = true;
-    this.isDrawing = false;
+    // Weired check because off 'TypeError: Cannot set properties of null (setting 'stop')' issue
+    if (this != null) {
+      this.stop = true;
+      this.isDrawing = false;
 
-    // Clear 'calculateFps' interval
-    if (this.calculateFpsInterval != null)
-      clearInterval(this.calculateFpsInterval);
+      // Clear 'calculateFps' interval
+      if (this.calculateFpsInterval != null)
+        clearInterval(this.calculateFpsInterval);
+    }
   }
 
   private draw(newTime: number = window.performance.now()) {
