@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import {
   plane,
   SpriteWrapper,
@@ -11,10 +12,8 @@ const Bird: React.FC<Props> = (props) => {
 
   return (
     <SpriteWrapper gameSprite={sprite}>
-      <div style={{ position: 'absolute', top: -10, left: 20, zIndex: -1 }}>
-        {dronies[sprite.skin]}
-      </div>
-      {plane}
+      <HeadContainer>{dronies[sprite.skin]}</HeadContainer>
+      <VehicleContainer>{plane}</VehicleContainer>
     </SpriteWrapper>
   );
 };
@@ -24,3 +23,14 @@ export default Bird;
 type Props = {
   sprite: flappydronie.sprites.Bird;
 };
+
+const VehicleContainer = styled.div`
+  z-index: 1;
+`;
+
+const HeadContainer = styled.div`
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  z-index: 2;
+`;

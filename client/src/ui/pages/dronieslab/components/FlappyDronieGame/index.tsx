@@ -12,10 +12,11 @@ import { useEventTracker } from '../../../../hooks/useEventTracker';
 import { useTheme } from '../../../../theme/useTheme';
 
 const FlappyDronieGame: React.FC = () => {
-  const [score, latestScore, highScore] = useAgile([
+  const [score, latestScore, highScore, gameStatus] = useAgile([
     flappydronie.SCORE,
     flappydronie.LATEST_SCORE,
     flappydronie.HIGH_SCORE,
+    flappydronie.STATUS,
   ]);
   const trackEvent = useEventTracker('Lab - FlappyDronieGame Section');
   const theme = useTheme();
@@ -56,7 +57,9 @@ const FlappyDronieGame: React.FC = () => {
           <Game linesCount={20}>
             <FlappyDronie />
           </Game>
-          <ClickToStartContainer>
+          <ClickToStartContainer
+            hide={gameStatus !== flappydronie.GAME_STATUS.SPLASH}
+          >
             <Icon.Click width={30} height={30} color={theme.colors.layout.hc} />
             <ClickToStartText>Click to Start</ClickToStartText>
           </ClickToStartContainer>
@@ -180,13 +183,16 @@ const GameContainer = styled.div`
   align-items: center;
 `;
 
-const ClickToStartContainer = styled.div`
+const ClickToStartContainer = styled.div<{ hide: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
 
   margin-top: 20px;
 
+  opacity: ${({ hide }) => (hide ? 0 : 1)};
+
+  transition: opacity ${({ theme }) => theme.transitionTimingFunction} 500ms;
   animation: pulse 1s linear infinite;
 
   @keyframes pulse {
