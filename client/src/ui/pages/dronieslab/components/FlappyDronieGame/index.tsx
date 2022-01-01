@@ -26,7 +26,7 @@ const FlappyDronieGame: React.FC = () => {
       </HeaderContainer>
 
       <GameContainer>
-        <LeftContent>
+        <InfoContainer>
           <StatsContainer>
             <LabelText label="Score: " value={score.toString()} />
             <LabelText label="Latest Score: " value={latestScore.toString()} />
@@ -44,7 +44,7 @@ const FlappyDronieGame: React.FC = () => {
             />
           )}
           <StyledInfoBox text="Some new features like a Leaderboard might be added in the near future." />
-        </LeftContent>
+        </InfoContainer>
 
         <Game linesCount={20}>
           <FlappyDronie />
@@ -64,10 +64,20 @@ const Container = styled.div`
   align-items: flex-start;
 
   width: 100%;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    align-items: center;
+  }
 `;
 
 const HeaderContainer = styled.div`
-  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    align-items: center;
+  }
 `;
 
 const Title = styled.h1`
@@ -79,10 +89,17 @@ const Title = styled.h1`
   white-space: nowrap;
   text-transform: uppercase;
 
+  transition: font-size ${({ theme }) => theme.transitionTimingFunction} 500ms;
+
   text-shadow: 0 0 50px
     ${({ theme }) => ui.hexToRgba(theme.colors.layout.p, 0.5)};
 
-  @media (max-width: ${ui.BREAK_POINTS[0]}px) {
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    font-size: 3rem;
+    white-space: pre-wrap;
+  }
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
     font-size: 2rem;
   }
 `;
@@ -96,7 +113,7 @@ const Subtitle = styled.h3`
   white-space: nowrap;
   text-transform: uppercase;
 
-  @media (max-width: ${ui.BREAK_POINTS[0]}px) {
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
     font-size: 1rem;
   }
 `;
@@ -109,13 +126,21 @@ const GameContainer = styled.div`
   width: 100%;
 
   margin-top: 50px;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    flex-direction: column-reverse;
+    justify-content: flex-start;
+    align-items: center;
+  }
 `;
 
 const Game = styled(LinesBackground)`
-  justify-self: flex-end;
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
+    padding: 5px;
+  }
 `;
 
-const LeftContent = styled.div`
+const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;

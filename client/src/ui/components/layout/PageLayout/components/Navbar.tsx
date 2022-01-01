@@ -5,7 +5,6 @@ import { ui } from '../../../../../core';
 import Icon from '../../../icons';
 import { IconButton, ButtonWrapper } from '../../../primitive';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
-import { INNER_PADDING } from '../static';
 import LogoText from '../../../other/LogoText';
 
 const Navbar: React.FC<Props> = (props) => {
@@ -20,7 +19,7 @@ const Navbar: React.FC<Props> = (props) => {
       <InnerContainer maxWidth={ui.MAX_WIDTH}>
         <LogoText onClick={goToHome} />
         <RightContent>
-          {windowWidth > ui.BREAK_POINTS[0] && (
+          {windowWidth > ui.WIDTH_BREAK_POINTS[1] && (
             <MenuContainer>
               <ButtonWrapper
                 to="https://github.com/bennodev19/dronies-watch"
@@ -91,7 +90,7 @@ const InnerContainer = styled.div<{ maxWidth: number }>`
   margin-right: auto;
 
   @media (max-width: ${ui.MAX_WIDTH}px) {
-    padding: 0 ${INNER_PADDING}px;
+    padding: 0 ${ui.INNER_PADDING}px;
   }
 `;
 

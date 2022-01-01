@@ -29,10 +29,11 @@ export const FRAMES = createState(1);
 export const SCORE = createState(0);
 export const LATEST_SCORE = createState(0).persist({ key: 'latest-score' });
 export const HIGH_SCORE = createState(0).persist({ key: 'high-score' });
+export const DEFAULT_CANVAS_DIMENSIONS = { width: 320, height: 480 };
 export const CANVAS_DIMENSIONS = createState<{ width: number; height: number }>(
   {
     width: window.innerWidth,
-    height: window.innerHeight,
+    height: DEFAULT_CANVAS_DIMENSIONS.height,
   },
 );
 export const FPS_CONTROLLER = new FpsController(120);

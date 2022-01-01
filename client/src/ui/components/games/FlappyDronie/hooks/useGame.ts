@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAgile } from '@agile-ts/react';
-import { flappydronie } from '../../../../../core';
+import { flappydronie, ui } from '../../../../../core';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 
 export function useGame() {
@@ -11,18 +11,20 @@ export function useGame() {
     flappydronie.PIPES,
     flappydronie.STATUS,
   ]);
-  const { windowWidth, windowHeight } = useWindowSize();
+  const { windowWidth } = useWindowSize();
 
   React.useEffect(() => {
-    if (windowWidth >= 500) {
-      flappydronie.CANVAS_DIMENSIONS.set({ width: 320, height: 480 });
+    if (windowWidth >= flappydronie.DEFAULT_CANVAS_DIMENSIONS.width) {
+      flappydronie.CANVAS_DIMENSIONS.set(
+        flappydronie.DEFAULT_CANVAS_DIMENSIONS,
+      );
     } else {
       flappydronie.CANVAS_DIMENSIONS.set({
-        width: windowWidth,
-        height: windowHeight,
+        width: windowWidth - ui.INNER_PADDING * 2,
+        height: flappydronie.DEFAULT_CANVAS_DIMENSIONS.height,
       });
     }
-  }, [windowHeight, windowWidth]);
+  }, [windowWidth]);
 
   React.useEffect(() => {
     flappydronie.FPS_CONTROLLER.startDrawing(flappydronie.updateFrame);
