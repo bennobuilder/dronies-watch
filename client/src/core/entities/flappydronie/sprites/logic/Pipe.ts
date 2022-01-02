@@ -1,4 +1,4 @@
-import { Base } from './base';
+import { Base } from './Base';
 
 export class Pipe extends Base {
   public type: 'S' | 'N';

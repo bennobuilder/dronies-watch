@@ -1,7 +1,7 @@
-import { Background } from './background';
-import { Base } from './base';
-import { Bird } from './bird';
-import { Foreground } from './foreground';
-import { Pipe } from './pipe';
+import { Background } from './Background';
+import { Base } from './Base';
+import { Bird } from './Bird';
+import { Foreground } from './Foreground';
+import { Pipe } from './Pipe';
 
 export { Background, Base, Bird, Foreground, Pipe };

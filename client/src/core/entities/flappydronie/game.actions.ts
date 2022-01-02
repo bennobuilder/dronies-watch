@@ -14,7 +14,7 @@ import {
   BACKGROUND_POSITION,
   BACKGROUNDS,
   BIRD,
-  BIRD_POSITION,
+  BIRD_DEFAULT_POSITION,
   CANVAS_DIMENSIONS,
   FOREGROUND_POSITION,
   FOREGROUNDS,
@@ -29,7 +29,8 @@ import {
 } from './game.controller';
 
 export const startGame = () => {
-  if (STATUS.value !== GAME_STATUS.SPLASH) BIRD.set(new Bird(BIRD_POSITION, 0));
+  if (STATUS.value !== GAME_STATUS.SPLASH)
+    BIRD.set(new Bird(BIRD_DEFAULT_POSITION.x, BIRD_DEFAULT_POSITION.y));
 
   STATUS.set(GAME_STATUS.PLAYING);
 };
@@ -49,7 +50,7 @@ export const endGame = () => {
 };
 
 export const resetGame = () => {
-  BIRD.set(new Bird(BIRD_POSITION, 0));
+  BIRD.set(new Bird(BIRD_DEFAULT_POSITION.x, BIRD_DEFAULT_POSITION.y));
   FRAMES.reset();
   PIPES.reset();
   STATUS.set(GAME_STATUS.SPLASH);
@@ -150,7 +151,7 @@ export const updatePipes = (pipes: Pipe[]) => {
     if (calculateCollisionWithPipe(pipe)) endGame();
 
     // Calculate Score
-    if (pipe.cx <= BIRD_POSITION && !pipe.scored && pipe.type === 'N') {
+    if (pipe.cx <= BIRD_DEFAULT_POSITION && !pipe.scored && pipe.type === 'N') {
       SCORE.set((v) => v + 1);
       pipe.scored = true;
     }
@@ -192,7 +193,7 @@ export const calculateCollisionWithPipe = (pipe: Pipe): boolean => {
 
 export const generatePipeSet = () => {
   const minHeight = 140;
-  const variationRange = 180;
+  const variationRange = 200;
   const randomYPos =
     CANVAS_DIMENSIONS.value.height -
     (pipe_h + fg_h + minHeight + variationRange * Math.random());

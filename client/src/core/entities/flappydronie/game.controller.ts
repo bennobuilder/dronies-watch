@@ -20,7 +20,7 @@ export enum GAME_STATUS {
 }
 
 // Configuration
-export const BIRD_POSITION = 60;
+export const BIRD_DEFAULT_POSITION = { x: 60, y: 0 };
 
 // General
 export const PLAY_ONLINE = createState(false);
@@ -43,7 +43,9 @@ export const GAP = createState(120);
 
 // Objects
 export const PIPES = createState<Pipe[]>([]);
-export const BIRD = createState<Bird>(new Bird(BIRD_POSITION, 0));
+export const BIRD = createState<Bird>(
+  new Bird(BIRD_DEFAULT_POSITION.x, BIRD_DEFAULT_POSITION.y),
+);
 BIRD.watch((v) => {
   if (PLAY_ONLINE.value)
     socketService.socket?.emit('bird', { cx: v.cx, cy: v.cy });
