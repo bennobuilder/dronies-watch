@@ -11,7 +11,10 @@ export class Bird extends Base {
   public maxVelocity = 7;
 
   constructor(game: Game, config: BirdConfig) {
-    super(game, { width: bird_w, height: bird_h, ...config });
+    super(game, {
+      ...config,
+      collisionBox: { width: bird_w, height: bird_h, ...config.collisionBox },
+    });
     this.velocity = 0;
   }
 

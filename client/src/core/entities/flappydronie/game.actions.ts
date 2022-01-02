@@ -1,14 +1,5 @@
-import {
-  bg_h,
-  bg_w,
-  bird_h,
-  bird_w,
-  fg_h,
-  fg_w,
-  pipe_h,
-  pipe_w,
-} from './sprites';
-import { Pipe, Bird } from './elements';
+import { bg_h, bg_w, fg_h, fg_w, pipe_h, pipe_w } from './sprites';
+import { Bird, PipeSet } from './elements';
 import {
   BACKGROUND_POSITION,
   BACKGROUNDS,
@@ -26,7 +17,6 @@ import {
   SCORE,
   STATUS,
 } from './game.controller';
-import { PipeSet } from './elements/PipeSet';
 
 export const startGame = () => {
   if (STATUS.value !== GAME_STATUS.SPLASH)
@@ -137,15 +127,12 @@ export const updateBird = (bird: Bird): Bird => {
   ) {
     bird.calculateVelocity();
 
+    const collisionWithGround =
+      bird.calculateCollision(foregrounds[0]) ||
+      bird.calculateCollision(foregrounds[1]);
+
     // Handle collision with bottom
-    if (
-      bird.calculateCollision({
-        cx: 0,
-        cy: foregrounds[0].cy,
-        width: canvasDimensions.width,
-        height: fg_h,
-      })
-    ) {
+    if (collisionWithGround) {
       // Set velocity to jump speed for correct rotation when crashing
       bird.setVelocity(bird.jumpForce);
 
@@ -171,7 +158,7 @@ export const updateBird = (bird: Bird): Bird => {
     }
 
     // Handle rotation
-    if (STATUS.value === GAME_STATUS.PLAYING) bird.calculateRotation();
+    if (!collisionWithGround) bird.calculateRotation();
   }
 
   return bird;
@@ -201,23 +188,13 @@ export const updatePipes = () => {
   pipeSets.forEach((pipeSet) => {
     // End Game, if Bird collides with Pipe
     if (
-      pipeSet.topPipe.calculateCollision({
-        cx: bird.cx,
-        cy: bird.cy,
-        width: bird.width,
-        height: bird.height,
-      }) ||
-      pipeSet.bottomPipe.calculateCollision({
-        cx: bird.cx,
-        cy: bird.cy,
-        width: bird.width,
-        height: bird.height,
-      })
+      pipeSet.topPipe.calculateCollision(bird) ||
+      pipeSet.bottomPipe.calculateCollision(bird)
     )
       endGame();
 
     // Calculate Score
-    if (pipeSet.cx <= BIRD_DEFAULT_POSITION.x && !pipeSet.scored) {
+    if (pipeSet.calculateCollision(bird) && !pipeSet.scored) {
       SCORE.set((v) => v + 1);
       pipeSet.scored = true;
     }

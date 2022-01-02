@@ -19,6 +19,7 @@ export const FPS_CONTROLLER = new FpsController(60);
 export const BIRD_DEFAULT_POSITION = { x: 60, y: 0 };
 export const PLAY_ONLINE = createState(false);
 export const DEFAULT_CANVAS_DIMENSIONS = { width: 320, height: 480 };
+export const SHOW_COLLIDER = createState(false);
 export const BIRD_SKIN = createState(0);
 export const VEHICLE_SKIN = createState(0);
 export const MAP_SKIN = createState(0);
@@ -61,12 +62,12 @@ export const FOREGROUNDS = createState([
   new Foreground(GAME, {
     cx: 0,
     cy: CANVAS_DIMENSIONS.value.height - fg_h,
-    height: fg_h,
+    collisionBox: { height: fg_h - 20 },
   }),
   new Foreground(GAME, {
     cx: fg_w,
     cy: CANVAS_DIMENSIONS.value.height - fg_h,
-    height: fg_h,
+    collisionBox: { height: fg_h - 20 },
   }),
 ]);
 export const FOREGROUND_POSITION = createState(0);

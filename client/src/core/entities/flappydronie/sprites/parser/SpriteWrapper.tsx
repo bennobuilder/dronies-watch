@@ -18,8 +18,9 @@ const SpriteWrapper: React.FC<Props> = (props) => {
     >
       {collisionBoxColor != null && (
         <CollisionBox
-          width={gameSprite.width}
-          height={gameSprite.height}
+          width={gameSprite.collisionBox.width}
+          height={gameSprite.collisionBox.height}
+          offset={gameSprite.collisionBox.offset}
           color={collisionBoxColor}
         />
       )}
@@ -39,9 +40,12 @@ type Props = {
 const CollisionBox = styled.div<{
   width: number;
   height: number;
+  offset: { x: number; y: number };
   color: string;
 }>`
   position: absolute;
+  bottom: ${({ offset }) => offset?.y ?? 0}px;
+  left: ${({ offset }) => offset?.x ?? 0}px;
 
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;

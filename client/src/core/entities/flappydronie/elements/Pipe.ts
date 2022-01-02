@@ -6,7 +6,10 @@ export class Pipe extends Base {
   public type: PipeType;
 
   constructor(game: Game, config: PipeConfig) {
-    super(game, { width: pipe_w, height: pipe_h, ...config });
+    super(game, {
+      ...config,
+      collisionBox: { width: pipe_w, height: pipe_h, ...config.collisionBox },
+    });
     this.type = config.type;
   }
 }

@@ -8,7 +8,10 @@ export class Background extends Base {
   public moveSpeed: number;
 
   constructor(game: Game, config: BackgroundConfig) {
-    super(game, { width: bg_w, height: bg_h, ...config });
+    super(game, {
+      ...config,
+      collisionBox: { width: bg_w, height: bg_h, ...config.collisionBox },
+    });
     config = defineConfig(config, {
       moveSpeed: 2,
     });

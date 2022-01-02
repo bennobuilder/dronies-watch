@@ -8,7 +8,10 @@ export class Foreground extends Base {
   public moveSpeed: number;
 
   constructor(game: Game, config: ForegroundConfig) {
-    super(game, { width: fg_w, height: fg_h, ...config });
+    super(game, {
+      ...config,
+      collisionBox: { width: fg_w, height: fg_h, ...config.collisionBox },
+    });
     config = defineConfig(config, {
       moveSpeed: 2,
     });

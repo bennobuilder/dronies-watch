@@ -16,7 +16,14 @@ export class PipeSet extends Base {
   public readonly bottomPipe: Pipe;
 
   constructor(game: Game, config: PipeConfig) {
-    super(game, { width: pipe_w, height: pipe_h * 3, ...config });
+    super(game, {
+      ...config,
+      collisionBox: {
+        width: pipe_w,
+        height: pipe_h * 3,
+        ...config.collisionBox,
+      },
+    });
     config = defineConfig(config, {
       moveSpeed: 2,
       distance: 100,
