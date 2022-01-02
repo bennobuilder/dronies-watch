@@ -1,15 +1,14 @@
 import {
   bg_h,
   bg_w,
-  Bird,
   bird_h,
   bird_w,
   fg_h,
   fg_w,
-  Pipe,
   pipe_h,
   pipe_w,
 } from './sprites';
+import { Pipe, Bird } from './elements';
 import {
   BACKGROUND_POSITION,
   BACKGROUNDS,
@@ -30,7 +29,9 @@ import {
 
 export const startGame = () => {
   if (STATUS.value !== GAME_STATUS.SPLASH)
-    BIRD.set(new Bird(BIRD_DEFAULT_POSITION.x, BIRD_DEFAULT_POSITION.y));
+    BIRD.set(
+      new Bird({ cx: BIRD_DEFAULT_POSITION.x, cy: BIRD_DEFAULT_POSITION.y }),
+    );
 
   STATUS.set(GAME_STATUS.PLAYING);
 };
@@ -50,7 +51,9 @@ export const endGame = () => {
 };
 
 export const resetGame = () => {
-  BIRD.set(new Bird(BIRD_DEFAULT_POSITION.x, BIRD_DEFAULT_POSITION.y));
+  BIRD.set(
+    new Bird({ cx: BIRD_DEFAULT_POSITION.x, cy: BIRD_DEFAULT_POSITION.y }),
+  );
   FRAMES.reset();
   PIPES.reset();
   STATUS.set(GAME_STATUS.SPLASH);
@@ -60,84 +63,112 @@ export const updateFrame = () => {
   FRAMES.set((f) => f + 1);
 
   // Update Scenery
-  if (
-    STATUS.value === GAME_STATUS.SPLASH ||
-    STATUS.value === GAME_STATUS.PLAYING
-  ) {
-    const newForegroundPos = (FOREGROUND_POSITION.value - 2) % (fg_w - 5); // -5 to hide white stripe between the two images
-    FOREGROUND_POSITION.set(newForegroundPos);
-    FOREGROUNDS.nextStateValue[0].cx = newForegroundPos;
-    FOREGROUNDS.nextStateValue[0].cy = CANVAS_DIMENSIONS.value.height - fg_h; // Required when resizing
-    FOREGROUNDS.nextStateValue[1].cx = newForegroundPos + (fg_w - 5); // -5 to hide white stripe between the two images
-    FOREGROUNDS.nextStateValue[1].cy = CANVAS_DIMENSIONS.value.height - fg_h; // Required when resizing
-    FOREGROUNDS.ingest();
-
-    const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % (bg_w - 5); // -5 to hide white stripe between the two images
-    BACKGROUND_POSITION.set(newBackgroundPos);
-    BACKGROUNDS.nextStateValue[0].cx = newBackgroundPos;
-    BACKGROUNDS.nextStateValue[0].cy = CANVAS_DIMENSIONS.value.height - bg_h; // Required when resizing
-    BACKGROUNDS.nextStateValue[1].cx = newBackgroundPos + (bg_w - 5); // -5 to hide white stripe between the two images
-    BACKGROUNDS.nextStateValue[1].cy = CANVAS_DIMENSIONS.value.height - bg_h; // Required when resizing
-    BACKGROUNDS.ingest();
-
-    // Update Pipes
-    if (STATUS.value === GAME_STATUS.PLAYING) PIPES.set((p) => updatePipes(p));
-  }
+  updateScenery();
 
   // Update Bird
   // TODO optimize as the screen is also re-rendered although the bird doesn't move
   BIRD.set((b) => updateBird(b), { force: true });
 };
 
+export const updateScenery = () => {
+  if (
+    STATUS.value === GAME_STATUS.SPLASH ||
+    STATUS.value === GAME_STATUS.PLAYING
+  ) {
+    const foregrounds = FOREGROUNDS.nextStateValue;
+    const backgrounds = BACKGROUNDS.nextStateValue;
+    const canvasDimensions = CANVAS_DIMENSIONS.value;
+
+    const newForegroundPos = (FOREGROUND_POSITION.value - 2) % (fg_w - 5); // -5 to hide white stripe between the two images
+
+    foregrounds[0].move({
+      cx: newForegroundPos,
+      cy: canvasDimensions.height - fg_h, // Required when resizing
+    });
+    foregrounds[1].move({
+      cx: newForegroundPos + (fg_w - 5), // -5 to hide white stripe between the two images,
+      cy: canvasDimensions.height - fg_h, // Required when resizing
+    });
+
+    // Apply changes to UI
+    FOREGROUND_POSITION.set(newForegroundPos);
+    FOREGROUNDS.ingest();
+
+    const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % (bg_w - 5); // -5 to hide white stripe between the two images
+
+    backgrounds[0].move({
+      cx: newBackgroundPos,
+      cy: canvasDimensions.height - bg_h, // Required when resizing
+    });
+    backgrounds[1].move({
+      cx: newBackgroundPos + (bg_w - 5), // -5 to hide white stripe between the two images
+      cy: canvasDimensions.height - bg_h, // Required when resizing
+    });
+
+    // Apply changes to UI
+    BACKGROUND_POSITION.set(newBackgroundPos);
+    BACKGROUNDS.ingest();
+
+    // Update Pipes
+    if (STATUS.value === GAME_STATUS.PLAYING) PIPES.set((p) => updatePipes(p));
+  }
+};
+
 export const updateBird = (bird: Bird): Bird => {
+  const canvasDimensions = CANVAS_DIMENSIONS.value;
+
   // If Splash Screen make the Bird hover
   if (STATUS.value === GAME_STATUS.SPLASH) {
-    bird.cy =
-      CANVAS_DIMENSIONS.value.height - 280 + 5 * Math.cos(FRAMES.value / 10); // ~199 - ~201
-    bird.rotation = 0;
+    const hoverHeight = 280;
+    bird.hover(canvasDimensions.height - hoverHeight);
   }
 
   if (
     STATUS.value === GAME_STATUS.PLAYING ||
-    STATUS.value === GAME_STATUS.SCORE // Apply physics to the Bird also in the Score status, to drop the bird when hitting a pipe
+    STATUS.value === GAME_STATUS.SCORE // Apply physics to the Bird also in the Score status, to drop the bird when hitting a Pipe
   ) {
-    // Handle velocity
-    bird.velocity += bird.gravity;
-    if (bird.velocity > bird.maxVelocity) bird.velocity = bird.maxVelocity;
-    bird.cy += bird.velocity;
+    bird.calculateVelocity();
 
     // Handle collision with bottom
-    const bottomCollisionHeight = CANVAS_DIMENSIONS.value.height - fg_h - 10;
-    if (bird.cy >= bottomCollisionHeight) {
-      bird.cy = bottomCollisionHeight;
-
-      // Set velocity to jump speed for correct rotation
-      bird.velocity = bird.jump;
+    if (
+      bird.calculateCollision({
+        cx: 0,
+        cy: canvasDimensions.height - fg_h - 10,
+        width: canvasDimensions.width,
+        height: fg_h,
+      })
+    ) {
+      // Set velocity to jump speed for correct rotation when crashing
+      bird.setVelocity(bird.jumpForce);
 
       endGame();
     }
 
     // Handle collision with top
-    if (bird.cy <= 0) {
-      bird.cy = 0;
+    if (
+      bird.calculateCollision({
+        cx: 0,
+        cy: 0,
+        width: canvasDimensions.width,
+        height: 10,
+      })
+    ) {
+      if (bird.cy <= 0) bird.move({ cy: 0 });
 
       // Bounce
-      bird.velocity = 2;
+      bird.setVelocity(2);
     }
 
     // Handle rotation
-    if (bird.velocity > 5) {
-      // When bird lacks upward momentum increment the rotation angle
-      bird.rotation = Math.min(Math.PI / 2.5, bird.rotation + 0.1);
-    } else if (STATUS.value === GAME_STATUS.PLAYING)
-      bird.rotation = Math.max(-0.3, bird.rotation - 0.1);
+    if (STATUS.value === GAME_STATUS.PLAYING) bird.calculateRotation();
   }
 
   return bird;
 };
 
 export const jumpBird = () => {
-  BIRD.nextStateValue.velocity = -BIRD.value.jump;
+  const bird = BIRD.nextStateValue;
+  bird.jump();
   BIRD.ingest({ force: true });
 };
 
@@ -151,7 +182,11 @@ export const updatePipes = (pipes: Pipe[]) => {
     if (calculateCollisionWithPipe(pipe)) endGame();
 
     // Calculate Score
-    if (pipe.cx <= BIRD_DEFAULT_POSITION && !pipe.scored && pipe.type === 'N') {
+    if (
+      pipe.cx <= BIRD_DEFAULT_POSITION.x &&
+      !pipe.scored &&
+      pipe.type === 'N'
+    ) {
       SCORE.set((v) => v + 1);
       pipe.scored = true;
     }
@@ -199,8 +234,8 @@ export const generatePipeSet = () => {
     (pipe_h + fg_h + minHeight + variationRange * Math.random());
 
   return [
-    new Pipe(pipe_h, randomYPos, 'S'),
-    new Pipe(pipe_h, randomYPos + pipe_h + GAP.value, 'N'),
+    new Pipe({ cx: pipe_h, cy: randomYPos, type: 'S' }),
+    new Pipe({ cx: pipe_h, cy: randomYPos + pipe_h + GAP.value, type: 'N' }),
   ];
 };
 

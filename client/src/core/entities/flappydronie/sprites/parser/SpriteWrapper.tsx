@@ -1,5 +1,5 @@
 import React from 'react';
-import { Base } from '../logic';
+import { Base } from '../../elements';
 
 const SpriteWrapper: React.FC<Props> = (props) => {
   const { gameSprite, onClickHandler, children } = props;

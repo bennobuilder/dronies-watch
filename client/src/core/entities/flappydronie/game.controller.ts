@@ -1,15 +1,6 @@
 import { createState } from '@agile-ts/core';
-import {
-  bg_h,
-  bg_w,
-  fg_h,
-  fg_w,
-  Pipe,
-  Bird,
-  Background,
-  Foreground,
-} from './sprites';
-import { socketService } from '../../socket';
+import { bg_h, bg_w, fg_h, fg_w } from './sprites';
+import { Pipe, Bird, Background, Foreground } from './elements';
 import { FpsController } from './utils/FpsController';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -37,28 +28,29 @@ export const CANVAS_DIMENSIONS = createState<{ width: number; height: number }>(
   },
 );
 export const FPS_CONTROLLER = new FpsController(60);
-export const DRONIE_SKIN = createState(0);
+export const BIRD_SKIN = createState(0);
+export const VEHICLE_SKIN = createState(0);
 export const MAP_SKIN = createState(0);
 export const GAP = createState(120);
 
 // Objects
 export const PIPES = createState<Pipe[]>([]);
 export const BIRD = createState<Bird>(
-  new Bird(BIRD_DEFAULT_POSITION.x, BIRD_DEFAULT_POSITION.y),
+  new Bird({ cx: BIRD_DEFAULT_POSITION.x, cy: BIRD_DEFAULT_POSITION.y }),
 );
-BIRD.watch((v) => {
-  if (PLAY_ONLINE.value)
-    socketService.socket?.emit('bird', { cx: v.cx, cy: v.cy });
-});
+// BIRD.watch((v) => {
+//   if (PLAY_ONLINE.value)
+//     socketService.socket?.emit('bird', { cx: v.cx, cy: v.cy });
+// });
 
 // Scenery
 export const BACKGROUNDS = createState([
-  new Background(0, CANVAS_DIMENSIONS.value.height - bg_h),
-  new Background(bg_w, CANVAS_DIMENSIONS.value.height - bg_h),
+  new Background({ cx: 0, cy: CANVAS_DIMENSIONS.value.height - bg_h }),
+  new Background({ cx: bg_w, cy: CANVAS_DIMENSIONS.value.height - bg_h }),
 ]);
 export const FOREGROUNDS = createState([
-  new Foreground(0, CANVAS_DIMENSIONS.value.height - fg_h),
-  new Foreground(fg_w, CANVAS_DIMENSIONS.value.height - fg_h),
+  new Foreground({ cx: 0, cy: CANVAS_DIMENSIONS.value.height - fg_h }),
+  new Foreground({ cx: fg_w, cy: CANVAS_DIMENSIONS.value.height - fg_h }),
 ]);
 export const FOREGROUND_POSITION = createState(0);
 export const BACKGROUND_POSITION = createState(0);

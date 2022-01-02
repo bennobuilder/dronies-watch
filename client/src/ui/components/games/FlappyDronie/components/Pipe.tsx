@@ -28,5 +28,5 @@ const Pipe: React.FC<Props> = (props) => {
 export default Pipe;
 
 type Props = {
-  sprite: flappydronie.sprites.Pipe;
+  sprite: flappydronie.Pipe;
 };

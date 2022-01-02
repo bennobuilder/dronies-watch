@@ -21,7 +21,7 @@ const Bird: React.FC<Props> = (props) => {
 export default Bird;
 
 type Props = {
-  sprite: flappydronie.sprites.Bird;
+  sprite: flappydronie.Bird;
 };
 
 const VehicleContainer = styled.div`

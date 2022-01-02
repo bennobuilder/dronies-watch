@@ -17,5 +17,5 @@ const Foreground: React.FC<Props> = (props) => {
 export default Foreground;
 
 type Props = {
-  sprite: flappydronie.sprites.Foreground;
+  sprite: flappydronie.Foreground;
 };
