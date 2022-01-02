@@ -1,5 +1,5 @@
 import { createState } from '@agile-ts/core';
-import { bg_h, bg_w, bird_h, bird_w, fg_h, fg_w } from './sprites';
+import { bg_h, bg_w, fg_h, fg_w } from './sprites';
 import { Bird, Background, Foreground } from './elements';
 import { FpsController } from './utils/FpsController';
 import { Game } from './elements/Game';
@@ -20,7 +20,7 @@ export const FPS_CONTROLLER = new FpsController(60);
 export const BIRD_DEFAULT_POSITION = { x: 60, y: 0 };
 export const PLAY_ONLINE = createState(false);
 export const DEFAULT_CANVAS_DIMENSIONS = { width: 320, height: 480 };
-export const SHOW_COLLIDER = createState(true);
+export const SHOW_COLLIDER = createState(false);
 export const BIRD_SKIN = createState(0);
 export const VEHICLE_SKIN = createState(0);
 export const MAP_SKIN = createState(0);

@@ -13,6 +13,7 @@ export function useGame() {
   ]);
   const { windowWidth } = useWindowSize();
 
+  // Update Canvas dimensions
   React.useEffect(() => {
     if (windowWidth >= flappydronie.DEFAULT_CANVAS_DIMENSIONS.width) {
       flappydronie.CANVAS_DIMENSIONS.set(
