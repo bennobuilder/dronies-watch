@@ -1,9 +1,10 @@
 import { createState } from '@agile-ts/core';
-import { bg_h, bg_w, fg_h, fg_w } from './sprites';
-import { Pipe, Bird, Background, Foreground } from './elements';
+import { bg_h, bg_w, bird_h, bird_w, fg_h, fg_w } from './sprites';
+import { Bird, Background, Foreground } from './elements';
 import { FpsController } from './utils/FpsController';
 import { Game } from './elements/Game';
 import { PipeSet } from './elements/PipeSet';
+import { createBird } from './game.actions';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export enum GAME_STATUS {
@@ -19,7 +20,7 @@ export const FPS_CONTROLLER = new FpsController(60);
 export const BIRD_DEFAULT_POSITION = { x: 60, y: 0 };
 export const PLAY_ONLINE = createState(false);
 export const DEFAULT_CANVAS_DIMENSIONS = { width: 320, height: 480 };
-export const SHOW_COLLIDER = createState(false);
+export const SHOW_COLLIDER = createState(true);
 export const BIRD_SKIN = createState(0);
 export const VEHICLE_SKIN = createState(0);
 export const MAP_SKIN = createState(0);
@@ -47,9 +48,7 @@ CANVAS_DIMENSIONS.watch((v) => {
 
 // Game Objects
 export const PIPE_SETS = createState<PipeSet[]>([]);
-export const BIRD = createState<Bird>(
-  new Bird(GAME, { cx: BIRD_DEFAULT_POSITION.x, cy: BIRD_DEFAULT_POSITION.y }),
-);
+export const BIRD = createState<Bird>(createBird());
 // BIRD.watch((v) => {
 //   if (PLAY_ONLINE.value)
 //     socketService.socket?.emit('bird', { cx: v.cx, cy: v.cy });

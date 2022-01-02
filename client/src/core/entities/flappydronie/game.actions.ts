@@ -1,4 +1,13 @@
-import { bg_h, bg_w, fg_h, fg_w, pipe_h, pipe_w } from './sprites';
+import {
+  bg_h,
+  bg_w,
+  bird_h,
+  bird_w,
+  fg_h,
+  fg_w,
+  pipe_h,
+  pipe_w,
+} from './sprites';
 import { Bird, PipeSet } from './elements';
 import {
   BACKGROUND_POSITION,
@@ -19,13 +28,7 @@ import {
 } from './game.controller';
 
 export const startGame = () => {
-  if (STATUS.value !== GAME_STATUS.SPLASH)
-    BIRD.set(
-      new Bird(GAME, {
-        cx: BIRD_DEFAULT_POSITION.x,
-        cy: BIRD_DEFAULT_POSITION.y,
-      }),
-    );
+  if (STATUS.value !== GAME_STATUS.SPLASH) BIRD.set(createBird());
 
   STATUS.set(GAME_STATUS.PLAYING);
 };
@@ -45,16 +48,22 @@ export const endGame = () => {
 };
 
 export const resetGame = () => {
-  BIRD.set(
-    new Bird(GAME, {
-      cx: BIRD_DEFAULT_POSITION.x,
-      cy: BIRD_DEFAULT_POSITION.y,
-    }),
-  );
+  BIRD.set(createBird());
   FRAMES.reset();
   PIPE_SETS.reset();
   STATUS.set(GAME_STATUS.SPLASH);
 };
+
+export const createBird = () =>
+  new Bird(GAME, {
+    cx: BIRD_DEFAULT_POSITION.x,
+    cy: BIRD_DEFAULT_POSITION.y,
+    collisionBox: {
+      width: bird_w - 10,
+      height: bird_h - 10,
+      offset: { x: 10, y: 5 },
+    },
+  });
 
 export const updateFrame = () => {
   FRAMES.set((f) => f + 1);

@@ -40,10 +40,10 @@ const FlappyDronie: React.FC = () => {
         <Background sprite={bg} key={bg.id} />
       ))}
       {pipeSets.map((pipeSet) => (
-        <>
+        <div key={`${pipeSet.topPipe.id}_${pipeSet.bottomPipe.id}`}>
           <Pipe sprite={pipeSet.topPipe} key={pipeSet.topPipe.id} />
           <Pipe sprite={pipeSet.bottomPipe} key={pipeSet.bottomPipe.id} />
-        </>
+        </div>
       ))}
       <Bird sprite={bird} key={bird.id} />
       {foregrounds.map((fg) => (
