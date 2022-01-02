@@ -1,17 +1,23 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useAgile } from '@agile-ts/react';
 import {
   plane,
   SpriteWrapper,
   dronies,
 } from '../../../../../core/entities/flappydronie/sprites';
 import { flappydronie } from '../../../../../core';
+import { SHOW_COLLIDER } from '../../../../../core/entities/flappydronie';
 
 const Bird: React.FC<Props> = (props) => {
   const { sprite } = props;
+  const showCollider = useAgile(SHOW_COLLIDER);
 
   return (
-    <SpriteWrapper gameSprite={sprite}>
+    <SpriteWrapper
+      gameSprite={sprite}
+      collisionBoxColor={showCollider ? 'purple' : undefined}
+    >
       <HeadContainer>{dronies[sprite.skin]}</HeadContainer>
       <VehicleContainer>{plane}</VehicleContainer>
     </SpriteWrapper>
@@ -21,7 +27,7 @@ const Bird: React.FC<Props> = (props) => {
 export default Bird;
 
 type Props = {
-  sprite: flappydronie.sprites.Bird;
+  sprite: flappydronie.Bird;
 };
 
 const VehicleContainer = styled.div`

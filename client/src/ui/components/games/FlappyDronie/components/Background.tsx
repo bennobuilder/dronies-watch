@@ -17,5 +17,5 @@ const Background: React.FC<Props> = (props) => {
 export default Background;
 
 type Props = {
-  sprite: flappydronie.sprites.Background;
+  sprite: flappydronie.Background;
 };

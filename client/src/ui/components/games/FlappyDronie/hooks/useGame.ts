@@ -4,15 +4,16 @@ import { flappydronie, ui } from '../../../../../core';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 
 export function useGame() {
-  const [backgrounds, foregrounds, bird, pipes, status] = useAgile([
+  const [backgrounds, foregrounds, bird, pipeSets, status] = useAgile([
     flappydronie.BACKGROUNDS,
     flappydronie.FOREGROUNDS,
     flappydronie.BIRD,
-    flappydronie.PIPES,
+    flappydronie.PIPE_SETS,
     flappydronie.STATUS,
   ]);
   const { windowWidth } = useWindowSize();
 
+  // Update Canvas dimensions
   React.useEffect(() => {
     if (windowWidth >= flappydronie.DEFAULT_CANVAS_DIMENSIONS.width) {
       flappydronie.CANVAS_DIMENSIONS.set(
@@ -31,5 +32,5 @@ export function useGame() {
     return flappydronie.FPS_CONTROLLER.stopDrawing;
   }, []);
 
-  return { backgrounds, foregrounds, bird, pipes, status };
+  return { backgrounds, foregrounds, bird, pipeSets, status };
 }

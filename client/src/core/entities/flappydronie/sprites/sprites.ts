@@ -15,16 +15,16 @@ export const foregrounds = Array.from(Array(2)).map((v, i) =>
   Sprite({
     filename: sheet,
     x: 0,
-    y: 2170 + i * (211 + 5),
+    y: 2170 + i * (173 + 5),
     width: 1920,
-    height: 211,
+    height: 173,
   }),
 );
 
 export const plane = Sprite({
   filename: sheet,
   x: 1925,
-  y: 1662,
+  y: 1587,
   width: 134,
   height: 80,
 });
@@ -42,7 +42,7 @@ export const dronies = Array.from(Array(21)).map((v, i) =>
 export const pipe_n = Sprite({
   filename: sheet,
   x: 1925,
-  y: 1747,
+  y: 1672,
   width: 105,
   height: 850,
 });
@@ -50,7 +50,7 @@ export const pipe_n = Sprite({
 export const pipe_s = Sprite({
   filename: sheet,
   x: 2035,
-  y: 1747,
+  y: 1672,
   width: 105,
   height: 850,
 });
