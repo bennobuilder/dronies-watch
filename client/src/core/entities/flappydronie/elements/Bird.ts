@@ -1,3 +1,4 @@
+import { defineConfig } from '@agile-ts/core';
 import { Base, BaseConfig } from './Base';
 import { Game } from './Game';
 import { bird_h, bird_w } from '../sprites';
@@ -7,14 +8,18 @@ export class Bird extends Base {
   public gravity = 0.25;
   public jumpForce = 4.6;
   public radius = 20; // Collision radius
-  public skin = Math.floor(Math.random() * 20) + 1; // Random Skin (UI)
   public maxVelocity = 7;
+  public skin; // Skin (UI)
 
   constructor(game: Game, config: BirdConfig) {
     super(game, {
       ...config,
       collisionBox: { width: bird_w, height: bird_h, ...config.collisionBox },
     });
+    config = defineConfig(config, {
+      skin: 0,
+    });
+    this.skin = config.skin as any;
     this.velocity = 0;
   }
 
@@ -48,4 +53,4 @@ export class Bird extends Base {
   }
 }
 
-export type BirdConfig = BaseConfig;
+export type BirdConfig = { skin?: number } & BaseConfig;

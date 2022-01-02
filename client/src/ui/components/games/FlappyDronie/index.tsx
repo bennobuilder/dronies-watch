@@ -32,8 +32,8 @@ const FlappyDronie: React.FC = () => {
   return (
     <Container
       id="flappydronie"
-      width={canvasDimensions.width}
-      height={canvasDimensions.height}
+      width={canvasDimensions.width || 0}
+      height={canvasDimensions.height || 0}
       onClick={inputHandler}
     >
       {backgrounds.map((bg) => (

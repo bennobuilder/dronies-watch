@@ -10,6 +10,7 @@
     "lint": "eslint --cache \"**/*.{js,ts}\""
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/express": "^4.17.13",
     "@types/http-errors": "^1.8.1",
     "@types/morgan": "^1.9.3",
@@ -25,6 +26,7 @@
     "typescript": "^4.5.4"
   },
   "dependencies": {
+    "axios": "^0.24.0",
     "cors": "^2.8.5",
     "express": "^4.17.2",
     "http-errors": "^2.0.0",
