@@ -8,7 +8,7 @@ import { flappydronie } from '../../../../../core';
 const Foreground: React.FC<Props> = (props) => {
   const { sprite } = props;
   return (
-    <SpriteWrapper gameSprite={sprite}>
+    <SpriteWrapper gameSprite={sprite} collisionBoxColor="blue">
       {foregrounds[sprite.skin]}
     </SpriteWrapper>
   );

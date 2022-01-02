@@ -1,12 +1,14 @@
 import { defineConfig } from '@agile-ts/core';
 import { Base, BaseConfig } from './Base';
+import { Game } from './Game';
+import { fg_h, fg_w } from '../sprites';
 
 export class Foreground extends Base {
   public skin = 0;
   public moveSpeed: number;
 
-  constructor(config: ForegroundConfig) {
-    super(config);
+  constructor(game: Game, config: ForegroundConfig) {
+    super(game, { width: fg_w, height: fg_h, ...config });
     config = defineConfig(config, {
       moveSpeed: 2,
     });
@@ -15,6 +17,6 @@ export class Foreground extends Base {
   }
 }
 
-type ForegroundConfig = {
+export type ForegroundConfig = {
   moveSpeed?: number;
 } & BaseConfig;

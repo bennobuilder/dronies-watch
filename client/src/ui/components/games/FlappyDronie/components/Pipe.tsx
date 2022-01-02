@@ -22,7 +22,11 @@ const Pipe: React.FC<Props> = (props) => {
     }
   }, [sprite.type]);
 
-  return <SpriteWrapper gameSprite={sprite}>{pipeAsset}</SpriteWrapper>;
+  return (
+    <SpriteWrapper gameSprite={sprite} collisionBoxColor="red">
+      {pipeAsset}
+    </SpriteWrapper>
+  );
 };
 
 export default Pipe;

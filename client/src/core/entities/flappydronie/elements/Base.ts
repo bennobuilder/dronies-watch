@@ -1,7 +1,11 @@
 import { defineConfig, generateId } from '@agile-ts/core';
+import { ga } from 'react-ga';
+import { Game } from './Game';
 
 export class Base {
   public id: string;
+
+  public game: Game;
 
   public cx: number;
   public cy: number;
@@ -10,7 +14,7 @@ export class Base {
   public width: number;
   public height: number;
 
-  constructor(config: BaseConfig = {}) {
+  constructor(game: Game, config: BaseConfig = {}) {
     config = defineConfig(config, {
       width: 20,
       height: 20,
@@ -18,6 +22,8 @@ export class Base {
       cy: 0,
       rotation: 0,
     });
+
+    this.game = game;
 
     this.width = config.width as any;
     this.height = config.height as any;

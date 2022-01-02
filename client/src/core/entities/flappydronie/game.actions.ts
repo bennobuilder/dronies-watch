@@ -18,19 +18,23 @@ import {
   FOREGROUND_POSITION,
   FOREGROUNDS,
   FRAMES,
+  GAME,
   GAME_STATUS,
-  GAP,
   HIGH_SCORE,
   LATEST_SCORE,
-  PIPES,
+  PIPE_SETS,
   SCORE,
   STATUS,
 } from './game.controller';
+import { PipeSet } from './elements/PipeSet';
 
 export const startGame = () => {
   if (STATUS.value !== GAME_STATUS.SPLASH)
     BIRD.set(
-      new Bird({ cx: BIRD_DEFAULT_POSITION.x, cy: BIRD_DEFAULT_POSITION.y }),
+      new Bird(GAME, {
+        cx: BIRD_DEFAULT_POSITION.x,
+        cy: BIRD_DEFAULT_POSITION.y,
+      }),
     );
 
   STATUS.set(GAME_STATUS.PLAYING);
@@ -52,10 +56,13 @@ export const endGame = () => {
 
 export const resetGame = () => {
   BIRD.set(
-    new Bird({ cx: BIRD_DEFAULT_POSITION.x, cy: BIRD_DEFAULT_POSITION.y }),
+    new Bird(GAME, {
+      cx: BIRD_DEFAULT_POSITION.x,
+      cy: BIRD_DEFAULT_POSITION.y,
+    }),
   );
   FRAMES.reset();
-  PIPES.reset();
+  PIPE_SETS.reset();
   STATUS.set(GAME_STATUS.SPLASH);
 };
 
@@ -90,7 +97,7 @@ export const updateScenery = () => {
       cy: canvasDimensions.height - fg_h, // Required when resizing
     });
 
-    // Apply changes to UI
+    // Apply changes to the UI
     FOREGROUND_POSITION.set(newForegroundPos);
     FOREGROUNDS.ingest();
 
@@ -105,17 +112,18 @@ export const updateScenery = () => {
       cy: canvasDimensions.height - bg_h, // Required when resizing
     });
 
-    // Apply changes to UI
+    // Apply changes to the UI
     BACKGROUND_POSITION.set(newBackgroundPos);
     BACKGROUNDS.ingest();
 
     // Update Pipes
-    if (STATUS.value === GAME_STATUS.PLAYING) PIPES.set((p) => updatePipes(p));
+    if (STATUS.value === GAME_STATUS.PLAYING) updatePipes();
   }
 };
 
 export const updateBird = (bird: Bird): Bird => {
   const canvasDimensions = CANVAS_DIMENSIONS.value;
+  const foregrounds = FOREGROUNDS.value;
 
   // If Splash Screen make the Bird hover
   if (STATUS.value === GAME_STATUS.SPLASH) {
@@ -133,13 +141,16 @@ export const updateBird = (bird: Bird): Bird => {
     if (
       bird.calculateCollision({
         cx: 0,
-        cy: canvasDimensions.height - fg_h - 10,
+        cy: foregrounds[0].cy,
         width: canvasDimensions.width,
         height: fg_h,
       })
     ) {
       // Set velocity to jump speed for correct rotation when crashing
       bird.setVelocity(bird.jumpForce);
+
+      if (bird.cy >= canvasDimensions.height - fg_h - 10)
+        bird.move({ cy: canvasDimensions.height - fg_h - 10 });
 
       endGame();
     }
@@ -172,71 +183,55 @@ export const jumpBird = () => {
   BIRD.ingest({ force: true });
 };
 
-export const updatePipes = (pipes: Pipe[]) => {
-  // Generate a Pipe every 100 frame
-  if (FRAMES.value % 100 === 0) pipes = pipes.concat(generatePipeSet());
+export const updatePipes = () => {
+  let pipeSets = PIPE_SETS.nextStateValue;
+  const bird = BIRD.value;
 
-  // Calculate collision and move Pipes
-  pipes.forEach((pipe) => {
-    // End Game, if collision with Pipe
-    if (calculateCollisionWithPipe(pipe)) endGame();
+  // Generate Pipe Sets
+  if (
+    pipeSets.length === 0 ||
+    pipeSets[pipeSets.length - 1].movedCx >=
+      pipeSets[pipeSets.length - 1].distance
+  ) {
+    pipeSets = pipeSets.concat(
+      new PipeSet(GAME, { cx: pipe_h, cy: 0, distance: 200, gap: 120 }),
+    );
+  }
+
+  pipeSets.forEach((pipeSet) => {
+    // End Game, if Bird collides with Pipe
+    if (
+      pipeSet.topPipe.calculateCollision({
+        cx: bird.cx,
+        cy: bird.cy,
+        width: bird.width,
+        height: bird.height,
+      }) ||
+      pipeSet.bottomPipe.calculateCollision({
+        cx: bird.cx,
+        cy: bird.cy,
+        width: bird.width,
+        height: bird.height,
+      })
+    )
+      endGame();
 
     // Calculate Score
-    if (
-      pipe.cx <= BIRD_DEFAULT_POSITION.x &&
-      !pipe.scored &&
-      pipe.type === 'N'
-    ) {
+    if (pipeSet.cx <= BIRD_DEFAULT_POSITION.x && !pipeSet.scored) {
       SCORE.set((v) => v + 1);
-      pipe.scored = true;
+      pipeSet.scored = true;
     }
 
-    // Move the Pipe towards the left
-    pipe.cx -= 2;
+    pipeSet.move();
 
-    // If the Pipe Set isn't visible anymore, remove it
-    if (pipe.cx < -pipe_w && pipe.type === 'N') pipes.splice(0, 2); // Remove leading Pipe Set
+    // Remove pipes that go out of view
+    if (pipeSet.cx < -pipe_w) pipeSets.splice(0, 1);
 
-    return pipe;
+    return pipeSet;
   });
 
-  return pipes;
-};
-
-export const calculateCollisionWithPipe = (pipe: Pipe): boolean => {
-  const bird = BIRD.value;
-  const cx = Math.min(
-    Math.max(bird.cx + bird_w / 2, pipe.cx),
-    pipe.cx + pipe_w,
-  );
-  const cy = Math.min(
-    Math.max(bird.cy + bird_h / 2, pipe.cy),
-    pipe.cy + pipe_h,
-  );
-
-  // Closest difference
-  const dx = bird.cx + bird_w / 2 - cx;
-  const dy = bird.cy + bird_h / 2 - cy;
-
-  // Vector length
-  const d1 = dx * dx + dy * dy;
-  const r = bird.radius * bird.radius;
-
-  // Determine intersection/collision of the Pipe with the Bird
-  return r > d1;
-};
-
-export const generatePipeSet = () => {
-  const minHeight = 140;
-  const variationRange = 200;
-  const randomYPos =
-    CANVAS_DIMENSIONS.value.height -
-    (pipe_h + fg_h + minHeight + variationRange * Math.random());
-
-  return [
-    new Pipe({ cx: pipe_h, cy: randomYPos, type: 'S' }),
-    new Pipe({ cx: pipe_h, cy: randomYPos + pipe_h + GAP.value, type: 'N' }),
-  ];
+  // Apply changes to the UI
+  PIPE_SETS.set(pipeSets);
 };
 
 export const getScoreTweet = (score: number) =>

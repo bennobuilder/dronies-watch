@@ -11,7 +11,7 @@ const Bird: React.FC<Props> = (props) => {
   const { sprite } = props;
 
   return (
-    <SpriteWrapper gameSprite={sprite}>
+    <SpriteWrapper gameSprite={sprite} collisionBoxColor="purple">
       <HeadContainer>{dronies[sprite.skin]}</HeadContainer>
       <VehicleContainer>{plane}</VehicleContainer>
     </SpriteWrapper>

@@ -1,25 +1,23 @@
 import { Base, BaseConfig } from './Base';
-import { FRAMES } from '../game.controller';
+import { Game } from './Game';
+import { bird_h, bird_w } from '../sprites';
 
 export class Bird extends Base {
   public velocity: number;
-
-  // Static properties, that doesn't change over time
   public gravity = 0.25;
   public jumpForce = 4.6;
   public radius = 20; // Collision radius
-  public skin = Math.floor(Math.random() * 20) + 1;
+  public skin = Math.floor(Math.random() * 20) + 1; // Random Skin (UI)
   public maxVelocity = 7;
 
-  constructor(config: BaseConfig) {
-    super(config);
+  constructor(game: Game, config: BirdConfig) {
+    super(game, { width: bird_w, height: bird_h, ...config });
     this.velocity = 0;
   }
 
   public hover(hoverHeight: number) {
     this.move({
-      // TODO outsource frame
-      cy: hoverHeight + 5 * Math.cos(FRAMES.value / 10), // ~199 - ~201
+      cy: hoverHeight + 5 * Math.cos(this.game.frame / 10), // ~199 - ~201
     });
   }
 
@@ -46,3 +44,5 @@ export class Bird extends Base {
     this.velocity = -this.jumpForce;
   }
 }
+
+export type BirdConfig = BaseConfig;

@@ -9,8 +9,8 @@ import Foreground from './components/Foreground';
 import { useGame } from './hooks/useGame';
 import { inputHandler } from './controller';
 
-const FlappyBird: React.FC = () => {
-  const { backgrounds, foregrounds, bird, pipes } = useGame();
+const FlappyDronie: React.FC = () => {
+  const { backgrounds, foregrounds, bird, pipeSets } = useGame();
   const [playonline, canvasDimensions] = useAgile([
     flappydronie.PLAY_ONLINE,
     flappydronie.CANVAS_DIMENSIONS,
@@ -31,7 +31,7 @@ const FlappyBird: React.FC = () => {
 
   return (
     <Container
-      id="flappybird"
+      id="flappydronie"
       width={canvasDimensions.width}
       height={canvasDimensions.height}
       onClick={inputHandler}
@@ -39,10 +39,13 @@ const FlappyBird: React.FC = () => {
       {backgrounds.map((bg) => (
         <Background sprite={bg} key={bg.id} />
       ))}
-      {pipes.map((pipe) => (
-        <Pipe sprite={pipe} key={pipe.id} />
+      {pipeSets.map((pipeSet) => (
+        <>
+          <Pipe sprite={pipeSet.topPipe} key={pipeSet.topPipe.id} />
+          <Pipe sprite={pipeSet.bottomPipe} key={pipeSet.bottomPipe.id} />
+        </>
       ))}
-      <Bird sprite={bird} />
+      <Bird sprite={bird} key={bird.id} />
       {foregrounds.map((fg) => (
         <Foreground sprite={fg} key={fg.id} />
       ))}
@@ -50,7 +53,7 @@ const FlappyBird: React.FC = () => {
   );
 };
 
-export default FlappyBird;
+export default FlappyDronie;
 
 const Container = styled.div<{ width: number; height: number }>`
   position: relative;
