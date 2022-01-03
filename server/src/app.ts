@@ -2,17 +2,18 @@ import cors from 'cors';
 import express from 'express';
 import logger from 'morgan';
 import createHttpError from 'http-errors';
-import flappyDronieRoutes from './routes/flappy-dronie';
-import rootRoutes from './routes/root';
 
+// Routes
+import routes from './routes';
+
+// Init Express App
 const app = express();
 
 app.use(logger('dev'));
 app.use(cors());
 
-// Routes
-app.use('/', rootRoutes);
-app.use('/flappy-dronie', flappyDronieRoutes);
+// Register Routes
+app.use('/', routes);
 
 // Catch 404 and forward to Error Handler
 app.use((req, res, next) => {

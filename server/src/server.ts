@@ -1,21 +1,23 @@
 import app from './app';
 import { initSocketServer } from './socket';
 import { createServer } from 'http';
-import debugConfig from './config/debug.config';
+import config from './config';
 
-// Assign port to express
-app.set('port', debugConfig.PORT);
+const PORT = config.debug.PORT;
+
+// Assign defined port to express
+app.set('port', PORT);
 
 // Create Http server
 export const server = createServer(app);
 
 // Listen on provided port, on all network interfaces
-server.listen(debugConfig.PORT);
+server.listen(PORT);
 server.on('error', (error) => {
   throw error;
 });
 server.on('listening', () => {
-  console.log('Server Running on Port:', debugConfig.PORT);
+  console.log(`Running on Port: ${PORT}`);
 });
 
 // Init socket
