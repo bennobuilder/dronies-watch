@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GAListener from '../ui/components/other/GAListener';
-import googleConfig from '../config/google.config';
+import config from '../config';
 
 // Screens
 import HomeScreen from '../ui/pages/home';
@@ -11,7 +11,7 @@ import DisclaimerScreen from '../ui/pages/disclaimer';
 
 const AppRouter: React.FC = () => (
   <BrowserRouter>
-    <GAListener trackingId={googleConfig.GA_TRACKING_CODE as any}>
+    <GAListener trackingId={config.google.GA_TRACKING_CODE as any}>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/lab" element={<DroniesLabScreen />} />

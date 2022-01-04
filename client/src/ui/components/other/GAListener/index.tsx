@@ -20,10 +20,7 @@ const GAListener: React.FC<Props> = (props) => {
 
   // Track Pages with Google Analytics
   React.useEffect(() => {
-    if (initialized) {
-      console.log('Updated Page Location', { location, initialized });
-      pageview(`${location.pathname}${location.search}`);
-    }
+    if (initialized) pageview(`${location.pathname}${location.search}`);
   }, [location, initialized]);
 
   // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33006
