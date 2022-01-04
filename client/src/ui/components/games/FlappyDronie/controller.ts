@@ -8,6 +8,9 @@ export const inputHandler = () => {
       case GAME_STATUS.SPLASH:
         console.log('START GAME');
 
+        flappydronie.startGame();
+        flappydronie.jumpBird();
+
         // Analytics
         trackEvent({
           category: 'Flappy Dronie',
@@ -15,8 +18,6 @@ export const inputHandler = () => {
           label: 'Start Game',
         });
 
-        flappydronie.startGame();
-        flappydronie.jumpBird();
         break;
       case GAME_STATUS.PLAYING:
         console.log('JUMP');
@@ -24,7 +25,16 @@ export const inputHandler = () => {
         break;
       case GAME_STATUS.SCORE:
         console.log('RESTART');
+
         flappydronie.resetGame();
+
+        // Analytics
+        trackEvent({
+          category: 'Flappy Dronie',
+          action: 'score',
+          label: `Scored: ${flappydronie.SCORE.value}`,
+        });
+
         break;
       default:
         break;
