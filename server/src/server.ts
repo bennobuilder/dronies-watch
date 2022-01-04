@@ -3,7 +3,7 @@ import { initSocketServer } from './socket';
 import { createServer } from 'http';
 import config from './config';
 
-const PORT = config.debug.PORT;
+const PORT = config.debug.port;
 
 // Assign defined port to express
 app.set('port', PORT);

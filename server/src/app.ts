@@ -2,8 +2,6 @@ import cors from 'cors';
 import express from 'express';
 import logger from 'morgan';
 import createHttpError from 'http-errors';
-
-// Routes
 import routes from './routes';
 
 // Init Express App

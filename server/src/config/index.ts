@@ -9,11 +9,13 @@ console.log(`Loaded Environment Variables from '.env.${ENVIRONMENT}'`);
 import appConfig from './app.config';
 import discordConfig from './discord.config';
 import debugConfig from './debug.config';
+import ormConfig from './orm.config';
 
 export const config = {
   app: appConfig,
   discord: discordConfig,
   debug: debugConfig,
+  orm: ormConfig,
 };
 
 export default config;

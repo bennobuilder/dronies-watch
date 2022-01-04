@@ -2,12 +2,12 @@ import appConfig from './app.config';
 import { sprintf } from '../utils/sprintf';
 
 export default {
-  APPLICATION_ID: process.env.DISCORD_APPLICATION_ID,
-  CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
-  API_ENDPOINT: 'https://discord.com/api/v8',
-  REDIRECT_URI: sprintf(
+  applicationId: process.env.DISCORD_APPLICATION_ID,
+  clientSecret: process.env.DISCORD_CLIENT_SECRET,
+  apiEndpoint: 'https://discord.com/api/v8',
+  redirectUrl: sprintf(
     process.env.DISCORD_REDIRECT_URL || '',
-    appConfig.VERSION,
+    appConfig.version,
   ),
 };
 
