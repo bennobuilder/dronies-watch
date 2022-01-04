@@ -1,9 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import metaConfig from '../../../../../config/meta.config';
+import config from '../../../../../config';
 
 // Assets
-// @ts-ignore
 import Favicon from '../../../../../assets/meta/favicon.ico';
 import Image from '../../../../../assets/meta/metaBanner.png';
 
@@ -13,16 +12,16 @@ import Image from '../../../../../assets/meta/metaBanner.png';
 const Head: React.FC<HeadProps> = (props) => {
   const {
     title: siteTitle,
-    description = metaConfig.description,
-    keywords = metaConfig.keywords,
+    description = config.meta.description,
+    keywords = config.meta.keywords,
     image = Image,
-    color = metaConfig.color,
-    creator = metaConfig.creator,
+    color = config.meta.color,
+    creator = config.meta.creator,
     canonical = '',
   } = props;
   const combinedTitle = siteTitle
-    ? `${siteTitle} - ${metaConfig.title}`
-    : metaConfig.title;
+    ? `${siteTitle} - ${config.meta.title}`
+    : config.meta.title;
 
   return (
     <Helmet>
@@ -49,9 +48,9 @@ const Head: React.FC<HeadProps> = (props) => {
       {Favicon && <link rel="shortcut icon" href={Favicon} />}
 
       {/* Permalink */}
-      <link rel="canonical" href={`${metaConfig.url}${canonical}/`} />
-      <meta property="og:url" content={`${metaConfig.url}${canonical}/`} />
-      <meta property="forem:domain" content={metaConfig.url} />
+      <link rel="canonical" href={`${config.meta.url}${canonical}/`} />
+      <meta property="og:url" content={`${config.meta.url}${canonical}/`} />
+      <meta property="forem:domain" content={config.meta.url} />
 
       {/* Description */}
       {description && <meta name="description" content={description} />}
@@ -66,7 +65,7 @@ const Head: React.FC<HeadProps> = (props) => {
       {image && (
         <meta
           name="twitter:image:alt"
-          content={`Image for "${metaConfig.title}"`}
+          content={`Image for "${config.meta.title}"`}
         />
       )}
       {/* Makes Image Large */}
