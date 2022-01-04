@@ -3,29 +3,41 @@ import { GAME_STATUS } from '../../../../core/entities/flappydronie';
 import { trackEvent } from '../../../hooks/useEventTracker';
 
 export const inputHandler = () => {
-  switch (flappydronie.STATUS.value) {
-    case GAME_STATUS.SPLASH:
-      console.log('START GAME');
+  if (!flappydronie.COOLDOWN.value) {
+    switch (flappydronie.STATUS.value) {
+      case GAME_STATUS.SPLASH:
+        console.log('START GAME');
 
-      // Analytics
-      trackEvent({
-        category: 'Flappy Dronie',
-        action: 'start-game',
-        label: 'Start Game',
-      });
+        flappydronie.startGame();
+        flappydronie.jumpBird();
 
-      flappydronie.startGame();
-      flappydronie.jumpBird();
-      break;
-    case GAME_STATUS.PLAYING:
-      console.log('JUMP');
-      flappydronie.jumpBird();
-      break;
-    case GAME_STATUS.SCORE:
-      console.log('RESTART');
-      flappydronie.resetGame();
-      break;
-    default:
-      break;
+        // Analytics
+        trackEvent({
+          category: 'Flappy Dronie',
+          action: 'start-game',
+          label: 'Start Game',
+        });
+
+        break;
+      case GAME_STATUS.PLAYING:
+        console.log('JUMP');
+        flappydronie.jumpBird();
+        break;
+      case GAME_STATUS.SCORE:
+        console.log('RESTART');
+
+        flappydronie.resetGame();
+
+        // Analytics
+        trackEvent({
+          category: 'Flappy Dronie',
+          action: 'score',
+          label: `Scored: ${flappydronie.SCORE.value}`,
+        });
+
+        break;
+      default:
+        break;
+    }
   }
 };

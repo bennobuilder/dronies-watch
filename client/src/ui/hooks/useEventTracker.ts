@@ -1,7 +1,8 @@
 import { event, EventArgs } from 'react-ga';
+import { ui } from '../../core';
 
 export function trackEvent(args: EventArgs) {
-  event(args);
+  if (ui.INITIALIZED_GA.value) event(args);
 }
 
 export function useEventTracker(category = 'unknown') {

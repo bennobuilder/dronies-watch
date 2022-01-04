@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
-import metaConfig from '../../../../../config/metaConfig';
+import metaConfig from '../../../../../config/meta.config';
 
 // Assets
 // @ts-ignore

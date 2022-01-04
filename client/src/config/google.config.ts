@@ -2,5 +2,5 @@
 //       but no alternative I've found is free (e.g. Fathom, Plausible)
 
 export default {
-  GA_TRACKING_CODE: process.env.REACT_APP_GA_TRACKING_CODE,
+  GA_TRACKING_CODE: process.env.GA_TRACKING_CODE,
 };

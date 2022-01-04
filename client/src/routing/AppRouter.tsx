@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import GAListener from '../ui/components/other/GAListener';
-import googleConfig from '../config/googleConfig';
+import googleConfig from '../config/google.config';
 
 // Screens
 import HomeScreen from '../ui/pages/home';

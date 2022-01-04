@@ -1,20 +1,13 @@
-import {
-  bg_h,
-  bg_w,
-  bird_h,
-  bird_w,
-  fg_h,
-  fg_w,
-  pipe_h,
-  pipe_w,
-} from './sprites';
-import { Bird, PipeSet } from './elements';
+import { bg_h, bg_w, fg_h, fg_w, pipe_h, pipe_w } from './sprites';
+import { PipeSet } from './elements';
 import {
   BACKGROUND_POSITION,
   BACKGROUNDS,
   BIRD,
   BIRD_DEFAULT_POSITION,
+  BIRD_SKIN,
   CANVAS_DIMENSIONS,
+  COOLDOWN,
   FOREGROUND_POSITION,
   FOREGROUNDS,
   FRAMES,
@@ -22,19 +15,24 @@ import {
   GAME_STATUS,
   HIGH_SCORE,
   LATEST_SCORE,
+  MAP_SKIN,
   PIPE_SETS,
   SCORE,
   STATUS,
 } from './game.controller';
 
 export const startGame = () => {
-  if (STATUS.value !== GAME_STATUS.SPLASH) BIRD.set(createBird());
-
   STATUS.set(GAME_STATUS.PLAYING);
 };
 
 export const endGame = () => {
   if (STATUS.value === GAME_STATUS.PLAYING) {
+    // Cooldown for no instant restart
+    COOLDOWN.set(true);
+    setTimeout(() => {
+      COOLDOWN.set(false);
+    }, 1000);
+
     STATUS.set(GAME_STATUS.SCORE);
 
     // Calculate High Score
@@ -48,22 +46,19 @@ export const endGame = () => {
 };
 
 export const resetGame = () => {
-  BIRD.set(createBird());
+  // Reset Bird
+  const bird = BIRD.nextStateValue;
+  bird.move({ cy: BIRD_DEFAULT_POSITION.y, cx: BIRD_DEFAULT_POSITION.x });
+  bird.rotate(0);
+  BIRD.ingest();
+
   FRAMES.reset();
   PIPE_SETS.reset();
   STATUS.set(GAME_STATUS.SPLASH);
-};
 
-export const createBird = () =>
-  new Bird(GAME, {
-    cx: BIRD_DEFAULT_POSITION.x,
-    cy: BIRD_DEFAULT_POSITION.y,
-    collisionBox: {
-      width: bird_w - 10,
-      height: bird_h - 10,
-      offset: { x: 10, y: 5 },
-    },
-  });
+  // Update Skins
+  BIRD_SKIN.set(Math.floor(Math.random() * 20) + 1);
+};
 
 export const updateFrame = () => {
   FRAMES.set((f) => f + 1);
@@ -72,8 +67,7 @@ export const updateFrame = () => {
   updateScenery();
 
   // Update Bird
-  // TODO optimize as the screen is also re-rendered although the bird doesn't move
-  BIRD.set((b) => updateBird(b), { force: true });
+  updateBird();
 };
 
 export const updateScenery = () => {
@@ -120,7 +114,9 @@ export const updateScenery = () => {
   }
 };
 
-export const updateBird = (bird: Bird): Bird => {
+export const updateBird = () => {
+  const bird = BIRD.nextStateValue;
+
   const canvasDimensions = CANVAS_DIMENSIONS.value;
   const foregrounds = FOREGROUNDS.value;
 
@@ -170,7 +166,9 @@ export const updateBird = (bird: Bird): Bird => {
     if (!collisionWithGround) bird.calculateRotation();
   }
 
-  return bird;
+  // Apply changes to the UI
+  // TODO optimize as the screen is also re-rendered although the bird doesn't move
+  BIRD.ingest({ force: true });
 };
 
 export const jumpBird = () => {
