@@ -10,6 +10,6 @@ export default {
   password: process.env.DB_PASSWORD || 'postgres',
   database: process.env.DB_NAME || 'random_node_project',
   synchronize: !!process.env.DB_SYNC,
-  entities: [`src/db/entity/**/*.${isCompiled ? 'js' : 'ts'}`],
+  entities: [`src/db/entities/**/*.${isCompiled ? 'js' : 'ts'}`],
   migrations: [`src/db/migrations/**/*.${isCompiled ? 'js' : 'ts'}`],
 };

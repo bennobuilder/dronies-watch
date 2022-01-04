@@ -9,7 +9,7 @@ export async function connectDB() {
   try {
     connection = getConnection();
   } catch (err) {
-    console.log(err);
+    // do nothing
   }
 
   try {
@@ -26,6 +26,8 @@ export async function connectDB() {
         password: orm.password,
         database: orm.database,
         synchronize: orm.synchronize,
+        entities: orm.entities,
+        migrations: orm.migrations,
       });
     }
     console.log(`Successfully connected to the database: '${orm.database}'.`);

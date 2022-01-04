@@ -2,23 +2,33 @@ import app from './app';
 import { initSocketServer } from './socket';
 import { createServer } from 'http';
 import config from './config';
+import { connectDB } from './db';
 
-const PORT = config.debug.port;
+export const { server, io } = (() => {
+  const PORT = config.debug.port;
 
-// Assign defined port to express
-app.set('port', PORT);
+  // Assign defined port to express
+  app.set('port', PORT);
 
-// Create Http server
-export const server = createServer(app);
+  // Connect to db
+  connectDB();
 
-// Listen on provided port, on all network interfaces
-server.listen(PORT);
-server.on('error', (error) => {
-  throw error;
-});
-server.on('listening', () => {
-  console.log(`Running on Port: ${PORT}`);
-});
+  // Create Http server
+  const server = createServer(app);
 
-// Init socket
-export const io = initSocketServer(server);
+  // Listen on provided port, on all network interfaces
+  server.listen(PORT);
+  server.on('error', (error) => {
+    throw error;
+  });
+  server.on('listening', () => {
+    console.log(`Running on Port: ${PORT}`);
+  });
+
+  // Init socket
+  const io = initSocketServer(server);
+
+  return { server, io };
+})();
+
+export default server;

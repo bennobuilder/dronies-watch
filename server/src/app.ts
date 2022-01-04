@@ -5,24 +5,28 @@ import createHttpError from 'http-errors';
 import routes from './routes';
 
 // Init Express App
-const app = express();
+const { app } = (() => {
+  const app = express();
 
-app.use(logger('dev'));
-app.use(cors());
+  app.use(logger('dev'));
+  app.use(cors());
 
-// Register Routes
-app.use('/', routes);
+  // Register Routes
+  app.use('/', routes);
 
-// Catch 404 and forward to Error Handler
-app.use((req, res, next) => {
-  next(createHttpError(404));
-});
+  // Catch 404 and forward to Error Handler
+  app.use((req, res, next) => {
+    next(createHttpError(404));
+  });
 
-// Error Handler
-// https://expressjs.com/en/guide/error-handling.html
-app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.json({ error: err });
-});
+  // Error Handler
+  // https://expressjs.com/en/guide/error-handling.html
+  app.use((err, req, res, next) => {
+    res.status(err.status || 500);
+    res.json({ error: err });
+  });
+
+  return { app };
+})();
 
 export default app;

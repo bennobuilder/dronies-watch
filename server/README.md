@@ -16,3 +16,6 @@
 
 ### How to have value in string represented by %s and then replaced with a value
 - https://stackoverflow.com/questions/3318621/javascript-how-to-have-value-in-string-represented-by-s-and-then-replaced-with/35754033
+
+### How to change PostgreSQL user password?
+- https://stackoverflow.com/questions/12720967/how-to-change-postgresql-user-password
