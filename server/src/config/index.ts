@@ -6,10 +6,12 @@ dotenv.config({ path: `.env.${ENVIRONMENT}` });
 console.log(`Loaded Environment Variables from '.env.${ENVIRONMENT}'`);
 
 // Configs
+import appConfig from './app.config';
 import discordConfig from './discord.config';
 import debugConfig from './debug.config';
 
 export const config = {
+  app: appConfig,
   discord: discordConfig,
   debug: debugConfig,
 };
