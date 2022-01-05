@@ -8,6 +8,7 @@ import Header from './components/Header';
 import HeaderBackgroundImg from '../../../assets/app/dronies_background.png';
 import FlappyDronieGame from './components/FlappyDronieGame';
 import Spacer from '../../components/other/Spacer';
+import RecentHighScores from './components/RecentHighScores';
 
 const FlappyDronieScreen: React.FC = () => (
   <PageLayout meta={{ title: 'Lab' }}>
@@ -16,6 +17,8 @@ const FlappyDronieScreen: React.FC = () => (
       <HeaderBackground src={HeaderBackgroundImg} alt="HeaderBackground" />
       <Spacer height={200} />
       <FlappyDronieGame />
+      <Spacer height={200} />
+      <RecentHighScores />
       <Spacer height={200} />
     </Container>
   </PageLayout>

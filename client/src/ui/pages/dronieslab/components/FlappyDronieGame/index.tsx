@@ -30,11 +30,12 @@ const FlappyDronieGame: React.FC = () => {
 
       <ContentContainer>
         <InfoContainer>
-          <StatsContainer>
+          <StatsContainer linesCount={0} opacity={0.3}>
             <LabelText label="Score: " value={score.toString()} />
             <LabelText label="Latest Score: " value={latestScore.toString()} />
             <LabelText label="High Score: " value={highScore.toString()} />
           </StatsContainer>
+
           {highScore > 5 && (
             <ShareScoreButton
               text="Share Score"
@@ -164,9 +165,12 @@ const InfoContainer = styled.div`
   }
 `;
 
-const StatsContainer = styled.div`
+const StatsContainer = styled(LinesBackground)`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+
+  padding: 20px 20px;
 `;
 
 const ShareScoreButton = styled(Button)`

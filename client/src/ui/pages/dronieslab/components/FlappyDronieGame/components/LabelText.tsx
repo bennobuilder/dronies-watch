@@ -26,7 +26,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
 
-  margin-top: 10px;
+  padding: 5px 0;
 `;
 
 const Label = styled.p`
