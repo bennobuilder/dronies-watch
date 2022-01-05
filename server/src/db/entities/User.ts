@@ -17,9 +17,9 @@ export class User {
   @Column({ name: 'avatar', nullable: true })
   avatar?: string;
 
-  @Column({ name: 'access_token' })
+  @Column({ name: 'discord_access_token' })
   accessToken: string;
 
-  @Column({ name: 'refresh_token' })
+  @Column({ name: 'discord_refresh_token' })
   refreshToken: string;
 }
