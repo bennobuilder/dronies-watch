@@ -1,4 +1,3 @@
-import app from './app';
 import { initSocketServer } from './socket';
 import { createServer } from 'http';
 import config from './config';
@@ -7,14 +6,21 @@ import { connectDB } from './db';
 export const { server, io } = (() => {
   const PORT = config.debug.port;
 
-  // Assign defined port to express
-  app.set('port', PORT);
+  const server = createServer();
+  const io = initSocketServer(server);
 
-  // Connect to db
-  connectDB();
+  connectDB(async () => {
+    // Import the express app after the DB has been connected
+    // to not try to connect to the Repositories
+    // accessed in the routes before the connection to the database has been established
+    // https://github.com/typeorm/typeorm/issues/5362
+    const { default: app } = await import('./app');
 
-  // Create Http server
-  const server = createServer(app);
+    // Assign express as request listener to the server,
+    // after the db has been connected
+    app.set('port', PORT);
+    server.on('request', app);
+  });
 
   // Listen on provided port, on all network interfaces
   server.listen(PORT);
@@ -24,9 +30,6 @@ export const { server, io } = (() => {
   server.on('listening', () => {
     console.log(`Running on Port: ${PORT}`);
   });
-
-  // Init socket
-  const io = initSocketServer(server);
 
   return { server, io };
 })();

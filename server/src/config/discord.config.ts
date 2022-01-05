@@ -1,14 +1,21 @@
 import appConfig from './app.config';
 import { sprintf } from '../utils/sprintf';
 
+const apiEndpoint = 'https://discord.com/api/v8';
+
 export default {
   applicationId: process.env.DISCORD_APPLICATION_ID,
   clientSecret: process.env.DISCORD_CLIENT_SECRET,
-  apiEndpoint: 'https://discord.com/api/v8',
+  apiEndpoint,
   redirectUrl: sprintf(
     process.env.DISCORD_REDIRECT_URL || '',
     appConfig.version,
   ),
+
+  routes: {
+    oauth2Token: `${apiEndpoint}/oauth2/token`,
+    oauth2User: `${apiEndpoint}/users/@me`,
+  },
 };
 
 // Localhost

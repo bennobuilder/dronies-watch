@@ -1,7 +1,10 @@
 import { Response, Request } from 'express';
-import { URLSearchParams } from 'url';
 import config from '../../../config';
-import axios from 'axios';
+import {
+  createUser,
+  exchangeAccessCodeForCredentials,
+  getDiscordUserDetails,
+} from './auth.service';
 
 export async function authDiscordRedirectController(
   req: Request,
@@ -10,7 +13,7 @@ export async function authDiscordRedirectController(
   try {
     const { code } = req.query;
     if (code != null) {
-      const formData = new URLSearchParams({
+      const response = await exchangeAccessCodeForCredentials({
         client_id: config.discord.applicationId || 'unknown',
         client_secret: config.discord.clientSecret || 'unknown',
         grant_type: 'authorization_code',
@@ -18,20 +21,23 @@ export async function authDiscordRedirectController(
         redirect_uri: config.discord.redirectUrl,
       });
 
-      const authResponse = await axios.post(
-        `${config.discord.apiEndpoint}/oauth2/token`,
-        // https://axios-http.com/docs/urlencoded
-        formData.toString(),
-        {
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-        },
-      );
+      const {
+        access_token: accessToken,
+        refresh_token: refreshToken,
+        token_type: tokenType,
+      } = response.data;
+      const discordUser = await getDiscordUserDetails(accessToken, tokenType);
+      const { id, discriminator, username, avatar } = discordUser.data;
+      const user = await createUser({
+        accessToken,
+        refreshToken,
+        discordId: id,
+        discriminator,
+        name: username,
+        avatar: avatar || undefined,
+      });
 
-      console.log(authResponse);
-
-      res.send(200);
+      res.send({ ...user, tag: `${user?.name}#${user?.discriminator}` });
     }
   } catch (err) {
     console.log(err);
@@ -77,20 +83,11 @@ export async function getAuthenticatedDiscordUserController(
   req: Request,
   res: Response,
 ) {
-  // try {
-  //   const userResponse = await axios.get(
-  //     'https://discord.com/api/v8/users/@me',
-  //     {
-  //       headers: {
-  //         // tokenType = 'Bearer' (https://www.devopsschool.com/blog/what-is-bearer-token-and-how-it-works/)
-  //         Authorization: `${'tokenType'} ${'accessToken'}`,
-  //       },
-  //     },
-  //   );
-  //   res.send(userResponse.data);
-  // } catch (err) {
-  //   console.log(err);
-  //   res.sendStatus(400);
-  // }
+  try {
+    // TODO
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
+  }
   res.send(200);
 }

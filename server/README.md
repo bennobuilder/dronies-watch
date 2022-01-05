@@ -19,3 +19,8 @@
 
 ### How to change PostgreSQL user password?
 - https://stackoverflow.com/questions/12720967/how-to-change-postgresql-user-password
+
+### Typeorm
+- https://typeorm.io/#/
+- https://www.youtube.com/watch?v=NtS5BkqS6M0&t=204s
+- https://www.youtube.com/watch?v=xt6etYGbPpo
