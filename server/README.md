@@ -24,3 +24,9 @@
 - https://typeorm.io/#/
 - https://www.youtube.com/watch?v=NtS5BkqS6M0&t=204s
 - https://www.youtube.com/watch?v=xt6etYGbPpo
+
+### Writing middleware for use in Express apps
+- https://expressjs.com/en/guide/writing-middleware.html#writing-middleware-for-use-in-express-apps
+
+### Error Handler Middleware
+- https://www.becomebetterprogrammer.com/how-to-use-error-handler-middleware-with-express-js-and-typescript/

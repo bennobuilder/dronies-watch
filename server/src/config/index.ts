@@ -10,12 +10,14 @@ import appConfig from './app.config';
 import discordConfig from './discord.config';
 import debugConfig from './debug.config';
 import ormConfig from './orm.config';
+import sessionConfig from './session.config';
 
 export const config = {
   app: appConfig,
   discord: discordConfig,
   debug: debugConfig,
   orm: ormConfig,
+  session: sessionConfig,
 };
 
 export default config;
