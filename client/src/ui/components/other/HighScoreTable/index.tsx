@@ -23,21 +23,21 @@ const HighScoreTable: React.FC = () => {
         </thead>
         <tbody>
           <TableItem
-            index={0}
+            rank={1}
             name="Benno"
             discriminator="1234"
             score={47}
             playedDateTime={new Date()}
           />
           <TableItem
-            index={1}
+            rank={2}
             name="Jeff"
             discriminator="5678"
             score={12}
             playedDateTime={new Date()}
           />
           <TableItem
-            index={2}
+            rank={3}
             name="Frank"
             discriminator="9999"
             score={8}
@@ -56,10 +56,12 @@ const Container = styled(LinesBackground)`
   position: relative;
 
   padding: 0;
+  width: 100%;
 `;
 
 const StyledTable = styled.table`
   min-width: 400px;
+  width: 100%;
 
   color: white; // TODO REMOVE
 `;

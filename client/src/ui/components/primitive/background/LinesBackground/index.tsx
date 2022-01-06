@@ -61,16 +61,15 @@ type Props = {
 const Container = styled.div`
   position: relative;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
+  background-color: blue;
 
   padding: 20px;
 `;
 
 const ContentContainer = styled.div`
   position: relative;
+
+  background-color: red;
 
   z-index: 2;
 `;
@@ -85,8 +84,6 @@ const LinesContainer = styled.div<{ opacity: number }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  width: 100%;
 
   opacity: ${({ opacity }) => opacity};
   z-index: 1;

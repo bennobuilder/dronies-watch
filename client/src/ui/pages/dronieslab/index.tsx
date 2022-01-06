@@ -29,10 +29,11 @@ export default FlappyDronieScreen;
 const Container = styled.div`
   display: flex;
   flex: 1;
-  margin-top: ${ui.NAVBAR_HEIGHT}px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  margin-top: ${ui.NAVBAR_HEIGHT}px;
 
   width: 100%;
 `;

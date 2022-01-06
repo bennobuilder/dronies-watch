@@ -4,7 +4,7 @@ import BottomDivider from './BottomDivider';
 
 const TableItem: React.FC<Props> = (props) => {
   const {
-    index,
+    rank,
     name,
     discriminator,
     score,
@@ -14,9 +14,9 @@ const TableItem: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      <Cell>{index + 1}</Cell>
+      <Rank>{rank + 1}</Rank>
       <Cell>{name}</Cell>
-      <Cell>{score}</Cell>
+      <Score>{score}</Score>
       <Cell>15 hours ago</Cell>
       {showDivider && <BottomDivider />}
     </Container>
@@ -26,7 +26,7 @@ const TableItem: React.FC<Props> = (props) => {
 export default TableItem;
 
 type Props = {
-  index: number;
+  rank: number;
   name: string;
   discriminator: string;
   score: number;
@@ -41,5 +41,16 @@ const Container = styled.tr`
 `;
 
 const Cell = styled.td`
-  padding: 12px 15px;
+  padding: 1rem 1rem;
+`;
+
+const Rank = styled(Cell)`
+  width: 4ch;
+  padding-left: 1rem;
+
+  text-align: right;
+`;
+
+const Score = styled(Cell)`
+  width: 8ch;
 `;

@@ -160,6 +160,8 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
 
+  width: 100%;
+
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
     margin-top: 30px;
   }
@@ -168,9 +170,9 @@ const InfoContainer = styled.div`
 const StatsContainer = styled(LinesBackground)`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
 
-  padding: 20px 20px;
+  padding: 20px 50px;
 `;
 
 const ShareScoreButton = styled(Button)`
