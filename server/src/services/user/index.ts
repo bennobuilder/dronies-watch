@@ -1,12 +1,8 @@
-import {
-  CreateUserParams,
-  UpdateUserParams,
-  UserCredentials,
-} from '../../routes/v1/auth/auth.types';
 import { getRepository } from 'typeorm';
 import { User } from '../../db/entities/User';
 import { decrypt } from '../crypto';
 import { getDiscordUserDetails } from './discord';
+import { CreateUserParams, UpdateUserParams, UserCredentials } from './user.types';
 
 const userRepository = getRepository(User);
 

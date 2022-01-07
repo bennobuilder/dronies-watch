@@ -4,10 +4,10 @@ import { serializeSession } from '../../../services/session';
 import { encrypt } from '../../../services/crypto';
 import {
   exchangeAccessCodeForCredentials,
-  getDiscordUserDetails,
   revokeToken,
 } from '../../../services/auth';
 import { createUser } from '../../../services/user';
+import { getDiscordUserDetails } from '../../../services/user/discord';
 
 export async function authDiscordRedirectController(
   req: Request,

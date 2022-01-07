@@ -1,11 +1,8 @@
 import axios from 'axios';
-import {
-  DiscordOAuth2CredentialsResponse,
-  OAuth2TokenExchangeRequestParams,
-} from '../../routes/v1/auth/auth.types';
 import { urlEncodeData } from '../../utils/urlEncodeData';
 import config from '../../config';
 import { getUser } from '../user';
+import { DiscordOAuth2CredentialsResponse, OAuth2TokenExchangeRequestParams } from './auth.types';
 
 // Retrieve access and refresh token
 export async function exchangeAccessCodeForCredentials(
