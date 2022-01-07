@@ -1,11 +1,14 @@
 import axios from 'axios';
 import { urlEncodeData } from '../../utils/urlEncodeData';
 import config from '../../config';
-import { getUser } from '../user';
-import { DiscordOAuth2CredentialsResponse, OAuth2TokenExchangeRequestParams } from './auth.types';
+import { deleteUser, getUser } from '../user';
+import {
+  DiscordOAuth2CredentialsResponse,
+  OAuth2TokenExchangeRequestParams,
+} from './auth.types';
 
 // Retrieve access and refresh token
-export async function exchangeAccessCodeForCredentials(
+export async function exchangeAccessCodeForDiscordCredentials(
   data: OAuth2TokenExchangeRequestParams,
 ) {
   return await axios.post<DiscordOAuth2CredentialsResponse>(
@@ -20,11 +23,9 @@ export async function exchangeAccessCodeForCredentials(
   );
 }
 
-export async function revokeToken(userId: string): Promise<boolean> {
+export async function revokeDiscordToken(userId: string): Promise<boolean> {
   const user = await getUser(userId);
   if (user == null) return false;
-
-  // TODO delete user and session
 
   await axios.post(
     config.discord.routes.revokeToken,

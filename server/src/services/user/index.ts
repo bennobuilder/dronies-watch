@@ -1,8 +1,12 @@
 import { getRepository } from 'typeorm';
 import { User } from '../../db/entities/User';
 import { decrypt } from '../crypto';
-import { getDiscordUserDetails } from './discord';
-import { CreateUserParams, UpdateUserParams, UserCredentials } from './user.types';
+import {
+  CreateUserParams,
+  UpdateUserParams,
+  UserCredentials,
+} from './user.types';
+import { deleteSession } from '../session';
 
 const userRepository = getRepository(User);
 
@@ -18,10 +22,9 @@ export async function createUser(
     return await updateUser(userInDB, params, credentials);
   }
 
-  // Create new user
+  // Create and save new user
   const newUser = userRepository.create({ ...params, ...credentials });
-  const savedUser = await userRepository.save(newUser);
-  return savedUser[0];
+  return userRepository.save(newUser);
 }
 
 export async function updateUser(
@@ -49,7 +52,12 @@ export async function getUser(userId: string): Promise<User | null> {
   userInDB.refreshToken = decrypt(userInDB.refreshToken);
 
   // TODO Check for user profile updates
-  getDiscordUserDetails(userInDB.accessToken);
+  // await getDiscordUserDetails(userInDB.accessToken);
 
   return userInDB;
+}
+
+export async function deleteUser(userId: string) {
+  await userRepository.delete(userId);
+  await deleteSession(userId);
 }

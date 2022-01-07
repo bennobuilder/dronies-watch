@@ -36,7 +36,7 @@ export async function deserializeSession(
     return next();
   }
 
-  const data = JSON.parse(sessionDB.data);
+  const data = JSON.parse(sessionDB.userId);
   req.userId = data;
 
   return next(); // Go to next middleware

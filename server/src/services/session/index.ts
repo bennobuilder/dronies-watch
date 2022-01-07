@@ -8,12 +8,15 @@ export async function serializeSession(req: Request, userId: string) {
   req.session.userId = userId;
   req.userId = userId;
 
-  // Save Session to database
+  // Create and save new user
   const session = sessionRepository.create({
     sessionId: req.sessionID,
     expiresAt: req.session.cookie.expires,
-    data: userId,
+    userId,
   });
-
   return sessionRepository.save(session);
+}
+
+export async function deleteSession(userId: string) {
+  await sessionRepository.delete({ userId });
 }

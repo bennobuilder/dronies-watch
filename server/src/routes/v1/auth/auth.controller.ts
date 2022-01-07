@@ -3,10 +3,10 @@ import config from '../../../config';
 import { serializeSession } from '../../../services/session';
 import { encrypt } from '../../../services/crypto';
 import {
-  exchangeAccessCodeForCredentials,
-  revokeToken,
+  exchangeAccessCodeForDiscordCredentials,
+  revokeDiscordToken,
 } from '../../../services/auth';
-import { createUser } from '../../../services/user';
+import { createUser, deleteUser } from '../../../services/user';
 import { getDiscordUserDetails } from '../../../services/user/discord';
 
 export async function authDiscordRedirectController(
@@ -18,9 +18,9 @@ export async function authDiscordRedirectController(
     if (code != null) {
       // Retrieve Discord User 'access_token' and 'refresh_token'
       // to retrieve user data from Discord
-      const response = await exchangeAccessCodeForCredentials({
-        client_id: config.discord.applicationId || 'unknown',
-        client_secret: config.discord.clientSecret || 'unknown',
+      const response = await exchangeAccessCodeForDiscordCredentials({
+        client_id: config.discord.applicationId!,
+        client_secret: config.discord.clientSecret!,
         grant_type: 'authorization_code',
         code: code.toString(),
         redirect_uri: config.discord.redirectUrl,
@@ -77,13 +77,13 @@ export async function authDiscordRevokeController(req: Request, res: Response) {
     const userId = req.userId;
     if (userId == null) return res.sendStatus(401);
 
-    const success = await revokeToken(userId);
+    const success = await revokeDiscordToken(userId);
+
+    await deleteUser(userId);
 
     res.send({ success });
   } catch (err) {
     console.log(err);
     res.sendStatus(400);
   }
-
-  res.sendStatus(401);
 }

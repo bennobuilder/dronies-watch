@@ -8,6 +8,6 @@ export class Session {
   @Column({ name: 'expires_at' })
   expiresAt: Date;
 
-  @Column('text')
-  data: string;
+  @Column({ name: 'user_id' })
+  userId: string;
 }
