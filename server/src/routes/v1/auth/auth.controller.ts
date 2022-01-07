@@ -4,8 +4,10 @@ import {
   createUser,
   exchangeAccessCodeForCredentials,
   getDiscordUserDetails,
+  revokeToken,
 } from './auth.service';
 import { serializeSession } from '../../../session';
+import { encrypt } from '../../../crypto';
 
 export async function authDiscordRedirectController(
   req: Request,
@@ -14,7 +16,8 @@ export async function authDiscordRedirectController(
   try {
     const { code } = req.query;
     if (code != null) {
-      // Retrieve Discord User 'access_token' and 'refresh_token' to later retrieve the User data
+      // Retrieve Discord User 'access_token' and 'refresh_token'
+      // to retrieve user data from Discord
       const response = await exchangeAccessCodeForCredentials({
         client_id: config.discord.applicationId || 'unknown',
         client_secret: config.discord.clientSecret || 'unknown',
@@ -23,7 +26,7 @@ export async function authDiscordRedirectController(
         redirect_uri: config.discord.redirectUrl,
       });
 
-      // Retrieve Discord User data
+      // Retrieve Discord user data
       const {
         access_token: accessToken,
         refresh_token: refreshToken,
@@ -31,21 +34,36 @@ export async function authDiscordRedirectController(
       } = response.data;
       const discordUser = await getDiscordUserDetails(accessToken, tokenType);
 
-      // Save Discord User data in database
+      // Save Discord user data in the database
       const { id, discriminator, username, avatar } = discordUser.data;
-      const user = await createUser({
-        accessToken,
-        refreshToken,
-        discordId: id,
-        discriminator,
-        name: username,
-        avatar: avatar || undefined,
+      const user = await createUser(
+        {
+          discordId: id,
+          discriminator,
+          name: username,
+          avatar: avatar || undefined,
+        },
+        {
+          accessToken: encrypt(accessToken),
+          refreshToken: encrypt(refreshToken),
+        },
+      );
+
+      // Init session
+      const session = await serializeSession(req, user.id.toString());
+
+      res.send({
+        session: {
+          expiresAt: session.expiresAt,
+        },
+        user: {
+          id: user.id,
+          avatar: user.avatar,
+          name: user.name,
+          discriminator: user.discriminator,
+          tag: `${user?.name}#${user?.discriminator}`,
+        },
       });
-
-      // Init Session
-      await serializeSession(req, user.id.toString());
-
-      res.send({ ...user, tag: `${user?.name}#${user?.discriminator}` });
     }
   } catch (err) {
     console.log(err);
@@ -54,31 +72,17 @@ export async function authDiscordRedirectController(
 }
 
 export async function authDiscordRevokeController(req: Request, res: Response) {
-  if (req.userId != null) {
-    // try {
-    //   const formData = new URLSearchParams({
-    //     client_id: config.discord.APPLICATION_ID || 'unknown',
-    //     client_secret: config.discord.CLIENT_SECRET || 'unknown',
-    //     token: 'todo',
-    //   });
-    //
-    //   const revokeData = await axios.post(
-    //     `${config.discord.API_ENDPOINT}/oauth2/token/revoke`,
-    //     // https://axios-http.com/docs/urlencoded
-    //     formData.toString(),
-    //     {
-    //       headers: {
-    //         'Content-Type': 'application/x-www-form-urlencoded',
-    //       },
-    //     },
-    //   );
-    //
-    //   res.send(revokeData.data);
-    // } catch (err) {
-    //   console.log(err);
-    //   res.sendStatus(400);
-    // }
-    res.sendStatus(200);
+  try {
+    // Check if user is authenticated
+    const userId = req.userId;
+    if (userId == null) return res.sendStatus(401);
+
+    const success = await revokeToken(userId);
+
+    res.send({ success });
+  } catch (err) {
+    console.log(err);
+    res.sendStatus(400);
   }
 
   res.sendStatus(401);
