@@ -1,5 +1,5 @@
 import { AES, enc } from 'crypto-js';
-import config from '../config';
+import config from '../../config';
 
 export function encrypt(token: string): string {
   return AES.encrypt(token, config.orm.secret!).toString();

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getUser } from './user.service';
+import { getUser } from '../../../services/user';
 
 export async function getUserController(req: Request, res: Response) {
   try {

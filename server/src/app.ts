@@ -5,7 +5,7 @@ import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import createHttpError from 'http-errors';
 import routes from './routes';
-import { deserializeSession } from './session';
+import { deserializeSession } from './services/session';
 import config from './config';
 
 // TODO ---

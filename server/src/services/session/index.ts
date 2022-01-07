@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { signedCookie } from 'cookie-parser';
 import { getRepository } from 'typeorm';
-import { Session } from '../db/entities/Session';
-import config from '../config';
+import { Session } from '../../db/entities/Session';
+import config from '../../config';
 
 const sessionRepository = getRepository(Session);
 const discordSessionConfig = config.session.discord;

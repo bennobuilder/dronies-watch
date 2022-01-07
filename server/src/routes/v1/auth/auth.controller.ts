@@ -1,13 +1,13 @@
 import { Response, Request } from 'express';
 import config from '../../../config';
+import { serializeSession } from '../../../services/session';
+import { encrypt } from '../../../services/crypto';
 import {
-  createUser,
   exchangeAccessCodeForCredentials,
   getDiscordUserDetails,
   revokeToken,
-} from './auth.service';
-import { serializeSession } from '../../../session';
-import { encrypt } from '../../../crypto';
+} from '../../../services/auth';
+import { createUser } from '../../../services/user';
 
 export async function authDiscordRedirectController(
   req: Request,
