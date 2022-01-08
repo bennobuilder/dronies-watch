@@ -34,16 +34,14 @@ export class ForegroundWrapper extends Base {
   public update() {
     const newForegroundPos = (this.cx - this.vx) % (fg_w - 5); // -5 to hide white stripe between the two images
 
-    if (this.foregrounds.length === 2) {
-      this.foregrounds[0].move({
-        cx: newForegroundPos,
-        cy: this.game.canvasDimensions.height - fg_h, // Required when resizing
-      });
-      this.foregrounds[1].move({
-        cx: newForegroundPos + (fg_w - 5), // -5 to hide white stripe between the two images
-        cy: this.game.canvasDimensions.height - fg_h, // Required when resizing
-      });
-    }
+    this.foregrounds[0].move({
+      cx: newForegroundPos,
+      cy: this.game.canvasDimensions.height - fg_h, // Required when resizing
+    });
+    this.foregrounds[1].move({
+      cx: newForegroundPos + (fg_w - 5), // -5 to hide white stripe between the two images
+      cy: this.game.canvasDimensions.height - fg_h, // Required when resizing
+    });
   }
 }
 

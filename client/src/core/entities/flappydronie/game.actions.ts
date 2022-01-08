@@ -43,9 +43,10 @@ export const endGame = () => {
 export const resetGame = () => {
   // Reset Bird
   const bird = BIRD.nextStateValue;
+  bird.lockRotation = false;
   bird.move({ cy: BIRD_DEFAULT_POSITION.y, cx: BIRD_DEFAULT_POSITION.x });
   bird.rotate(0);
-  BIRD.ingest();
+  BIRD.ingest({ force: true });
 
   PIPE_SETS.reset();
   STATUS.set(GAME_STATUS.SPLASH);
@@ -130,8 +131,8 @@ export const updateScenery = () => {
 
   if (status === GAME_STATUS.SPLASH || status === GAME_STATUS.PLAYING) {
     // Update Background and Foreground
-    BACKGROUND_WRAPPER.value.update();
-    FOREGROUND_WRAPPER.value.update();
+    BACKGROUND_WRAPPER.nextStateValue.update();
+    FOREGROUND_WRAPPER.nextStateValue.update();
 
     // Update Pipes
     if (status === GAME_STATUS.PLAYING) updatePipes();

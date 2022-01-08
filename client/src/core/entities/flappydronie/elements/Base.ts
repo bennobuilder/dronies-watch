@@ -73,8 +73,8 @@ export class Base {
       cy: this.cy,
     });
 
-    this.cx = (newPos.cx as any) + this.vx;
-    this.cy = (newPos.cy as any) + this.vy;
+    this.cx = newPos.cx!;
+    this.cy = newPos.cy!;
   }
 
   public rotate(rotation: number) {
@@ -107,7 +107,8 @@ export class Base {
   public update() {
     this.vy += this.gravity;
     if (this.vy > this.mvy) this.vy = this.mvy;
-    this.move({ cy: this.cy });
+    if (this.vx > this.mvx) this.vx = this.mvx;
+    this.move({ cy: this.cy + this.vy, cx: this.cx + this.vx });
 
     if (this.updateCallback != null) this.updateCallback(this);
   }

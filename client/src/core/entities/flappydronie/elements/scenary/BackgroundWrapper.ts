@@ -29,16 +29,14 @@ export class BackgroundWrapper extends Base {
   public update() {
     const newBackgroundPos = (this.cx - this.vx) % (bg_w - 5); // -5 to hide white stripe between the two images
 
-    if (this.backgrounds.length === 2) {
-      this.backgrounds[0].move({
-        cx: newBackgroundPos,
-        cy: this.game.canvasDimensions.height - bg_h, // Required when resizing
-      });
-      this.backgrounds[1].move({
-        cx: newBackgroundPos + (bg_w - 5), // -5 to hide white stripe between the two images
-        cy: this.game.canvasDimensions.height - bg_h, // Required when resizing
-      });
-    }
+    this.backgrounds[0].move({
+      cx: newBackgroundPos,
+      cy: this.game.canvasDimensions.height - bg_h, // Required when resizing
+    });
+    this.backgrounds[1].move({
+      cx: newBackgroundPos + (bg_w - 5), // -5 to hide white stripe between the two images
+      cy: this.game.canvasDimensions.height - bg_h, // Required when resizing
+    });
   }
 }
 

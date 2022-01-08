@@ -44,8 +44,8 @@ const CollisionBox = styled.div<{
   color: string;
 }>`
   position: absolute;
-  bottom: ${({ offset }) => offset?.y ?? 0}px;
-  left: ${({ offset }) => offset?.x ?? 0}px;
+  bottom: ${({ offset }) => offset.y}px;
+  left: ${({ offset }) => offset.x}px;
 
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
