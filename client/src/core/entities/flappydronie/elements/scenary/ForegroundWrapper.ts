@@ -1,6 +1,6 @@
 import { Foreground } from './Foreground';
+import { fg_h, fg_w } from '../../sprites';
 import { Game } from '../Game';
-import { fg_w, fg_h } from '../../sprites';
 import { Base, BaseConfig } from '../Base';
 
 export class ForegroundWrapper extends Base {
@@ -18,30 +18,37 @@ export class ForegroundWrapper extends Base {
     });
 
     this.foregrounds = [
-      new Foreground(game, {
-        cx: 0,
-        cy: game.canvasDimensions.height - fg_h,
-        collisionBox: { height: fg_h - 20 },
-      }),
+      new Foreground(game, { cx: 0, cy: game.canvasDimensions.height - fg_h }),
       new Foreground(game, {
         cx: fg_w,
         cy: game.canvasDimensions.height - fg_h,
-        collisionBox: { height: fg_h - 20 },
       }),
     ];
   }
 
   public update() {
-    const newForegroundPos = (this._cx - this._vx) % (fg_w - 5); // -5 to hide white stripe between the two images
-    this.move({ cx: newForegroundPos });
+    const newForegroundPos = (this._cx - this._vx) % (fg_w - 5);
+    this.move({ cx: newForegroundPos }, true);
 
-    this.foregrounds[0].move({
-      cx: newForegroundPos,
-      cy: this.game.canvasDimensions.height - fg_h, // Required when resizing
-    });
-    this.foregrounds[1].move({
-      cx: newForegroundPos + (fg_w - 5), // -5 to hide white stripe between the two images
-      cy: this.game.canvasDimensions.height - fg_h, // Required when resizing
+    this.foregrounds[0].move(
+      {
+        cx: newForegroundPos,
+        cy: this.game.canvasDimensions.height - fg_h, // Required when resizing
+      },
+      true,
+    );
+    this.foregrounds[1].move(
+      {
+        cx: newForegroundPos + (fg_w - 5), // -5 to hide white stripe between the two images
+        cy: this.game.canvasDimensions.height - fg_h, // Required when resizing
+      },
+      true,
+    );
+  }
+
+  public render(lagOffset: number) {
+    this.foregrounds.forEach((fg) => {
+      fg.render(lagOffset);
     });
   }
 }

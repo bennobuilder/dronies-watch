@@ -71,14 +71,21 @@ export class Base {
     this.renderCallback = config.renderCallback;
   }
 
-  public move(newPos: MoveConfig) {
+  public move(newPos: MoveConfig, hard = false) {
     newPos = defineConfig(newPos, {
       cx: this._cx,
       cy: this._cy,
     });
 
-    this.cx = newPos.cx!;
-    this.cy = newPos.cy!;
+    if (!hard) {
+      this.cx = newPos.cx!;
+      this.cy = newPos.cy!;
+    } else {
+      this._cx = newPos.cx!;
+      this._ox = newPos.cx!;
+      this._cy = newPos.cy!;
+      this._oy = newPos.cy!;
+    }
   }
 
   public rotate(rotation: number) {

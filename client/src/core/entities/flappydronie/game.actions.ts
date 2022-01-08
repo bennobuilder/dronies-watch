@@ -70,8 +70,8 @@ export const updateFrame = () => {
 
 export const renderFrame = (lagOffset: number) => {
   BIRD.value.render(lagOffset);
-  FOREGROUND_WRAPPER.value.foregrounds.forEach((fg) => fg.render(lagOffset));
-  BACKGROUND_WRAPPER.value.backgrounds.forEach((bg) => bg.render(lagOffset));
+  FOREGROUND_WRAPPER.value.render(lagOffset);
+  BACKGROUND_WRAPPER.value.render(lagOffset);
   PIPE_SETS.value.forEach((pipeSet) => pipeSet.render(lagOffset));
 };
 
