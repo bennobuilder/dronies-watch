@@ -4,50 +4,48 @@ import { useTheme } from '../../../theme/useTheme';
 import BottomDivider from './components/BottomDivider';
 import TableItem from './components/TableItem';
 import TableOutline from './components/TableOutline';
+import TableHeader from './components/TableHeader';
+import { ui } from '../../../../core';
 
 const HighScoreTable: React.FC = () => {
   const theme = useTheme();
 
   return (
     <Container>
-      <StyledTable>
-        <TableOutline />
+      <InnerContainer>
+        <StyledTable>
+          <TableOutline />
 
-        {/* Table Content */}
-        <thead>
-          <TableHeaderRow>
-            <TableHeaderCell>#</TableHeaderCell>
-            <TableHeaderCell>User</TableHeaderCell>
-            <TableHeaderCell>Score</TableHeaderCell>
-            <TableHeaderCell>Time ago</TableHeaderCell>
-            <BottomDivider />
-          </TableHeaderRow>
-        </thead>
-        <tbody>
-          <TableItem
-            rank={1}
-            name="Benno"
-            discriminator="1234"
-            score={47}
-            playedDateTime={new Date()}
-          />
-          <TableItem
-            rank={2}
-            name="Jeff"
-            discriminator="5678"
-            score={12}
-            playedDateTime={new Date()}
-          />
-          <TableItem
-            rank={3}
-            name="Frank"
-            discriminator="9999"
-            score={8}
-            playedDateTime={new Date()}
-            showDivider={false}
-          />
-        </tbody>
-      </StyledTable>
+          {/* Table Content */}
+          <thead>
+            <TableHeader />
+          </thead>
+          <tbody>
+            <TableItem
+              rank={1}
+              name="Benno"
+              discriminator="1234"
+              score={47}
+              playedDateTime={new Date()}
+            />
+            <TableItem
+              rank={2}
+              name="Jeff"
+              discriminator="5678"
+              score={12}
+              playedDateTime={new Date()}
+            />
+            <TableItem
+              rank={3}
+              name="Frank"
+              discriminator="9999"
+              score={8}
+              playedDateTime={new Date()}
+              showDivider={false}
+            />
+          </tbody>
+        </StyledTable>
+      </InnerContainer>
     </Container>
   );
 };
@@ -56,29 +54,19 @@ export default HighScoreTable;
 
 const Container = styled.div`
   position: relative;
-
+  width: 70%;
   padding: 0;
-  width: 80%;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    width: 100%;
+  }
+`;
+
+const InnerContainer = styled.div`
+  overflow-x: auto; // https://www.w3schools.com/howto/howto_css_table_responsive.asp
 `;
 
 const StyledTable = styled.table`
-  min-width: 400px;
   width: 100%;
-
-  color: white; // TODO REMOVE
-`;
-
-const TableHeaderRow = styled.tr`
-  position: relative;
-
-  text-align: left;
-`;
-
-const TableHeaderCell = styled.th`
-  padding: 12px 15px;
-
-  font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 1rem;
-  font-weight: bold;
-  color: ${({ theme }) => theme.colors.layout.hc};
+  min-width: 400px;
 `;
