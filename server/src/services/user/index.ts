@@ -18,9 +18,7 @@ export async function createUser(
   const userInDB = await userRepository.findOne({
     discordId: params.discordId,
   });
-  if (userInDB != null) {
-    return await updateUser(userInDB, params, credentials);
-  }
+  if (userInDB != null) return updateUser(userInDB, params, credentials);
 
   // Create and save new user
   const newUser = userRepository.create({ ...params, ...credentials });

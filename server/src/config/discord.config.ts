@@ -16,6 +16,7 @@ export default {
     oauth2Token: `${apiEndpoint}/oauth2/token`,
     oauth2User: `${apiEndpoint}/users/@me`,
     revokeToken: `${apiEndpoint}/oauth2/token/revoke`,
+    imageBase: `https://cdn.discordapp.com`,
   },
 };
 

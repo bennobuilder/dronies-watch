@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { getUser } from '../../../services/user';
+import config from '../../../config';
 
 export async function getUserController(req: Request, res: Response) {
   try {
@@ -15,6 +16,8 @@ export async function getUserController(req: Request, res: Response) {
       user: {
         id: user.id,
         avatar: user.avatar,
+        // https://cdn.discordapp.com/avatars/637931838052237312/6d0a11e764bfe0cda5deda7e0aa8da6f.webp?size=32
+        avatarUrl: `${config.discord.routes.imageBase}/avatars/${user.discordId}/${user.avatar}.webp?size=32`,
         name: user.name,
         discriminator: user.discriminator,
         tag: `${user?.name}#${user?.discriminator}`,
