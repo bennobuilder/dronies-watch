@@ -2,11 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 const BottomDivider: React.FC = () => (
-  <>
+  // 'td' to avoid react error
+  <td>
     <EdgeMiddle position="left" />
     <EdgeMiddle position="right" />
     <DottedLine />
-  </>
+  </td>
 );
 
 export default BottomDivider;

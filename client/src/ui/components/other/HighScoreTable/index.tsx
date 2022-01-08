@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTheme } from '../../../theme/useTheme';
-import BottomDivider from './components/BottomDivider';
 import TableItem from './components/TableItem';
 import TableOutline from './components/TableOutline';
 import TableHeader from './components/TableHeader';
@@ -13,20 +12,20 @@ const HighScoreTable: React.FC = () => {
   return (
     <Container>
       <InnerContainer>
+        <TableOutline />
         <StyledTable>
-          <TableOutline />
-
           {/* Table Content */}
           <thead>
             <TableHeader />
           </thead>
+
           <tbody>
             <TableItem
               rank={1}
               name="Benno"
               discriminator="1234"
               score={47}
-              playedDateTime={new Date()}
+              playedDateTime={new Date('07.01.2022')}
             />
             <TableItem
               rank={2}

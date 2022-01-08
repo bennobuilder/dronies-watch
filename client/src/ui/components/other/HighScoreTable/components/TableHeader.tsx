@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import BottomDivider from './BottomDivider';
+import { HORIZONTAL_PADDING } from '../controller';
 
 const TableHeader: React.FC = () => (
   <Container>
-    <Cell>#</Cell>
-    <Cell>User</Cell>
+    <RankText>#</RankText>
+    <UserText>User</UserText>
     <Cell>Score</Cell>
     <Cell>Time ago</Cell>
     <BottomDivider />
@@ -19,11 +20,19 @@ const Container = styled.tr`
 `;
 
 const Cell = styled.th`
-  padding: 12px 15px;
+  padding: 15px 0;
 
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 1rem;
+  font-size: 14px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.layout.hc};
   text-align: left;
+`;
+
+const RankText = styled(Cell)`
+  padding-left: ${HORIZONTAL_PADDING}px;
+`;
+
+const UserText = styled(Cell)`
+  padding-left: 20px;
 `;

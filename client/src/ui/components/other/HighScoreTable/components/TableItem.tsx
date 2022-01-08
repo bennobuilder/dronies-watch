@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import BottomDivider from './BottomDivider';
-
-const HORIZONTAL_PADDING = 30;
+import { HORIZONTAL_PADDING, timeSince } from '../controller';
 
 const TableItem: React.FC<Props> = (props) => {
   const {
@@ -18,14 +17,18 @@ const TableItem: React.FC<Props> = (props) => {
     <Container>
       <RankText>{rank}</RankText>
       <UserContainer>
-        <UserImage src="https://cdn.discordapp.com/avatars/637931838052237312/6d0a11e764bfe0cda5deda7e0aa8da6f.webp?size=32" />
-        <NameContainer>
-          <UserName>{name}</UserName>
-          <UserDiscriminator>#1234</UserDiscriminator>
-        </NameContainer>
+        <InnerUserContainer>
+          <UserImage src="https://cdn.discordapp.com/avatars/637931838052237312/6d0a11e764bfe0cda5deda7e0aa8da6f.webp?size=32" />
+          <NameContainer>
+            <UserName>{name}</UserName>
+            <UserDiscriminator>
+              #{discriminator.replace('#', '')}
+            </UserDiscriminator>
+          </NameContainer>
+        </InnerUserContainer>
       </UserContainer>
       <ScoreText>{score}</ScoreText>
-      <TimeText>15 hours ago</TimeText>
+      <TimeText>{timeSince(playedDateTime)}</TimeText>
       {showDivider && <BottomDivider />}
     </Container>
   );
@@ -49,30 +52,29 @@ const Container = styled.tr`
 `;
 
 const Cell = styled.td`
-  padding: 1rem 1rem;
+  padding: 15px 0;
 `;
 
 const RankText = styled(Cell)`
-  width: 5%;
+  width: 10%;
   padding-left: ${HORIZONTAL_PADDING}px;
 
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: bold;
   color: ${({ theme }) => theme.colors.layout.hc};
   text-align: left;
-
-  background-color: blue;
 `;
 
 const UserContainer = styled(Cell)`
+  width: auto;
+  padding-left: 20px;
+`;
+
+const InnerUserContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  width: auto;
-
-  background-color: purple;
 `;
 
 const NameContainer = styled.div`
@@ -82,28 +84,28 @@ const NameContainer = styled.div`
 `;
 
 const UserName = styled.div`
+  margin-left: 15px;
+
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: normal;
   color: ${({ theme }) => theme.colors.interactive.primary.p0};
   text-align: left;
 `;
 
 const UserDiscriminator = styled.div`
-  margin: 0 0 5px 5px;
+  margin: 0 0 2px 5px;
 
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 0.6rem;
-  font-weight: bold;
+  font-size: 10px;
+  font-weight: lighter;
   color: ${({ theme }) => theme.colors.layout.rHc};
   text-align: left;
 `;
 
 const UserImage = styled.img`
-  margin-right: 10px;
-
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 100%;
 `;
 
@@ -112,12 +114,10 @@ const ScoreText = styled(Cell)`
   padding-right: 50px;
 
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 2rem;
+  font-size: 24px;
   font-weight: bold;
   color: ${({ theme }) => theme.primitiveColors.red};
   text-align: center;
-
-  background-color: green;
 `;
 
 const TimeText = styled(Cell)`
@@ -125,11 +125,9 @@ const TimeText = styled(Cell)`
   padding-right: ${HORIZONTAL_PADDING}px;
 
   font-family: ${({ theme }) => theme.fontFamily};
-  font-size: 1rem;
-  font-weight: bold;
+  font-size: 14px;
+  font-weight: normal;
   color: ${({ theme }) => theme.colors.layout.hc};
   text-align: right;
   white-space: nowrap;
-
-  background-color: red;
 `;
