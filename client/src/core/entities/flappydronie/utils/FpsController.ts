@@ -2,6 +2,7 @@
 // https://stackoverflow.com/questions/39042859/most-performant-way-to-call-update-loop-of-a-javascript-physics-engine
 // https://stackoverflow.com/questions/25612452/html5-canvas-game-loop-delta-time-calculations
 // https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
+// https://jsbin.com/ditad/10/edit?js,output
 export class FpsController {
   public config: FpsControllerConfig;
   public fps = 0;
@@ -17,11 +18,16 @@ export class FpsController {
 
   private updateCallback?: () => void;
   private renderCallback?: (lagOffset: number) => void;
+  private performanceCallback?: (performance: Performance) => void;
 
-  constructor(fps: number) {
+  constructor(
+    fps: number,
+    performanceCallback?: (performance: Performance) => void,
+  ) {
     this.config = {
       fps,
     };
+    this.performanceCallback = performanceCallback;
   }
 
   public startDrawing(
@@ -69,9 +75,17 @@ export class FpsController {
     this.fps = Math.floor(1000 / this.elapsed);
 
     // Calculate the lag offset and use it to render the sprites
-    if (this.renderCallback != null) {
-      this.renderCallback(this.lag / this.frameDuration);
-    }
+    const lagOffset = this.lag / this.frameDuration;
+    if (this.renderCallback != null) this.renderCallback(lagOffset);
+
+    // Stats
+    if (this.performanceCallback != null)
+      this.performanceCallback({
+        fps: this.fps,
+        lag: Math.floor(this.lag),
+        offset: Math.round(lagOffset * 100) / 100,
+        elapsed: Math.floor(this.elapsed),
+      });
   }
 
   public stopDrawing() {
@@ -85,4 +99,11 @@ export class FpsController {
 
 type FpsControllerConfig = {
   fps: number;
+};
+
+export type Performance = {
+  elapsed: number;
+  lag: number;
+  fps: number;
+  offset: number;
 };

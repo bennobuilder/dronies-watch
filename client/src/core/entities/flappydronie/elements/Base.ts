@@ -108,10 +108,15 @@ export class Base {
     this.vy += this.gravity;
     if (this.vy > this.mvy) this.vy = this.mvy;
     this.move({ cy: this.cy });
+
+    if (this.updateCallback != null) this.updateCallback(this);
   }
 
-  public render() {
-    // TODO
+  public render(lagOffset = 1) {
+    this.rx = this.cx * lagOffset;
+    this.ry = this.cy * lagOffset;
+
+    if (this.renderCallback != null) this.renderCallback(this, lagOffset);
   }
 }
 

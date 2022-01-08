@@ -6,7 +6,7 @@ const SpriteWrapper: React.FC<Props> = (props) => {
   const { gameSprite, onClickHandler, collisionBoxColor, children } = props;
 
   const rotate = `rotate(${gameSprite.rotation}rad)`;
-  const translate = `translate(${gameSprite.cx}px, ${gameSprite.cy}px)`;
+  const translate = `translate(${gameSprite.rx}px, ${gameSprite.ry}px)`;
 
   return (
     <div

@@ -1,19 +1,34 @@
 import { Foreground } from './Foreground';
-import { fg_h, fg_w } from '../../sprites';
 import { Game } from '../Game';
+import { fg_w, fg_h } from '../../sprites';
+import { Base, BaseConfig } from '../Base';
 
-export class ForegroundWrapper {
-  public game: Game;
-
+export class ForegroundWrapper extends Base {
   public foregrounds: Foreground[];
-  public cx: number;
-  public vx: number;
 
-  constructor(game: Game, foregrounds: Foreground[]) {
-    this.game = game;
-    this.foregrounds = foregrounds;
-    this.cx = 0;
-    this.vx = 0.5;
+  constructor(game: Game, config: ForegroundWrapperConfig) {
+    super(game, {
+      ...config,
+      vx: 2,
+      collisionBox: {
+        width: fg_w * 2,
+        height: fg_h,
+        ...config.collisionBox,
+      },
+    });
+
+    this.foregrounds = [
+      new Foreground(game, {
+        cx: 0,
+        cy: game.canvasDimensions.height - fg_h,
+        collisionBox: { height: fg_h - 20 },
+      }),
+      new Foreground(game, {
+        cx: fg_w,
+        cy: game.canvasDimensions.height - fg_h,
+        collisionBox: { height: fg_h - 20 },
+      }),
+    ];
   }
 
   public update() {
@@ -30,8 +45,6 @@ export class ForegroundWrapper {
       });
     }
   }
-
-  public render() {
-    this.foregrounds.forEach((foreground) => foreground.render());
-  }
 }
+
+type ForegroundWrapperConfig = BaseConfig;

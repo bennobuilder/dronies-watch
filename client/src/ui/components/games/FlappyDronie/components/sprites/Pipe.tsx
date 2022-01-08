@@ -4,9 +4,9 @@ import {
   pipe_n,
   pipe_s,
   SpriteWrapper,
-} from '../../../../../core/entities/flappydronie/sprites';
-import { flappydronie } from '../../../../../core';
-import { SHOW_COLLIDER } from '../../../../../core/entities/flappydronie';
+} from '../../../../../../core/entities/flappydronie/sprites';
+import { flappydronie } from '../../../../../../core';
+import { SHOW_COLLIDER } from '../../../../../../core/entities/flappydronie';
 
 const Pipe: React.FC<Props> = (props) => {
   const { sprite } = props;

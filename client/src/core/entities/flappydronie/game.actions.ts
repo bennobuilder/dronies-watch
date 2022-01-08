@@ -1,13 +1,12 @@
 import { fg_h, pipe_h, pipe_w } from './sprites';
 import { PipeSet } from './elements';
 import {
-  BACKGROUND,
+  BACKGROUND_WRAPPER,
   BIRD,
   BIRD_DEFAULT_POSITION,
   BIRD_SKIN,
   COOLDOWN,
-  FOREGROUND,
-  FRAMES,
+  FOREGROUND_WRAPPER,
   GAME,
   GAME_STATUS,
   HIGH_SCORE,
@@ -48,7 +47,6 @@ export const resetGame = () => {
   bird.rotate(0);
   BIRD.ingest();
 
-  FRAMES.reset();
   PIPE_SETS.reset();
   STATUS.set(GAME_STATUS.SPLASH);
 
@@ -57,9 +55,7 @@ export const resetGame = () => {
 };
 
 export const updateFrame = () => {
-  // TODO add delta time to the frames so that the delta time is globally accessible!!
-  //  https://stackoverflow.com/questions/25612452/html5-canvas-game-loop-delta-time-calculations
-  FRAMES.set((f) => f + 1);
+  GAME.update();
 
   // Update Scenery
   updateScenery();
@@ -68,34 +64,29 @@ export const updateFrame = () => {
   updateBird();
 };
 
-export const updateScenery = () => {
-  if (
-    STATUS.value === GAME_STATUS.SPLASH ||
-    STATUS.value === GAME_STATUS.PLAYING
-  ) {
-    BACKGROUND.value.update();
-    FOREGROUND.value.update();
-
-    // Update Pipes
-    if (STATUS.value === GAME_STATUS.PLAYING) updatePipes();
-  }
+export const renderFrame = (lagOffset: number) => {
+  BIRD.value.render(lagOffset);
+  FOREGROUND_WRAPPER.value.render(lagOffset);
+  BACKGROUND_WRAPPER.value.render(lagOffset);
+  PIPE_SETS.value.forEach((pipeSet) => pipeSet.render(lagOffset));
 };
 
 export const updateBird = () => {
   const bird = BIRD.nextStateValue;
+  const status = STATUS.value;
 
   const { canvasDimensions } = GAME;
-  const { foregrounds } = FOREGROUND.value;
+  const { foregrounds } = FOREGROUND_WRAPPER.value;
 
   // If Splash Screen make the Bird hover
-  if (STATUS.value === GAME_STATUS.SPLASH) {
+  if (status === GAME_STATUS.SPLASH) {
     const hoverHeight = 280;
     bird.hover(canvasDimensions.height - hoverHeight);
   }
 
   if (
-    STATUS.value === GAME_STATUS.PLAYING ||
-    STATUS.value === GAME_STATUS.SCORE // Apply physics to the Bird also in the Score status, to drop the bird when hitting a Pipe
+    status === GAME_STATUS.PLAYING ||
+    status === GAME_STATUS.SCORE // Apply physics to the Bird also in the Score status, to drop the bird when hitting a Pipe
   ) {
     bird.update();
 
@@ -127,16 +118,24 @@ export const updateBird = () => {
       bird.setVelocity(2);
     }
   }
-
-  // Apply changes to the UI
-  // TODO optimize as the screen is also re-rendered although the bird doesn't move
-  BIRD.ingest({ force: true });
 };
 
 export const jumpBird = () => {
   const bird = BIRD.nextStateValue;
   bird.jump();
-  BIRD.ingest({ force: true });
+};
+
+export const updateScenery = () => {
+  const status = STATUS.value;
+
+  if (status === GAME_STATUS.SPLASH || status === GAME_STATUS.PLAYING) {
+    // Update Background and Foreground
+    BACKGROUND_WRAPPER.value.update();
+    FOREGROUND_WRAPPER.value.update();
+
+    // Update Pipes
+    if (status === GAME_STATUS.PLAYING) updatePipes();
+  }
 };
 
 export const updatePipes = () => {
@@ -150,7 +149,16 @@ export const updatePipes = () => {
       pipeSets[pipeSets.length - 1].distance
   ) {
     pipeSets = pipeSets.concat(
-      new PipeSet(GAME, { cx: pipe_h, cy: 0, distance: 200, gap: 120 }),
+      new PipeSet(GAME, {
+        cx: pipe_h,
+        cy: 0,
+        distance: 200,
+        gap: 120,
+        renderCallback: (base, lagOffset) => {
+          base.render(lagOffset);
+          PIPE_SETS.ingest();
+        },
+      }),
     );
   }
 
@@ -168,16 +176,13 @@ export const updatePipes = () => {
       pipeSet.scored = true;
     }
 
-    pipeSet.move();
+    pipeSet.update();
 
     // Remove pipes that go out of view
     if (pipeSet.cx < -pipe_w) pipeSets.splice(0, 1);
 
     return pipeSet;
   });
-
-  // Apply changes to the UI
-  PIPE_SETS.set(pipeSets);
 };
 
 export const getScoreTweet = (score: number) =>

@@ -2,8 +2,8 @@ export class Game {
   public frame = 0;
   public canvasDimensions: CanvasDimensions = { width: 0, height: 0 };
 
-  public syncFrame(frame: number) {
-    this.frame = frame;
+  public update() {
+    this.frame += 1;
   }
 
   public syncCanvasDimensions(dimensions: CanvasDimensions) {

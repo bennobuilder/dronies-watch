@@ -5,8 +5,8 @@ import { useWindowSize } from '../../../../hooks/useWindowSize';
 
 export function useGame() {
   const [background, foreground, bird, pipeSets, status] = useAgile([
-    flappydronie.BACKGROUND,
-    flappydronie.FOREGROUND,
+    flappydronie.BACKGROUND_WRAPPER,
+    flappydronie.FOREGROUND_WRAPPER,
     flappydronie.BIRD,
     flappydronie.PIPE_SETS,
     flappydronie.STATUS,
@@ -28,7 +28,10 @@ export function useGame() {
   }, [windowWidth]);
 
   React.useEffect(() => {
-    flappydronie.FPS_CONTROLLER.startDrawing(flappydronie.updateFrame);
+    flappydronie.FPS_CONTROLLER.startDrawing(
+      flappydronie.updateFrame,
+      flappydronie.renderFrame,
+    );
     return flappydronie.FPS_CONTROLLER.stopDrawing;
   }, []);
 

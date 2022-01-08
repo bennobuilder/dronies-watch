@@ -1,19 +1,29 @@
 import { Background } from './Background';
 import { bg_h, bg_w } from '../../sprites';
 import { Game } from '../Game';
+import { Base, BaseConfig } from '../Base';
 
-export class BackgroundWrapper {
-  public game: Game;
-
+export class BackgroundWrapper extends Base {
   public backgrounds: Background[];
-  public cx: number;
-  public vx: number;
 
-  constructor(game: Game, backgrounds: Background[]) {
-    this.game = game;
-    this.backgrounds = backgrounds;
-    this.cx = 0;
-    this.vx = 0.5;
+  constructor(game: Game, config: BackgroundWrapperConfig) {
+    super(game, {
+      ...config,
+      vx: 0.5,
+      collisionBox: {
+        width: bg_w * 2,
+        height: bg_h,
+        ...config.collisionBox,
+      },
+    });
+
+    this.backgrounds = [
+      new Background(game, { cx: 0, cy: game.canvasDimensions.height - bg_h }),
+      new Background(game, {
+        cx: bg_w,
+        cy: game.canvasDimensions.height - bg_h,
+      }),
+    ];
   }
 
   public update() {
@@ -30,8 +40,6 @@ export class BackgroundWrapper {
       });
     }
   }
-
-  public render() {
-    this.backgrounds.forEach((background) => background.render());
-  }
 }
+
+type BackgroundWrapperConfig = BaseConfig;
