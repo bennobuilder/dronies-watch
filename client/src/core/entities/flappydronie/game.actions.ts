@@ -3,18 +3,18 @@ import { PipeSet } from './elements';
 import {
   BACKGROUND_WRAPPER,
   BIRD,
-  BIRD_DEFAULT_POSITION,
+  DEFAULT_BIRD_POSITION,
   BIRD_SKIN,
   COOLDOWN,
   FOREGROUND_WRAPPER,
   GAME,
-  GAME_STATUS,
   HIGH_SCORE,
   LATEST_SCORE,
   PIPE_SETS,
   SCORE,
   STATUS,
 } from './game.controller';
+import { GAME_STATUS } from './game.types';
 
 export const startGame = () => {
   STATUS.set(GAME_STATUS.PLAYING);
@@ -43,12 +43,15 @@ export const endGame = () => {
 export const resetGame = () => {
   // Reset Bird
   const bird = BIRD.nextStateValue;
-  bird.lockRotation = false;
-  bird.move({ cy: BIRD_DEFAULT_POSITION.y, cx: BIRD_DEFAULT_POSITION.x });
+  bird.unlockRotation();
+  bird.move({ cy: DEFAULT_BIRD_POSITION.y, cx: DEFAULT_BIRD_POSITION.x });
   bird.rotate(0);
-  BIRD.ingest({ force: true });
+  BIRD.ingest();
 
+  // Reset Pipes
   PIPE_SETS.reset();
+
+  // Reset Game
   STATUS.set(GAME_STATUS.SPLASH);
 
   // Update Skins
@@ -67,8 +70,8 @@ export const updateFrame = () => {
 
 export const renderFrame = (lagOffset: number) => {
   BIRD.value.render(lagOffset);
-  FOREGROUND_WRAPPER.value.render(lagOffset);
-  BACKGROUND_WRAPPER.value.render(lagOffset);
+  FOREGROUND_WRAPPER.value.foregrounds.forEach((fg) => fg.render(lagOffset));
+  BACKGROUND_WRAPPER.value.backgrounds.forEach((bg) => bg.render(lagOffset));
   PIPE_SETS.value.forEach((pipeSet) => pipeSet.render(lagOffset));
 };
 
@@ -97,7 +100,7 @@ export const updateBird = () => {
 
     // Handle collision with ground
     if (collisionWithGround) {
-      bird.lockRotation = true;
+      bird.lockRotation();
       if (bird.cy >= canvasDimensions.height - fg_h - 10)
         bird.move({ cy: canvasDimensions.height - fg_h - 10 });
 
@@ -140,7 +143,7 @@ export const updateScenery = () => {
 };
 
 export const updatePipes = () => {
-  let pipeSets = PIPE_SETS.nextStateValue;
+  let pipeSets = PIPE_SETS.value;
   const bird = BIRD.value;
 
   // Generate Pipe Sets
@@ -155,8 +158,7 @@ export const updatePipes = () => {
         cy: 0,
         distance: 200,
         gap: 120,
-        renderCallback: (base, lagOffset) => {
-          base.render(lagOffset);
+        renderCallback: () => {
           PIPE_SETS.ingest();
         },
       }),
@@ -164,6 +166,8 @@ export const updatePipes = () => {
   }
 
   pipeSets.forEach((pipeSet) => {
+    pipeSet.update();
+
     // End Game, if Bird collides with Pipe
     if (
       pipeSet.topPipe.calculateCollision(bird) ||
@@ -177,13 +181,14 @@ export const updatePipes = () => {
       pipeSet.scored = true;
     }
 
-    pipeSet.update();
-
     // Remove pipes that go out of view
     if (pipeSet.cx < -pipe_w) pipeSets.splice(0, 1);
 
     return pipeSet;
   });
+
+  // Apply changes to the UI
+  PIPE_SETS.set(pipeSets);
 };
 
 export const getScoreTweet = (score: number) =>

@@ -5,20 +5,19 @@
 // https://jsbin.com/ditad/10/edit?js,output
 export class FpsController {
   public config: FpsControllerConfig;
-  public fps = 0;
+  public fps = 0; // Current 'Frames per Second'
 
-  public isDrawing = false;
+  public isDrawing = false; // Whether the FpsController is current drawing/rendering
   private stop = true;
 
-  private frameDuration = 0;
-  private now = 0;
-  private then = 0;
-  private elapsed = 0;
-  private lag: number = 0;
+  private frameDuration = 0; // Fps in ms (-> Frame per Millisecond)
+  private then = 0; // Latest draw time
+  private elapsed = 0; // Elapsed time to the latest draw time
+  private lag: number = 0; // Lag offset
 
   private updateCallback?: () => void;
   private renderCallback?: (lagOffset: number) => void;
-  private performanceCallback?: (performance: Performance) => void;
+  private readonly performanceCallback?: (performance: Performance) => void;
 
   constructor(
     fps: number,
@@ -55,8 +54,7 @@ export class FpsController {
     requestAnimationFrame((t) => this.draw(t));
 
     // Calculate elapsed time since last loop
-    this.now = now;
-    this.elapsed = this.now - this.then;
+    this.elapsed = now - this.then;
     this.then = now;
 
     // Add the elapsed time to the lag counter
@@ -72,13 +70,12 @@ export class FpsController {
       this.lag -= this.frameDuration;
     }
 
-    this.fps = Math.floor(1000 / this.elapsed);
-
     // Calculate the lag offset and use it to render the sprites
     const lagOffset = this.lag / this.frameDuration;
     if (this.renderCallback != null) this.renderCallback(lagOffset);
 
-    // Stats
+    // Calculate and apply 'analytics'
+    this.fps = Math.floor(1000 / this.elapsed);
     if (this.performanceCallback != null)
       this.performanceCallback({
         fps: this.fps,

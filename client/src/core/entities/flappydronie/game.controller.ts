@@ -4,30 +4,18 @@ import { Bird, Game, PipeSet } from './elements';
 import { FpsController, Performance } from './utils/FpsController';
 import { BackgroundWrapper } from './elements/scenary/BackgroundWrapper';
 import { ForegroundWrapper } from './elements/scenary/ForegroundWrapper';
-
-// eslint-disable-next-line @typescript-eslint/naming-convention
-export enum GAME_STATUS {
-  SPLASH,
-  PLAYING,
-  SCORE,
-}
-
-export const GAME = new Game();
-export const FPS_CONTROLLER = new FpsController(60, (performance) =>
-  PERFORMANCE.set(performance),
-);
-export const PERFORMANCE = createState<Performance>({
-  elapsed: 0,
-  offset: 0,
-  lag: 0,
-  fps: 0,
-});
+import { GAME_STATUS } from './game.types';
 
 // Configuration
-export const BIRD_DEFAULT_POSITION = { x: 60, y: 0 };
-export const PLAY_ONLINE = createState(false);
 export const DEFAULT_CANVAS_DIMENSIONS = { width: 320, height: 480 };
-export const SHOW_COLLIDER = createState(true);
+export const DEFAULT_BIRD_POSITION = { x: 60, y: 0 };
+export const PLAY_ONLINE = createState(false);
+export const SHOW_COLLIDERS = createState(false).persist({
+  key: 'sho-colliders',
+});
+export const SHOW_PERFORMANCE = createState(false).persist({
+  key: 'show-performance',
+});
 export const BIRD_SKIN = createState(Math.floor(Math.random() * 20) + 1); // +1 because the first Bird sprite is a test asset
 BIRD_SKIN.watch((v) => {
   BIRD.nextStateValue.skin = v;
@@ -53,29 +41,31 @@ MAP_SKIN.watch((v) => {
 });
 export const VEHICLE_SKIN = createState(0);
 
+// Game
+export const GAME = new Game(DEFAULT_CANVAS_DIMENSIONS);
+export const FPS_CONTROLLER = new FpsController(60, (performance) =>
+  PERFORMANCE.set(performance),
+);
+export const PERFORMANCE = createState<Performance>({
+  elapsed: 0,
+  offset: 0,
+  lag: 0,
+  fps: 0,
+});
+
 // Game Properties
 export const STATUS = createState<GAME_STATUS>(GAME_STATUS.SPLASH);
 export const SCORE = createState(0);
 export const LATEST_SCORE = createState(0).persist({ key: 'latest-score' });
 export const HIGH_SCORE = createState(0).persist({ key: 'high-score' });
-export const CANVAS_DIMENSIONS = createState<{ width: number; height: number }>(
-  {
-    width: window.innerWidth,
-    height: DEFAULT_CANVAS_DIMENSIONS.height,
-  },
-);
-GAME.syncCanvasDimensions(CANVAS_DIMENSIONS.value);
-CANVAS_DIMENSIONS.watch((v) => {
-  GAME.syncCanvasDimensions(v);
-});
 export const COOLDOWN = createState(false);
 
 // Game Objects
 export const PIPE_SETS = createState<PipeSet[]>([]);
 export const BIRD = createState<Bird>(
   new Bird(GAME, {
-    cx: BIRD_DEFAULT_POSITION.x,
-    cy: BIRD_DEFAULT_POSITION.y,
+    cx: DEFAULT_BIRD_POSITION.x,
+    cy: DEFAULT_BIRD_POSITION.y,
     collisionBox: {
       width: bird_w - 10,
       height: bird_h - 10,

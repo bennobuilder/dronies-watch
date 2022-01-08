@@ -9,7 +9,7 @@ export class ForegroundWrapper extends Base {
   constructor(game: Game, config: ForegroundWrapperConfig) {
     super(game, {
       ...config,
-      vx: 2,
+      vx: 2, // Move speed
       collisionBox: {
         width: fg_w * 2,
         height: fg_h,
@@ -32,7 +32,8 @@ export class ForegroundWrapper extends Base {
   }
 
   public update() {
-    const newForegroundPos = (this.cx - this.vx) % (fg_w - 5); // -5 to hide white stripe between the two images
+    const newForegroundPos = (this._cx - this._vx) % (fg_w - 5); // -5 to hide white stripe between the two images
+    this.move({ cx: newForegroundPos });
 
     this.foregrounds[0].move({
       cx: newForegroundPos,

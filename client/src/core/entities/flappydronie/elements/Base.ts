@@ -6,27 +6,29 @@ export class Base {
 
   public game: Game;
 
-  public cx: number; // X Position
-  public cy: number; // Y Position
+  protected _cx: number; // X Position
+  protected _cy: number; // Y Position
 
-  public vx: number; // Velocity X
-  public vy: number; // Velocity Y
+  protected _ox: number; // Old X Position
+  protected _oy: number; // Old Y Position
 
-  public mvx: number; // Max Velocity X
-  public mvy: number; // Max Velocity Y
+  protected _rx: number; // Render X
+  protected _ry: number; // Render Y
 
-  public rx: number; // Render X
-  public ry: number; // Render Y
+  protected _vx: number; // Velocity X
+  protected _vy: number; // Velocity Y
+
+  protected readonly _mvx: number; // Max Velocity X
+  protected readonly _mvy: number; // Max Velocity Y
 
   public gravity;
 
-  public rotation: number;
-  public lockRotation = false;
+  protected _rotation: number;
 
-  public collisionBox: CollisionBoxConfig;
+  protected _collisionBox: CollisionBoxConfig;
 
-  private updateCallback?: (base: Base) => void;
-  private renderCallback?: (base: Base, lagOffset: number) => void;
+  private readonly updateCallback?: (base: Base) => void;
+  private readonly renderCallback?: (base: Base, lagOffset: number) => void;
 
   constructor(game: Game, config: BaseConfig = {}) {
     config = defineConfig(config, {
@@ -42,7 +44,7 @@ export class Base {
     this.id = generateId();
     this.game = game;
 
-    this.collisionBox = {
+    this._collisionBox = {
       width: 10,
       height: 10,
       offset: {
@@ -52,15 +54,17 @@ export class Base {
       },
       ...config.collisionBox,
     };
-    this.cx = config.cx!;
-    this.cy = config.cy!;
-    this.vx = config.vx!;
-    this.vy = config.vy!;
-    this.mvx = 10;
-    this.mvy = 7;
-    this.rx = this.cx;
-    this.ry = this.cy;
-    this.rotation = config.rotation!;
+    this._cx = config.cx!;
+    this._cy = config.cy!;
+    this._ox = this._cx;
+    this._oy = this._cy;
+    this._vx = config.vx!;
+    this._vy = config.vy!;
+    this._mvx = 10;
+    this._mvy = 7;
+    this._rx = this._cx;
+    this._ry = this._cy;
+    this._rotation = config.rotation!;
     this.gravity = config.gravity!;
 
     this.updateCallback = config.updateCallback;
@@ -69,8 +73,8 @@ export class Base {
 
   public move(newPos: MoveConfig) {
     newPos = defineConfig(newPos, {
-      cx: this.cx,
-      cy: this.cy,
+      cx: this._cx,
+      cy: this._cy,
     });
 
     this.cx = newPos.cx!;
@@ -78,7 +82,7 @@ export class Base {
   }
 
   public rotate(rotation: number) {
-    if (!this.lockRotation) this.rotation = rotation;
+    this._rotation = rotation;
   }
 
   public calculateCollision(object: Base): boolean;
@@ -87,37 +91,86 @@ export class Base {
     let finalObject: CalculateCollisionObject;
     if (object instanceof Base) {
       finalObject = {
-        cx: object.cx + object.collisionBox.offset.x,
-        cy: object.cy + object.collisionBox.offset.y,
-        width: object.collisionBox.width,
-        height: object.collisionBox.height,
+        cx: object._cx + object._collisionBox.offset.x,
+        cy: object._cy + object._collisionBox.offset.y,
+        width: object._collisionBox.width,
+        height: object._collisionBox.height,
       };
     } else {
       finalObject = object;
     }
 
     return (
-      this.cx < finalObject.cx + finalObject.width &&
-      this.cx + this.collisionBox.width > finalObject.cx &&
-      this.cy < finalObject.cy + finalObject.height &&
-      this.collisionBox.height + this.cy > finalObject.cy
+      this._cx < finalObject.cx + finalObject.width &&
+      this._cx + this._collisionBox.width > finalObject.cx &&
+      this._cy < finalObject.cy + finalObject.height &&
+      this._collisionBox.height + this._cy > finalObject.cy
     );
   }
 
   public update() {
-    this.vy += this.gravity;
-    if (this.vy > this.mvy) this.vy = this.mvy;
-    if (this.vx > this.mvx) this.vx = this.mvx;
-    this.move({ cy: this.cy + this.vy, cx: this.cx + this.vx });
+    // Apply Gravity
+    this._vy += this.gravity;
+
+    // Apply Velocity
+    if (this._vy > this._mvy) this._vy = this._mvy;
+    if (this._vx > this._mvx) this._vx = this._mvx;
+    this.move({ cy: this._cy + this._vy, cx: this._cx + this._vx });
 
     if (this.updateCallback != null) this.updateCallback(this);
   }
 
   public render(lagOffset = 1) {
-    this.rx = this.cx * lagOffset;
-    this.ry = this.cy * lagOffset;
+    // Calculate the to render (visible) position
+    this._rx = (this._cx - this._ox) * lagOffset + this._ox;
+    this._ry = (this._cy - this._oy) * lagOffset + this._oy;
 
     if (this.renderCallback != null) this.renderCallback(this, lagOffset);
+  }
+
+  public get cx(): number {
+    return this._cx;
+  }
+  public set cx(value: number) {
+    this._ox = this._cx;
+    this._cx = value;
+  }
+
+  public get cy(): number {
+    return this._cy;
+  }
+  public set cy(value: number) {
+    this._oy = this._cy;
+    this._cy = value;
+  }
+
+  public get ox(): number {
+    return this._ox;
+  }
+  public get oy(): number {
+    return this._oy;
+  }
+
+  public get rx(): number {
+    return this._rx;
+  }
+  public get ry(): number {
+    return this._ry;
+  }
+
+  public get vx(): number {
+    return this._vx;
+  }
+  public get vy(): number {
+    return this._vy;
+  }
+
+  public get rotation(): number {
+    return this._rotation;
+  }
+
+  public get collisionBox(): CollisionBoxConfig {
+    return this._collisionBox;
   }
 }
 

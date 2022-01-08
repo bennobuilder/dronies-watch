@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useHotkeys } from 'react-hotkeys-hook';
 import { useAgile } from '@agile-ts/react';
 import { flappydronie } from '../../../../core';
 import Bird from './components/sprites/Bird';
@@ -7,18 +8,19 @@ import Background from './components/sprites/Background';
 import Pipe from './components/sprites/Pipe';
 import Foreground from './components/sprites/Foreground';
 import { useGame } from './hooks/useGame';
-import { inputHandler } from './controller';
+import { inputHandler, toggledDeveloperMode } from './controller';
 import PerformanceIndicator from './components/PerformanceIndicator';
 
 const FlappyDronie: React.FC = () => {
   const { backgrounds, foregrounds, bird, pipeSets } = useGame();
-  const [canvasDimensions] = useAgile([flappydronie.CANVAS_DIMENSIONS]);
+  const showPerformance = useAgile(flappydronie.SHOW_PERFORMANCE);
+  useHotkeys('d', toggledDeveloperMode);
 
   return (
     <Container
       id="flappydronie"
-      width={canvasDimensions.width || 0}
-      height={canvasDimensions.height || 0}
+      width={flappydronie.GAME.canvasDimensions.width}
+      height={flappydronie.GAME.canvasDimensions.height}
       onClick={inputHandler}
     >
       {backgrounds.map((bg) => (
@@ -34,7 +36,7 @@ const FlappyDronie: React.FC = () => {
       {foregrounds.map((fg) => (
         <Foreground sprite={fg} key={fg.id} />
       ))}
-      <PerformanceIndicator />
+      {showPerformance && <PerformanceIndicator />}
     </Container>
   );
 };

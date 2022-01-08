@@ -4,9 +4,11 @@ import { Game } from './Game';
 import { bird_h, bird_w } from '../sprites';
 
 export class Bird extends Base {
-  public jumpForce = 4.6;
-  public radius = 20; // Collision radius
-  public skin; // Skin (UI)
+  public skin; // UI skin
+
+  private readonly jumpForce = 4.6;
+
+  private isRotationLocked = false;
 
   constructor(game: Game, config: BirdConfig) {
     super(game, {
@@ -27,12 +29,12 @@ export class Bird extends Base {
   }
 
   public setVelocity(velocity: number) {
-    this.vy = velocity;
+    this._vy = velocity;
   }
 
   public calculateRotation() {
     // When bird lacks upward momentum increment the rotation angle
-    if (this.vy > 5) {
+    if (this._vy > 5) {
       this.rotate(Math.min(Math.PI / 2.5, this.rotation + 0.1));
     } else {
       this.rotate(Math.max(-0.3, this.rotation - 0.1));
@@ -40,12 +42,20 @@ export class Bird extends Base {
   }
 
   public jump() {
-    this.vy = -this.jumpForce;
+    this._vy = -this.jumpForce;
   }
 
   public update() {
     super.update();
-    this.calculateRotation();
+    if (!this.isRotationLocked) this.calculateRotation();
+  }
+
+  public lockRotation() {
+    this.isRotationLocked = true;
+  }
+
+  public unlockRotation() {
+    this.isRotationLocked = false;
   }
 }
 

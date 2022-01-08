@@ -3,7 +3,7 @@ import { Game } from '../Game';
 import { fg_h, fg_w } from '../../sprites';
 
 export class Foreground extends Base {
-  public skin = 0;
+  public skin = 0; // UI skin
 
   constructor(game: Game, config: ForegroundConfig) {
     super(game, {
