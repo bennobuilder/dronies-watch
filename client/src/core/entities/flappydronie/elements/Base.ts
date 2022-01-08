@@ -1,5 +1,4 @@
 import { defineConfig, generateId } from '@agile-ts/core';
-import { ga } from 'react-ga';
 import { Game } from './Game';
 
 export class Base {
@@ -7,20 +6,40 @@ export class Base {
 
   public game: Game;
 
-  public cx: number;
-  public cy: number;
+  public cx: number; // X Position
+  public cy: number; // Y Position
+
+  public vx: number; // Velocity X
+  public vy: number; // Velocity Y
+
+  public mvx: number; // Max Velocity X
+  public mvy: number; // Max Velocity Y
+
+  public rx: number; // Render X
+  public ry: number; // Render Y
+
+  public gravity;
+
   public rotation: number;
+  public lockRotation = false;
 
   public collisionBox: CollisionBoxConfig;
+
+  private updateCallback?: (base: Base) => void;
+  private renderCallback?: (base: Base, lagOffset: number) => void;
 
   constructor(game: Game, config: BaseConfig = {}) {
     config = defineConfig(config, {
       collisionBox: {},
       cx: 0,
       cy: 0,
+      vx: 0,
+      vy: 0,
       rotation: 0,
+      gravity: 0,
     });
 
+    this.id = generateId();
     this.game = game;
 
     this.collisionBox = {
@@ -33,11 +52,19 @@ export class Base {
       },
       ...config.collisionBox,
     };
-    this.cx = config.cx as any;
-    this.cy = config.cy as any;
-    this.rotation = config.rotation as any;
+    this.cx = config.cx!;
+    this.cy = config.cy!;
+    this.vx = config.vx!;
+    this.vy = config.vy!;
+    this.mvx = 10;
+    this.mvy = 7;
+    this.rx = this.cx;
+    this.ry = this.cy;
+    this.rotation = config.rotation!;
+    this.gravity = config.gravity!;
 
-    this.id = generateId();
+    this.updateCallback = config.updateCallback;
+    this.renderCallback = config.renderCallback;
   }
 
   public move(newPos: MoveConfig) {
@@ -46,12 +73,12 @@ export class Base {
       cy: this.cy,
     });
 
-    this.cx = newPos.cx as any;
-    this.cy = newPos.cy as any;
+    this.cx = (newPos.cx as any) + this.vx;
+    this.cy = (newPos.cy as any) + this.vy;
   }
 
   public rotate(rotation: number) {
-    this.rotation = rotation;
+    if (!this.lockRotation) this.rotation = rotation;
   }
 
   public calculateCollision(object: Base): boolean;
@@ -76,12 +103,28 @@ export class Base {
       this.collisionBox.height + this.cy > finalObject.cy
     );
   }
+
+  public update() {
+    this.vy += this.gravity;
+    if (this.vy > this.mvy) this.vy = this.mvy;
+    this.move({ cy: this.cy });
+  }
+
+  public render() {
+    // TODO
+  }
 }
 
 export type BaseConfig = {
   cx?: number;
   cy?: number;
+  vx?: number;
+  vy?: number;
   rotation?: number;
+  gravity?: number;
+
+  updateCallback?: (base: Base) => void;
+  renderCallback?: (base: Base, lagOffset: number) => void;
 
   collisionBox?: Partial<CollisionBoxConfig>;
 };

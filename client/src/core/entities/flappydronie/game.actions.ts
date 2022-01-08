@@ -1,21 +1,17 @@
-import { bg_h, bg_w, fg_h, fg_w, pipe_h, pipe_w } from './sprites';
+import { fg_h, pipe_h, pipe_w } from './sprites';
 import { PipeSet } from './elements';
 import {
-  BACKGROUND_POSITION,
-  BACKGROUNDS,
+  BACKGROUND,
   BIRD,
   BIRD_DEFAULT_POSITION,
   BIRD_SKIN,
-  CANVAS_DIMENSIONS,
   COOLDOWN,
-  FOREGROUND_POSITION,
-  FOREGROUNDS,
+  FOREGROUND,
   FRAMES,
   GAME,
   GAME_STATUS,
   HIGH_SCORE,
   LATEST_SCORE,
-  MAP_SKIN,
   PIPE_SETS,
   SCORE,
   STATUS,
@@ -61,6 +57,8 @@ export const resetGame = () => {
 };
 
 export const updateFrame = () => {
+  // TODO add delta time to the frames so that the delta time is globally accessible!!
+  //  https://stackoverflow.com/questions/25612452/html5-canvas-game-loop-delta-time-calculations
   FRAMES.set((f) => f + 1);
 
   // Update Scenery
@@ -75,39 +73,8 @@ export const updateScenery = () => {
     STATUS.value === GAME_STATUS.SPLASH ||
     STATUS.value === GAME_STATUS.PLAYING
   ) {
-    const foregrounds = FOREGROUNDS.nextStateValue;
-    const backgrounds = BACKGROUNDS.nextStateValue;
-    const canvasDimensions = CANVAS_DIMENSIONS.value;
-
-    const newForegroundPos = (FOREGROUND_POSITION.value - 2) % (fg_w - 5); // -5 to hide white stripe between the two images
-
-    foregrounds[0].move({
-      cx: newForegroundPos,
-      cy: canvasDimensions.height - fg_h, // Required when resizing
-    });
-    foregrounds[1].move({
-      cx: newForegroundPos + (fg_w - 5), // -5 to hide white stripe between the two images,
-      cy: canvasDimensions.height - fg_h, // Required when resizing
-    });
-
-    // Apply changes to the UI
-    FOREGROUND_POSITION.set(newForegroundPos);
-    FOREGROUNDS.ingest();
-
-    const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % (bg_w - 5); // -5 to hide white stripe between the two images
-
-    backgrounds[0].move({
-      cx: newBackgroundPos,
-      cy: canvasDimensions.height - bg_h, // Required when resizing
-    });
-    backgrounds[1].move({
-      cx: newBackgroundPos + (bg_w - 5), // -5 to hide white stripe between the two images
-      cy: canvasDimensions.height - bg_h, // Required when resizing
-    });
-
-    // Apply changes to the UI
-    BACKGROUND_POSITION.set(newBackgroundPos);
-    BACKGROUNDS.ingest();
+    BACKGROUND.value.update();
+    FOREGROUND.value.update();
 
     // Update Pipes
     if (STATUS.value === GAME_STATUS.PLAYING) updatePipes();
@@ -117,8 +84,8 @@ export const updateScenery = () => {
 export const updateBird = () => {
   const bird = BIRD.nextStateValue;
 
-  const canvasDimensions = CANVAS_DIMENSIONS.value;
-  const foregrounds = FOREGROUNDS.value;
+  const { canvasDimensions } = GAME;
+  const { foregrounds } = FOREGROUND.value;
 
   // If Splash Screen make the Bird hover
   if (STATUS.value === GAME_STATUS.SPLASH) {
@@ -130,17 +97,15 @@ export const updateBird = () => {
     STATUS.value === GAME_STATUS.PLAYING ||
     STATUS.value === GAME_STATUS.SCORE // Apply physics to the Bird also in the Score status, to drop the bird when hitting a Pipe
   ) {
-    bird.calculateVelocity();
+    bird.update();
 
     const collisionWithGround =
       bird.calculateCollision(foregrounds[0]) ||
       bird.calculateCollision(foregrounds[1]);
 
-    // Handle collision with bottom
+    // Handle collision with ground
     if (collisionWithGround) {
-      // Set velocity to jump speed for correct rotation when crashing
-      bird.setVelocity(bird.jumpForce);
-
+      bird.lockRotation = true;
       if (bird.cy >= canvasDimensions.height - fg_h - 10)
         bird.move({ cy: canvasDimensions.height - fg_h - 10 });
 
@@ -161,9 +126,6 @@ export const updateBird = () => {
       // Bounce
       bird.setVelocity(2);
     }
-
-    // Handle rotation
-    if (!collisionWithGround) bird.calculateRotation();
   }
 
   // Apply changes to the UI

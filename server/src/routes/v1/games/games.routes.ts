@@ -3,6 +3,6 @@ import flappyDroniesRoutes from './flappydronie';
 
 const router = Router();
 
-router.use('/flappy-dronie', flappyDroniesRoutes);
+router.use('/flappydronie', flappyDroniesRoutes);
 
 export default router;

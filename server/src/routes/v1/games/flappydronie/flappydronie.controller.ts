@@ -8,7 +8,7 @@ export async function playedController(req: Request, res: Response) {
 
     // TODO
 
-    res.sendStatus(200);
+    res.send('jeff');
   } catch (err) {
     console.log(err);
     res.sendStatus(400);

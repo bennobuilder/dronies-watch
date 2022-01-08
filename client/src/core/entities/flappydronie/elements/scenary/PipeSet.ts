@@ -1,8 +1,8 @@
 import { defineConfig } from '@agile-ts/core';
-import { Base, BaseConfig } from './Base';
-import { Game } from './Game';
+import { Base, BaseConfig } from '../Base';
+import { Game } from '../Game';
 import { Pipe } from './Pipe';
-import { fg_h, pipe_h, pipe_w } from '../sprites';
+import { fg_h, pipe_h, pipe_w } from '../../sprites';
 
 export class PipeSet extends Base {
   public movedCx = 0; // How far the PipeSet has been moved

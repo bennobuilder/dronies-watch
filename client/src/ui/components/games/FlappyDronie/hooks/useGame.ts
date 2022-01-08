@@ -4,9 +4,9 @@ import { flappydronie, ui } from '../../../../../core';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 
 export function useGame() {
-  const [backgrounds, foregrounds, bird, pipeSets, status] = useAgile([
-    flappydronie.BACKGROUNDS,
-    flappydronie.FOREGROUNDS,
+  const [background, foreground, bird, pipeSets, status] = useAgile([
+    flappydronie.BACKGROUND,
+    flappydronie.FOREGROUND,
     flappydronie.BIRD,
     flappydronie.PIPE_SETS,
     flappydronie.STATUS,
@@ -32,5 +32,11 @@ export function useGame() {
     return flappydronie.FPS_CONTROLLER.stopDrawing;
   }, []);
 
-  return { backgrounds, foregrounds, bird, pipeSets, status };
+  return {
+    backgrounds: background.backgrounds,
+    foregrounds: foreground.foregrounds,
+    bird,
+    pipeSets,
+    status,
+  };
 }

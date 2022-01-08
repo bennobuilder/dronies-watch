@@ -2,6 +2,8 @@ import { createState } from '@agile-ts/core';
 import { bg_h, bg_w, bird_h, bird_w, fg_h, fg_w } from './sprites';
 import { Bird, Background, Foreground, Game, PipeSet } from './elements';
 import { FpsController } from './utils/FpsController';
+import { BackgroundWrapper } from './elements/scenary/BackgroundWrapper';
+import { ForegroundWrapper } from './elements/scenary/ForegroundWrapper';
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export enum GAME_STATUS {
@@ -27,8 +29,8 @@ BIRD_SKIN.watch((v) => {
 });
 export const MAP_SKIN = createState(0);
 MAP_SKIN.watch((v) => {
-  const foregrounds = FOREGROUNDS.nextStateValue;
-  const backgrounds = BACKGROUNDS.nextStateValue;
+  const { foregrounds } = FOREGROUND.nextStateValue;
+  const { backgrounds } = BACKGROUND.nextStateValue;
 
   foregrounds.forEach((fg) => {
     fg.skin = v;
@@ -38,8 +40,8 @@ MAP_SKIN.watch((v) => {
   });
 
   // Apply changes to the UI
-  FOREGROUNDS.ingest();
-  BACKGROUNDS.ingest();
+  FOREGROUND.ingest();
+  BACKGROUND.ingest();
 });
 export const VEHICLE_SKIN = createState(0);
 
@@ -83,21 +85,27 @@ export const BIRD = createState<Bird>(
 //   if (PLAY_ONLINE.value)
 //     socketService.socket?.emit('bird', { cx: v.cx, cy: v.cy });
 // });
-export const BACKGROUNDS = createState([
-  new Background(GAME, { cx: 0, cy: CANVAS_DIMENSIONS.value.height - bg_h }),
-  new Background(GAME, { cx: bg_w, cy: CANVAS_DIMENSIONS.value.height - bg_h }),
-]);
-export const FOREGROUNDS = createState([
-  new Foreground(GAME, {
-    cx: 0,
-    cy: CANVAS_DIMENSIONS.value.height - fg_h,
-    collisionBox: { height: fg_h - 20 },
-  }),
-  new Foreground(GAME, {
-    cx: fg_w,
-    cy: CANVAS_DIMENSIONS.value.height - fg_h,
-    collisionBox: { height: fg_h - 20 },
-  }),
-]);
-export const FOREGROUND_POSITION = createState(0);
-export const BACKGROUND_POSITION = createState(0);
+export const BACKGROUND = createState(
+  new BackgroundWrapper(GAME, [
+    new Background(GAME, { cx: 0, cy: CANVAS_DIMENSIONS.value.height - bg_h }),
+    new Background(GAME, {
+      cx: bg_w,
+      cy: CANVAS_DIMENSIONS.value.height - bg_h,
+    }),
+  ]),
+);
+
+export const FOREGROUND = createState(
+  new ForegroundWrapper(GAME, [
+    new Foreground(GAME, {
+      cx: 0,
+      cy: CANVAS_DIMENSIONS.value.height - fg_h,
+      collisionBox: { height: fg_h - 20 },
+    }),
+    new Foreground(GAME, {
+      cx: fg_w,
+      cy: CANVAS_DIMENSIONS.value.height - fg_h,
+      collisionBox: { height: fg_h - 20 },
+    }),
+  ]),
+);
