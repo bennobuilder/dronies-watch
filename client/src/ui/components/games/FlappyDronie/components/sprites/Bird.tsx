@@ -5,13 +5,13 @@ import {
   plane,
   SpriteWrapper,
   dronies,
-} from '../../../../../core/entities/flappydronie/sprites';
-import { flappydronie } from '../../../../../core';
-import { SHOW_COLLIDER } from '../../../../../core/entities/flappydronie';
+} from '../../../../../../core/entities/flappydronie/sprites';
+import { flappydronie } from '../../../../../../core';
+import { SHOW_COLLIDERS } from '../../../../../../core/entities/flappydronie';
 
 const Bird: React.FC<Props> = (props) => {
   const { sprite } = props;
-  const showCollider = useAgile(SHOW_COLLIDER);
+  const showCollider = useAgile(SHOW_COLLIDERS);
 
   return (
     <SpriteWrapper

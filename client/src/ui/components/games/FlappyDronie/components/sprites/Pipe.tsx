@@ -4,14 +4,14 @@ import {
   pipe_n,
   pipe_s,
   SpriteWrapper,
-} from '../../../../../core/entities/flappydronie/sprites';
-import { flappydronie } from '../../../../../core';
-import { SHOW_COLLIDER } from '../../../../../core/entities/flappydronie';
+} from '../../../../../../core/entities/flappydronie/sprites';
+import { flappydronie } from '../../../../../../core';
+import { SHOW_COLLIDERS } from '../../../../../../core/entities/flappydronie';
 
 const Pipe: React.FC<Props> = (props) => {
   const { sprite } = props;
   const [pipeAsset, setPipeAsset] = useState<React.ReactElement | null>(null);
-  const showCollider = useAgile(SHOW_COLLIDER);
+  const showCollider = useAgile(SHOW_COLLIDERS);
 
   useEffect(() => {
     switch (sprite.type) {

@@ -10,6 +10,7 @@ import Icon from '../../../../components/icons';
 import InfoBox from '../../../../components/other/InfoBox';
 import { useEventTracker } from '../../../../hooks/useEventTracker';
 import { useTheme } from '../../../../theme/useTheme';
+import { GAME_STATUS } from '../../../../../core/entities/flappydronie';
 
 const FlappyDronieGame: React.FC = () => {
   const [score, latestScore, highScore, gameStatus] = useAgile([
@@ -58,9 +59,7 @@ const FlappyDronieGame: React.FC = () => {
           <Game linesCount={20}>
             <FlappyDronie />
           </Game>
-          <ClickToStartContainer
-            hide={gameStatus !== flappydronie.GAME_STATUS.SPLASH}
-          >
+          <ClickToStartContainer hide={gameStatus !== GAME_STATUS.SPLASH}>
             <Icon.Click width={30} height={30} color={theme.colors.layout.hc} />
             <ClickToStartText>Click to Start</ClickToStartText>
           </ClickToStartContainer>

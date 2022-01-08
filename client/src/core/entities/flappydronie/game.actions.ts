@@ -1,25 +1,20 @@
-import { bg_h, bg_w, fg_h, fg_w, pipe_h, pipe_w } from './sprites';
+import { fg_h, pipe_h, pipe_w } from './sprites';
 import { PipeSet } from './elements';
 import {
-  BACKGROUND_POSITION,
-  BACKGROUNDS,
+  BACKGROUND_WRAPPER,
   BIRD,
-  BIRD_DEFAULT_POSITION,
+  DEFAULT_BIRD_POSITION,
   BIRD_SKIN,
-  CANVAS_DIMENSIONS,
   COOLDOWN,
-  FOREGROUND_POSITION,
-  FOREGROUNDS,
-  FRAMES,
+  FOREGROUND_WRAPPER,
   GAME,
-  GAME_STATUS,
   HIGH_SCORE,
   LATEST_SCORE,
-  MAP_SKIN,
   PIPE_SETS,
   SCORE,
   STATUS,
 } from './game.controller';
+import { GAME_STATUS } from './game.types';
 
 export const startGame = () => {
   STATUS.set(GAME_STATUS.PLAYING);
@@ -48,12 +43,15 @@ export const endGame = () => {
 export const resetGame = () => {
   // Reset Bird
   const bird = BIRD.nextStateValue;
-  bird.move({ cy: BIRD_DEFAULT_POSITION.y, cx: BIRD_DEFAULT_POSITION.x });
+  bird.unlockRotation();
+  bird.move({ cy: DEFAULT_BIRD_POSITION.y, cx: DEFAULT_BIRD_POSITION.x });
   bird.rotate(0);
   BIRD.ingest();
 
-  FRAMES.reset();
+  // Reset Pipes
   PIPE_SETS.reset();
+
+  // Reset Game
   STATUS.set(GAME_STATUS.SPLASH);
 
   // Update Skins
@@ -61,7 +59,7 @@ export const resetGame = () => {
 };
 
 export const updateFrame = () => {
-  FRAMES.set((f) => f + 1);
+  GAME.update();
 
   // Update Scenery
   updateScenery();
@@ -70,77 +68,39 @@ export const updateFrame = () => {
   updateBird();
 };
 
-export const updateScenery = () => {
-  if (
-    STATUS.value === GAME_STATUS.SPLASH ||
-    STATUS.value === GAME_STATUS.PLAYING
-  ) {
-    const foregrounds = FOREGROUNDS.nextStateValue;
-    const backgrounds = BACKGROUNDS.nextStateValue;
-    const canvasDimensions = CANVAS_DIMENSIONS.value;
-
-    const newForegroundPos = (FOREGROUND_POSITION.value - 2) % (fg_w - 5); // -5 to hide white stripe between the two images
-
-    foregrounds[0].move({
-      cx: newForegroundPos,
-      cy: canvasDimensions.height - fg_h, // Required when resizing
-    });
-    foregrounds[1].move({
-      cx: newForegroundPos + (fg_w - 5), // -5 to hide white stripe between the two images,
-      cy: canvasDimensions.height - fg_h, // Required when resizing
-    });
-
-    // Apply changes to the UI
-    FOREGROUND_POSITION.set(newForegroundPos);
-    FOREGROUNDS.ingest();
-
-    const newBackgroundPos = (BACKGROUND_POSITION.value - 0.5) % (bg_w - 5); // -5 to hide white stripe between the two images
-
-    backgrounds[0].move({
-      cx: newBackgroundPos,
-      cy: canvasDimensions.height - bg_h, // Required when resizing
-    });
-    backgrounds[1].move({
-      cx: newBackgroundPos + (bg_w - 5), // -5 to hide white stripe between the two images
-      cy: canvasDimensions.height - bg_h, // Required when resizing
-    });
-
-    // Apply changes to the UI
-    BACKGROUND_POSITION.set(newBackgroundPos);
-    BACKGROUNDS.ingest();
-
-    // Update Pipes
-    if (STATUS.value === GAME_STATUS.PLAYING) updatePipes();
-  }
+export const renderFrame = (lagOffset: number) => {
+  BIRD.value.render(lagOffset);
+  FOREGROUND_WRAPPER.value.foregrounds.forEach((fg) => fg.render(lagOffset));
+  BACKGROUND_WRAPPER.value.backgrounds.forEach((bg) => bg.render(lagOffset));
+  PIPE_SETS.value.forEach((pipeSet) => pipeSet.render(lagOffset));
 };
 
 export const updateBird = () => {
   const bird = BIRD.nextStateValue;
+  const status = STATUS.value;
 
-  const canvasDimensions = CANVAS_DIMENSIONS.value;
-  const foregrounds = FOREGROUNDS.value;
+  const { canvasDimensions } = GAME;
+  const { foregrounds } = FOREGROUND_WRAPPER.value;
 
   // If Splash Screen make the Bird hover
-  if (STATUS.value === GAME_STATUS.SPLASH) {
+  if (status === GAME_STATUS.SPLASH) {
     const hoverHeight = 280;
     bird.hover(canvasDimensions.height - hoverHeight);
   }
 
   if (
-    STATUS.value === GAME_STATUS.PLAYING ||
-    STATUS.value === GAME_STATUS.SCORE // Apply physics to the Bird also in the Score status, to drop the bird when hitting a Pipe
+    status === GAME_STATUS.PLAYING ||
+    status === GAME_STATUS.SCORE // Apply physics to the Bird also in the Score status, to drop the bird when hitting a Pipe
   ) {
-    bird.calculateVelocity();
+    bird.update();
 
     const collisionWithGround =
       bird.calculateCollision(foregrounds[0]) ||
       bird.calculateCollision(foregrounds[1]);
 
-    // Handle collision with bottom
+    // Handle collision with ground
     if (collisionWithGround) {
-      // Set velocity to jump speed for correct rotation when crashing
-      bird.setVelocity(bird.jumpForce);
-
+      bird.lockRotation();
       if (bird.cy >= canvasDimensions.height - fg_h - 10)
         bird.move({ cy: canvasDimensions.height - fg_h - 10 });
 
@@ -161,24 +121,29 @@ export const updateBird = () => {
       // Bounce
       bird.setVelocity(2);
     }
-
-    // Handle rotation
-    if (!collisionWithGround) bird.calculateRotation();
   }
-
-  // Apply changes to the UI
-  // TODO optimize as the screen is also re-rendered although the bird doesn't move
-  BIRD.ingest({ force: true });
 };
 
 export const jumpBird = () => {
   const bird = BIRD.nextStateValue;
   bird.jump();
-  BIRD.ingest({ force: true });
+};
+
+export const updateScenery = () => {
+  const status = STATUS.value;
+
+  if (status === GAME_STATUS.SPLASH || status === GAME_STATUS.PLAYING) {
+    // Update Background and Foreground
+    BACKGROUND_WRAPPER.nextStateValue.update();
+    FOREGROUND_WRAPPER.nextStateValue.update();
+
+    // Update Pipes
+    if (status === GAME_STATUS.PLAYING) updatePipes();
+  }
 };
 
 export const updatePipes = () => {
-  let pipeSets = PIPE_SETS.nextStateValue;
+  let pipeSets = PIPE_SETS.value;
   const bird = BIRD.value;
 
   // Generate Pipe Sets
@@ -188,11 +153,21 @@ export const updatePipes = () => {
       pipeSets[pipeSets.length - 1].distance
   ) {
     pipeSets = pipeSets.concat(
-      new PipeSet(GAME, { cx: pipe_h, cy: 0, distance: 200, gap: 120 }),
+      new PipeSet(GAME, {
+        cx: pipe_h,
+        cy: 0,
+        distance: 200,
+        gap: 120,
+        renderCallback: () => {
+          PIPE_SETS.ingest();
+        },
+      }),
     );
   }
 
   pipeSets.forEach((pipeSet) => {
+    pipeSet.update();
+
     // End Game, if Bird collides with Pipe
     if (
       pipeSet.topPipe.calculateCollision(bird) ||
@@ -205,8 +180,6 @@ export const updatePipes = () => {
       SCORE.set((v) => v + 1);
       pipeSet.scored = true;
     }
-
-    pipeSet.move();
 
     // Remove pipes that go out of view
     if (pipeSet.cx < -pipe_w) pipeSets.splice(0, 1);

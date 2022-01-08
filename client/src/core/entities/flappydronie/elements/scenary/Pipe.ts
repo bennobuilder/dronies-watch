@@ -1,9 +1,9 @@
-import { Base, BaseConfig } from './Base';
-import { Game } from './Game';
-import { pipe_h, pipe_w } from '../sprites';
+import { Base, BaseConfig } from '../Base';
+import { Game } from '../Game';
+import { pipe_h, pipe_w } from '../../sprites';
 
 export class Pipe extends Base {
-  public type: PipeType;
+  public readonly type: PipeType;
 
   constructor(game: Game, config: PipeConfig) {
     super(game, {
