@@ -52,7 +52,6 @@ const FlappyDronieGame: React.FC = () => {
               }
             />
           )}
-          <StyledInfoBox text="Some new features like a Leaderboard might be added in the near future." />
         </InfoContainer>
 
         <GameContainer>
@@ -159,22 +158,18 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 100%;
-
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
     margin-top: 30px;
   }
 `;
 
 const StatsContainer = styled(LinesBackground)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  padding: 20px 50px;
+  padding: 20px 60px;
 `;
 
 const ShareScoreButton = styled(Button)`
+  display: flex;
+
   margin-top: 50px;
 `;
 

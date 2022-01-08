@@ -1,16 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useTheme } from '../../../theme/useTheme';
-import LinesBackground from '../../primitive/background/LinesBackground';
 import BottomDivider from './components/BottomDivider';
 import TableItem from './components/TableItem';
+import TableOutline from './components/TableOutline';
 
 const HighScoreTable: React.FC = () => {
   const theme = useTheme();
 
   return (
-    <Container linesCount={0}>
+    <Container>
       <StyledTable>
+        <TableOutline />
+
         {/* Table Content */}
         <thead>
           <TableHeaderRow>
@@ -52,11 +54,11 @@ const HighScoreTable: React.FC = () => {
 
 export default HighScoreTable;
 
-const Container = styled(LinesBackground)`
+const Container = styled.div`
   position: relative;
 
   padding: 0;
-  width: 100%;
+  width: 80%;
 `;
 
 const StyledTable = styled.table`
@@ -74,4 +76,9 @@ const TableHeaderRow = styled.tr`
 
 const TableHeaderCell = styled.th`
   padding: 12px 15px;
+
+  font-family: ${({ theme }) => theme.fontFamily};
+  font-size: 1rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.layout.hc};
 `;

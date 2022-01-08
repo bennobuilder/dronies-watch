@@ -87,7 +87,7 @@ const Container = styled(ButtonWrapper)<{
   hoverColor: string;
   size: NumberSize;
 }>`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   flex-direction: row;
 

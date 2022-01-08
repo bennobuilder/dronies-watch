@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import BottomDivider from './BottomDivider';
 
+const HORIZONTAL_PADDING = 30;
+
 const TableItem: React.FC<Props> = (props) => {
   const {
     rank,
@@ -14,10 +16,10 @@ const TableItem: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      <Rank>{rank + 1}</Rank>
-      <Cell>{name}</Cell>
-      <Score>{score}</Score>
-      <Cell>15 hours ago</Cell>
+      <RankText>{rank}</RankText>
+      <NameText>{name}</NameText>
+      <ScoreText>{score}</ScoreText>
+      <TimeText>15 hours ago</TimeText>
       {showDivider && <BottomDivider />}
     </Container>
   );
@@ -44,13 +46,54 @@ const Cell = styled.td`
   padding: 1rem 1rem;
 `;
 
-const Rank = styled(Cell)`
-  width: 4ch;
-  padding-left: 1rem;
+const RankText = styled(Cell)`
+  width: 5%;
+  padding-left: ${HORIZONTAL_PADDING}px;
 
-  text-align: right;
+  font-family: ${({ theme }) => theme.fontFamily};
+  font-size: 1rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.layout.hc};
+  text-align: left;
+
+  background-color: blue;
 `;
 
-const Score = styled(Cell)`
-  width: 8ch;
+const NameText = styled(Cell)`
+  width: auto;
+
+  font-family: ${({ theme }) => theme.fontFamily};
+  font-size: 1rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.layout.hc};
+  text-align: left;
+
+  background-color: purple;
+`;
+
+const ScoreText = styled(Cell)`
+  width: 1%;
+  padding-right: 50px;
+
+  font-family: ${({ theme }) => theme.fontFamily};
+  font-size: 2rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.primitiveColors.red};
+  text-align: center;
+
+  background-color: green;
+`;
+
+const TimeText = styled(Cell)`
+  width: 1%; // https://stackoverflow.com/questions/26983301/how-to-make-a-table-column-be-a-minimum-width
+  padding-right: ${HORIZONTAL_PADDING}px;
+
+  font-family: ${({ theme }) => theme.fontFamily};
+  font-size: 1rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.layout.hc};
+  text-align: right;
+  white-space: nowrap;
+
+  background-color: red;
 `;

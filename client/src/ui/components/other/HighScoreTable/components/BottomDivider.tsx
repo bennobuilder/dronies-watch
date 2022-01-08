@@ -18,7 +18,7 @@ const EdgeMiddle = styled.div<{ position: 'left' | 'right' }>`
   left: ${({ position }) => (position === 'left' ? 0 : undefined)};
   right: ${({ position }) => (position === 'right' ? 0 : undefined)};
 
-  width: 2%;
+  width: 10px;
   height: 2px;
   background-color: ${({ theme }) => theme.colors.layout.rHc};
 `;

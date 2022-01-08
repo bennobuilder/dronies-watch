@@ -59,17 +59,14 @@ type Props = {
 };
 
 const Container = styled.div`
+  display: table; // https://stackoverflow.com/questions/12708381/display-block-without-100-width
   position: relative;
-
-  background-color: blue;
 
   padding: 20px;
 `;
 
 const ContentContainer = styled.div`
   position: relative;
-
-  background-color: red;
 
   z-index: 2;
 `;
