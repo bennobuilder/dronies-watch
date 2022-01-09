@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { urlEncodeData } from '../../utils/urlEncodeData';
 import config from '../../config';
-import { deleteUser, getUser } from '../user';
+import { getUser } from '../user';
 import {
   DiscordOAuth2CredentialsResponse,
   OAuth2TokenExchangeRequestParams,

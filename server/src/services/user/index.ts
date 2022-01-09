@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { User } from '../../db/entities/User';
+import { User } from '../../db';
 import { decrypt } from '../crypto';
 import {
   CreateUserParams,

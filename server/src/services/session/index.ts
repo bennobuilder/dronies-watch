@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { getRepository } from 'typeorm';
-import { Session } from '../../db/entities/Session';
+import { Session } from '../../db';
 import config from '../../config';
 
 const sessionRepository = getRepository(Session);

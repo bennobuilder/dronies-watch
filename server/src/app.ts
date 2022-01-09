@@ -7,8 +7,8 @@ import createHttpError from 'http-errors';
 import routes from './routes';
 import config from './config';
 import { deserializeSession } from './middleware/session';
-import helmet from 'helmet';
 import { rateLimiterMiddleware } from './middleware/security';
+import helmet from 'helmet';
 
 // TODO ---
 //  Failed to outsource this declarations into the global.d.ts file due to annoying errors

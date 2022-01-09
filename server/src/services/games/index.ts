@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { GameLog } from '../../db/entities/GameLog';
+import { GameLog } from '../../db';
 import { GAME_TYPES } from './games.types';
 
 const gameLogRepository = getRepository(GameLog);
