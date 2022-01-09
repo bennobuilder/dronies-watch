@@ -75,3 +75,6 @@ TODO
 - https://www.youtube.com/watch?v=rKgZLVgdvAY
 - https://orkhan.gitbook.io/typeorm/docs/relations
 - https://stackoverflow.com/questions/61361008/typeorm-insert-with-relationid
+
+### How to deploy multiple apps in monorepo with Heroku
+- https://michaellin.me/deploy-multiple-apps-in-monorepo-to-heroku/
