@@ -12,5 +12,5 @@ export default {
   synchronize: !!process.env.DB_SYNC,
   entities: [`src/db/entities/**/*.${isCompiled ? 'js' : 'ts'}`],
   migrations: [`src/db/migrations/**/*.${isCompiled ? 'js' : 'ts'}`],
-  secret: process.env.ENCRYPT_SECRET,
+  secret: process.env.DB_ENCRYPT_SECRET,
 };

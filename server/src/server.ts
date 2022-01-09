@@ -4,7 +4,7 @@ import config from './config';
 import { connectDB } from './db';
 
 export const { server, io } = (() => {
-  const PORT = config.debug.port;
+  const PORT = config.app.port;
 
   const server = createServer();
   const io = initSocketServer(server);

@@ -1,7 +1,6 @@
 # 💾 Backend
 > api.dronies.watch
 
-
 ## 🍪 Session
 
 This backend uses `Discord OAuth2` for authentications,
@@ -30,6 +29,37 @@ DISCORD_OAUTH_SESSION_ID=s%3ADIEAWKI3fYvmaeLLQuNMcu_1WWqc0kAC.%2Foy9fri87cjVzjCT
 
 **PUT** /v1/games/flappydronie/played
 - TODO
+
+## Installation & Instructions
+Do you wish to use this code?
+Please follow the following instructions on how to set everything up.
+
+**Pre-requisites:**
+- Clone this repository
+- Run npm install or yarn install
+  - Use the sample below as a `.env` or `.env.local` boilerplate. 
+    Don't share the value of your variables publicly as these include critical information.
+    ```text
+    # Express App Server Details
+    PORT=9000
+    
+    # Discord OAuth2 Client Details
+    DISCORD_APPLICATION_ID={YOUR_APPLICATION_ID}
+    DISCORD_CLIENT_SECRET={YOUR_CLIENT_SECRET}
+    DISCORD_REDIRECT_URL=http://localhost:9000/%s/auth/discord/redirect
+    
+    # Postgres & TypeORM Connection Options
+    DB_HOST=localhost
+    DB_PORT=5432
+    DB_USERNAME=postgres
+    DB_PASSWORD=postgres
+    DB_NAME=dronies_watch
+    DB_SYNC=true
+    DB_ENCRYPT_SECRET=n2r5u8x/A?D(G+KaPdSgVkYp3s6v9y$B # 256-bit
+    
+    # Cookie & Session Options
+    SESSION_SECRET=3t6w9z$C&F)H@McQfTjWnZr4u7x!A%D* # 256-bit
+    ```
 
 ## 👨‍🎓 Learnings
 
@@ -78,3 +108,10 @@ TODO
 
 ### How to deploy multiple apps in monorepo with Heroku
 - https://michaellin.me/deploy-multiple-apps-in-monorepo-to-heroku/
+
+### Deploying a PostgreSQL database on Heroku
+- https://www.youtube.com/watch?v=80oty2v4HsE
+```text
+// Connect to Heroku Database from local endmachine
+psql --host=ec2-34-255-225-151.eu-west-1.compute.amazonaws.com --port=5432 --username=htozchapbteyzi --password --dbname=dbuea1u652cemv
+```
