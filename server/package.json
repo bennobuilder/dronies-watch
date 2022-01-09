@@ -5,7 +5,8 @@
   "description": "dronies.watch backend",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "tsc": "tsc",
+    "build": "yarn run tsc",
     "start": "node ./dist/index.js",
     "start:dev": "nodemon",
     "prettier": "prettier --config .prettierrc --write \"**/*.{js,ts}\"",
