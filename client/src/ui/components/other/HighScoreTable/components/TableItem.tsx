@@ -18,7 +18,10 @@ const TableItem: React.FC<Props> = (props) => {
       <RankText>{rank}</RankText>
       <UserContainer>
         <InnerUserContainer>
-          <UserImage src="https://cdn.discordapp.com/avatars/637931838052237312/6d0a11e764bfe0cda5deda7e0aa8da6f.webp?size=32" />
+          <UserImage
+            src="https://cdn.discordapp.com/avatars/637931838052237312/6d0a11e764bfe0cda5deda7e0aa8da6f.webp?size=32"
+            loading="lazy"
+          />
           <NameContainer>
             <UserName>{name}</UserName>
             <UserDiscriminator>
@@ -68,7 +71,7 @@ const RankText = styled(Cell)`
 
 const UserContainer = styled(Cell)`
   width: auto;
-  padding-left: 20px;
+  padding: 0 50px 0 20px;
 `;
 
 const InnerUserContainer = styled.div`

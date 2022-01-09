@@ -1,17 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useTheme } from '../../../theme/useTheme';
 import TableItem from './components/TableItem';
 import TableOutline from './components/TableOutline';
 import TableHeader from './components/TableHeader';
-import { ui } from '../../../../core';
+import InfoBox from '../InfoBox';
 
-const HighScoreTable: React.FC = () => {
-  const theme = useTheme();
+const HighScoreTable: React.FC<Props> = (props) => {
+  const { data } = props;
 
   return (
     <Container>
       <InnerContainer>
+        {data.length === 0 && <StyledInfoBox text="No data captured yet!" />}
         <TableOutline />
         <StyledTable>
           {/* Table Content */}
@@ -20,28 +20,16 @@ const HighScoreTable: React.FC = () => {
           </thead>
 
           <tbody>
-            <TableItem
-              rank={1}
-              name="Benno"
-              discriminator="1234"
-              score={47}
-              playedDateTime={new Date('07.01.2022')}
-            />
-            <TableItem
-              rank={2}
-              name="Jeff"
-              discriminator="5678"
-              score={12}
-              playedDateTime={new Date()}
-            />
-            <TableItem
-              rank={3}
-              name="Frank"
-              discriminator="9999"
-              score={8}
-              playedDateTime={new Date()}
-              showDivider={false}
-            />
+            {data.map((itemData, i) => (
+              <TableItem
+                key={i}
+                rank={itemData.rank}
+                name={itemData.name}
+                discriminator={itemData.discriminator}
+                score={itemData.score}
+                playedDateTime={itemData.playedDateTime}
+              />
+            ))}
           </tbody>
         </StyledTable>
       </InnerContainer>
@@ -51,21 +39,47 @@ const HighScoreTable: React.FC = () => {
 
 export default HighScoreTable;
 
+type Props = {
+  data: TableData[];
+};
+
+type TableData = {
+  rank: number;
+  name: string;
+  discriminator: string;
+  score: number;
+  playedDateTime: Date;
+};
+
 const Container = styled.div`
   position: relative;
-  width: 70%;
-  padding: 0;
-
-  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
-    width: 100%;
-  }
 `;
 
 const InnerContainer = styled.div`
+  min-height: 600px;
+  max-height: 700px;
+
   overflow-x: auto; // https://www.w3schools.com/howto/howto_css_table_responsive.asp
+  overflow-y: auto;
+
+  // Hide Scrollbar
+  // https://www.w3schools.com/howto/howto_css_hide_scrollbars.asp
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
 `;
 
 const StyledTable = styled.table`
   width: 100%;
   min-width: 400px;
+`;
+
+const StyledInfoBox = styled(InfoBox)`
+  position: absolute;
+  top: 30%;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
 `;
