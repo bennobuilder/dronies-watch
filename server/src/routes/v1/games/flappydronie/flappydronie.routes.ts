@@ -1,8 +1,12 @@
 import { Router } from 'express';
-import { playedController } from './flappydronie.controller';
+import {
+  playedController,
+  recentHighscoresConroller,
+} from './flappydronie.controller';
 
 const router = Router();
 
-router.use('/played', playedController);
+router.put('/played', playedController);
+router.get('/recent-highscores', recentHighscoresConroller);
 
 export default router;

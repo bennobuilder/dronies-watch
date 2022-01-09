@@ -46,7 +46,7 @@ const Title = styled.h1`
   margin: 0 0 50px 0;
 
   color: ${({ theme }) => theme.colors.layout.p};
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-family: ${({ theme }) => theme.headings.fontFamily};
   white-space: nowrap;
   text-transform: uppercase;

@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { getRepository } from 'typeorm';
 import { Session } from '../../db/entities/Session';
+import config from '../../config';
 
 const sessionRepository = getRepository(Session);
 
@@ -24,7 +25,10 @@ export async function serializeSession(req: Request, userId: string) {
   }
 
   // Delete first Session if user still has more than 3 active sessions
-  if (sessionsInDB.length - deletedSessions >= 3) {
+  if (
+    sessionsInDB.length - deletedSessions >=
+    config.session.discord.maxActiveSessions
+  ) {
     await sessionRepository.delete(sessionsInDB[0]);
   }
 

@@ -1,5 +1,5 @@
 import cors from 'cors';
-import express from 'express';
+import express, { json } from 'express';
 import session from 'express-session';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
@@ -7,6 +7,9 @@ import createHttpError from 'http-errors';
 import routes from './routes';
 import config from './config';
 import { deserializeSession } from './middleware/session';
+import helmet from 'helmet';
+import router from './routes/v1/user';
+import { rateLimiterMiddleware } from './middleware/security';
 
 // TODO ---
 //  Failed to outsource this declarations into the global.d.ts file due to annoying errors
@@ -33,6 +36,9 @@ const { app } = (() => {
   // Logging Middleware
   app.use(logger('dev'));
 
+  // Protects app from some well-known web vulnerabilities
+  app.use(helmet());
+
   // Cors Middleware
   // https://expressjs.com/en/resources/middleware/cors.html
   app.use(cors());
@@ -57,8 +63,20 @@ const { app } = (() => {
     }),
   );
 
+  // Middleware that protects against to many requests
+  router.use(rateLimiterMiddleware);
+
   // Custom deserialize Session Middleware
-  app.use(deserializeSession);
+  router.use(deserializeSession);
+
+  // Middleware to parse incoming requests with JSON payloads
+  app.use(
+    json({
+      limit: '100kb',
+      strict: true,
+      type: 'application/json',
+    }),
+  );
 
   // Register Routes
   app.use('/', routes);

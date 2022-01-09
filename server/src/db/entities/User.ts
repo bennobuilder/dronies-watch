@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { GameLog } from './GameLog';
+import { Session } from './Session';
 
 @Entity({ name: 'users' })
 export class User {
@@ -22,4 +24,10 @@ export class User {
 
   @Column({ name: 'discord_refresh_token' })
   refreshToken: string;
+
+  @OneToMany(() => GameLog, (gameLog) => gameLog.player)
+  gameLogs: GameLog[];
+
+  @OneToMany(() => Session, (session) => session.user)
+  sessions: Session[];
 }

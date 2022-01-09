@@ -1,18 +1,30 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { User } from './User';
 
 @Entity({ name: 'game_log' })
-export class User {
+export class GameLog {
   @PrimaryGeneratedColumn()
   id: number;
 
+  // Foreign Key
   @Column({ name: 'player_id' })
-  playerId: string;
+  playerId: number; // https://stackoverflow.com/questions/61361008/typeorm-insert-with-relationid
+
+  @ManyToOne(() => User, (user) => user.gameLogs, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'player_id' })
+  player: User;
 
   @Column({ name: 'score' })
   score: number;
 
-  @Column({ name: 'created_date_time' })
-  createdDateTime: Date;
+  @Column({ name: 'played_at' })
+  playedAt: Date;
 
   @Column({ name: 'game_type' })
   gameType: string;

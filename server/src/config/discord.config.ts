@@ -15,6 +15,8 @@ export default {
   routes: {
     oauth2Token: `${apiEndpoint}/oauth2/token`,
     oauth2User: `${apiEndpoint}/users/@me`,
+    oauth2Login:
+      'https://discord.com/api/oauth2/authorize?client_id=927198260530122773&redirect_uri=http%3A%2F%2Flocalhost%3A9000%2Fv1%2Fauth%2Fdiscord%2Fredirect&response_type=code&scope=identify',
     revokeToken: `${apiEndpoint}/oauth2/token/revoke`,
     imageBase: `https://cdn.discordapp.com`,
   },

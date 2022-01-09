@@ -9,6 +9,10 @@ import {
 import { createUser, deleteUser } from '../../../services/user';
 import { getDiscordUserDetails } from '../../../services/user/discord';
 
+export async function authDiscordLoginController(req: Request, res: Response) {
+  res.redirect(config.discord.routes.oauth2Login);
+}
+
 export async function authDiscordRedirectController(
   req: Request,
   res: Response,
