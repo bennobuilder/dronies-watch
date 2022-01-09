@@ -18,6 +18,7 @@ export const { rateLimiterMiddleware } = (() => {
     //   .catch((_) => {
     //     res.status(429).send('Too Many Requests');
     //   });
+    return next();
   };
 
   return { rateLimiterMiddleware };

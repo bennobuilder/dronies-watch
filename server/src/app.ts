@@ -8,7 +8,6 @@ import routes from './routes';
 import config from './config';
 import { deserializeSession } from './middleware/session';
 import helmet from 'helmet';
-import router from './routes/v1/user';
 import { rateLimiterMiddleware } from './middleware/security';
 
 // TODO ---
@@ -64,10 +63,10 @@ const { app } = (() => {
   );
 
   // Middleware that protects against to many requests
-  router.use(rateLimiterMiddleware);
+  app.use(rateLimiterMiddleware);
 
   // Custom deserialize Session Middleware
-  router.use(deserializeSession);
+  app.use(deserializeSession);
 
   // Middleware to parse incoming requests with JSON payloads
   app.use(

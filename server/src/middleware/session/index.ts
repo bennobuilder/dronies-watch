@@ -36,8 +36,9 @@ export async function deserializeSession(
     return next();
   }
 
-  const data = JSON.parse(sessionInDB.userId);
-  req.userId = data;
+  // Append 'userId' to request so that further routes know
+  // that this user (userId) sent the request and is authenticated
+  req.userId = sessionInDB.userId;
 
   return next(); // Go to next middleware
 }
