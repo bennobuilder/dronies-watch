@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { signedCookie } from 'cookie-parser';
 import { getRepository } from 'typeorm';
-import { Session } from '../../db/entities/Session';
+import { Session } from '../../db/entities/Session.entity';
 import config from '../../config';
 
 const sessionRepository = getRepository(Session);

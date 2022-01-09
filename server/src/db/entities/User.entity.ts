@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { GameLog } from './GameLog';
-import { Session } from './Session';
+import { GameLog } from './GameLog.entity';
+import { Session } from './Session.entity';
 
 @Entity({ name: 'users' })
 export class User {

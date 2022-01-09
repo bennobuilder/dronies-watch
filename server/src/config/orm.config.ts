@@ -2,6 +2,8 @@ import path from 'path';
 
 const isCompiled = path.extname(__filename).includes('js');
 
+console.log('Dir Name', __dirname);
+
 export default {
   type: 'postgres',
   host: process.env.DB_HOST || 'localhost',
@@ -10,7 +12,7 @@ export default {
   password: process.env.DB_PASSWORD || 'postgres',
   database: process.env.DB_NAME || 'random_node_project',
   synchronize: !!process.env.DB_SYNC,
-  entities: [`src/db/entities/**/*.${isCompiled ? 'js' : 'ts'}`],
-  migrations: [`src/db/migrations/**/*.${isCompiled ? 'js' : 'ts'}`],
+  entities: [isCompiled ? 'dist/**/*.entity.js' : 'src/**/*.entity.ts'],
+  migrations: [isCompiled ? 'dist/**/*.migration.js' : 'src/**/*.migration.ts'],
   secret: process.env.DB_ENCRYPT_SECRET,
 };
