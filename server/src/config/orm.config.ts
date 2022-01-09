@@ -2,8 +2,6 @@ import path from 'path';
 
 const isCompiled = path.extname(__filename).includes('js');
 
-console.log('Dir Name', __dirname);
-
 export default {
   type: 'postgres',
   host: process.env.DB_HOST || 'localhost',
