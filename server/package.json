@@ -5,7 +5,7 @@
   "description": "dronies.watch backend",
   "license": "MIT",
   "scripts": {
-    "tsc": "tsc",
+    "postinstall": "yarn run build",
     "build": "yarn run tsc",
     "start": "node ./dist/index.js",
     "start:dev": "nodemon",
