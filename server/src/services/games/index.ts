@@ -40,10 +40,21 @@ export async function getRecentHighScores(
   endIncludeDate.setDate(endIncludeDate.getDate() - 7);
 
   // Query recent games with a high score
+  // https://github.com/typeorm/typeorm/issues/5464
   return await gameLogRepository
     .createQueryBuilder('gameLog')
-    .leftJoinAndSelect('gameLog.player', 'user')
-    .where('gameLog.game_type = :gameType', { gameType })
+    .leftJoin(
+      (qb) =>
+        qb
+          .from(GameLog, 'sub_gameLog')
+          .select('MAX("score")', 'max_score')
+          .addSelect('player_id')
+          .groupBy('player_id'),
+      'best_game',
+      'best_game.player_id = gameLog.player_id',
+    )
+    .where('best_game.max_score = gameLog.score')
+    .andWhere('gameLog.game_type = :gameType', { gameType })
     .andWhere('gameLog.played_at > :date', { date: endIncludeDate })
     .orderBy('gameLog.score', 'DESC')
     .limit(limit)

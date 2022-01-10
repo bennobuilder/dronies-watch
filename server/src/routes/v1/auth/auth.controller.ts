@@ -63,7 +63,7 @@ export async function authDiscordRedirectController(
         res.redirect(
           `${config.discord.afterOAuth2RedirectUri}/?success=${
             session != null
-          };userId=${session.userId}`,
+          }&userId=${session.userId}`,
         );
       } else {
         res.send({

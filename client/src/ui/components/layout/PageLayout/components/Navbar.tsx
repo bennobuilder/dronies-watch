@@ -16,9 +16,6 @@ const Navbar: React.FC<Props> = (props) => {
 
   const navigate = useNavigate();
   const goToHome = () => navigate('/');
-  const goToOAuth2Login = () => {
-    window.location.href = `${config.api.baseUrl}/auth/discord/login`;
-  };
 
   return (
     <Container fixed={fixed as any}>

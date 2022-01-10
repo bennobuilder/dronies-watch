@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { fg_h, pipe_h, pipe_w } from './sprites';
 import { PipeSet } from './elements';
 import {
@@ -15,6 +16,7 @@ import {
   STATUS,
 } from './game.controller';
 import { GAME_STATUS } from './game.types';
+import config from '../../../config';
 
 export const startGame = () => {
   STATUS.set(GAME_STATUS.PLAYING);
@@ -189,6 +191,13 @@ export const updatePipes = () => {
 
   // Apply changes to the UI
   PIPE_SETS.set(pipeSets);
+};
+
+export const fetchRecentHighScores = async (limit = 50) => {
+  const response = await axios.get(
+    `${config.api.routes.recentHighScores}?limit=${limit}`,
+  );
+  console.log(response);
 };
 
 export const getScoreTweet = (score: number) =>
