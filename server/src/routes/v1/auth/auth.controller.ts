@@ -27,7 +27,7 @@ export async function authDiscordRedirectController(
         client_secret: config.discord.clientSecret!,
         grant_type: 'authorization_code',
         code: code.toString(),
-        redirect_uri: config.discord.redirectUrl,
+        redirect_uri: config.discord.oAuth2RedirectUri,
       });
 
       // Retrieve Discord user data
@@ -56,18 +56,29 @@ export async function authDiscordRedirectController(
       // Init session
       const session = await serializeSession(req, user.id.toString());
 
-      res.send({
-        session: {
-          expiresAt: session.expiresAt,
-        },
-        user: {
-          id: user.id,
-          avatar: user.avatar,
-          name: user.name,
-          discriminator: user.discriminator,
-          tag: `${user?.name}#${user?.discriminator}`,
-        },
-      });
+      if (config.discord.afterOAuth2RedirectUri != null) {
+        res.cookie(config.session.discord.name, session.sessionId, {
+          expires: session.expiresAt,
+        });
+        res.redirect(
+          `${config.discord.afterOAuth2RedirectUri}/?success=${
+            session != null
+          };userId=${session.userId}`,
+        );
+      } else {
+        res.send({
+          session: {
+            expiresAt: session.expiresAt,
+          },
+          user: {
+            id: user.id,
+            avatar: user.avatar,
+            name: user.name,
+            discriminator: user.discriminator,
+            tag: `${user?.name}#${user?.discriminator}`,
+          },
+        });
+      }
     }
   } catch (err) {
     console.log(err);

@@ -111,7 +111,16 @@ TODO
 
 ### Deploying a PostgreSQL database on Heroku
 - https://www.youtube.com/watch?v=80oty2v4HsE
-```text
-// Connect to Heroku Database from local endmachine
-psql --host=ec2-34-255-225-151.eu-west-1.compute.amazonaws.com --port=5432 --username=htozchapbteyzi --password --dbname=dbuea1u652cemv
+  ```text
+  // Connect to Heroku Database from local end machine
+  psql --host=ec2-34-255-225-151.eu-west-1.compute.amazonaws.com --port=5432 --username=htozchapbteyzi --password --dbname=dbuea1u652cemv
+  ```
+
+### Unable to connect to Heroku Postgres
 ```
+There was an error initializing DB: no pg_hba.conf entry for host "x", user "y", database "z", SSL off
+```
+https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
+
+### Learn Docker - DevOps with Node.js & Express
+- https://www.youtube.com/watch?v=9zUHg7xjIqQ

@@ -19,7 +19,7 @@ const FlappyDronieScreen: React.FC = () => (
       <FlappyDronieGame />
       <Spacer height={200} />
       <RecentHighScores />
-      <Spacer height={200} />
+      <Spacer height={400} />
     </Container>
   </PageLayout>
 );

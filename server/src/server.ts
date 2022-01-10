@@ -1,13 +1,15 @@
 import { initSocketServer } from './socket';
-import { createServer } from 'http';
+import { createServer as createHttpServer } from 'http';
+import { createServer as createHttpsServer } from 'https';
 import config from './config';
 import { connectDB } from './db';
 
-export const { server, io } = (() => {
+export const { httpServer, io } = (() => {
   const PORT = config.app.port;
 
-  const server = createServer();
-  const io = initSocketServer(server);
+  const httpServer = createHttpServer();
+  const httpsServer = createHttpsServer(); // TODO Required to use 'https'?
+  const io = initSocketServer(httpServer);
 
   connectDB(async () => {
     // Import the express app after the DB has been connected
@@ -19,19 +21,19 @@ export const { server, io } = (() => {
     // Assign express as request listener to the server,
     // after the db has been connected
     app.set('port', PORT);
-    server.on('request', app);
+    httpServer.on('request', app);
   });
 
   // Listen on provided port, on all network interfaces
-  server.listen(PORT);
-  server.on('error', (error) => {
+  httpServer.listen(PORT);
+  httpServer.on('error', (error) => {
     throw error;
   });
-  server.on('listening', () => {
+  httpServer.on('listening', () => {
     console.log(`Running on Port: ${PORT}`);
   });
 
-  return { server, io };
+  return { httpServer, io };
 })();
 
-export default server;
+export default httpServer;

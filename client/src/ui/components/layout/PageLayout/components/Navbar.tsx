@@ -7,6 +7,7 @@ import { IconButton, ButtonWrapper } from '../../../primitive';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 import LogoText from '../../../other/LogoText';
 import { useEventTracker } from '../../../../hooks/useEventTracker';
+import config from '../../../../../config';
 
 const Navbar: React.FC<Props> = (props) => {
   const { fixed } = props;
@@ -15,6 +16,9 @@ const Navbar: React.FC<Props> = (props) => {
 
   const navigate = useNavigate();
   const goToHome = () => navigate('/');
+  const goToOAuth2Login = () => {
+    window.location.href = `${config.api.baseUrl}/auth/discord/login`;
+  };
 
   return (
     <Container fixed={fixed as any}>
@@ -47,6 +51,17 @@ const Navbar: React.FC<Props> = (props) => {
                 }
               >
                 <MenuText>Disclaimer</MenuText>
+              </ButtonWrapper>
+              <ButtonWrapper
+                to={`${config.api.baseUrl}/auth/discord/login`}
+                onClick={() => {
+                  trackEvent({
+                    action: 'pressed-login-btn',
+                    label: `Pressed Login Button`,
+                  });
+                }}
+              >
+                <MenuText>Login</MenuText>
               </ButtonWrapper>
             </MenuContainer>
           )}
