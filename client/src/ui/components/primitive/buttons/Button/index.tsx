@@ -7,19 +7,35 @@ import { useTheme } from '../../../../theme/useTheme';
 import { ui } from '../../../../../core';
 
 const iconSizes = {
-  xs: 12,
-  sm: 16,
-  md: 26,
-  lg: 32,
+  xs: 20,
+  sm: 26,
+  md: 30,
+  lg: 36,
   xl: 48,
 };
 
 const buttonHeight = {
-  xs: 44,
+  xs: 32,
   sm: 54,
   md: 68,
   lg: 78,
   xl: 94,
+};
+
+const borderWidth = {
+  xs: 1,
+  sm: 1,
+  md: 2,
+  lg: 2,
+  xl: 3,
+};
+
+const horizontalPadding = {
+  xs: 15,
+  sm: 20,
+  md: 20,
+  lg: 24,
+  xl: 28,
 };
 
 const Button: React.FC<Props> = (props) => {
@@ -92,9 +108,10 @@ const Container = styled(ButtonWrapper)<{
   flex-direction: row;
 
   height: ${({ size }) => getSizeValue(size, buttonHeight)}px;
-  padding: 0 28px 0 28px;
+  padding: 0 ${({ size }) => getSizeValue(size, horizontalPadding)}px;
 
-  border: 3px solid ${({ color }) => color};
+  border: ${({ size }) => getSizeValue(size, borderWidth)}px solid
+    ${({ color }) => color};
   color: ${({ color }) => color};
 
   letter-spacing: 4px;

@@ -40,7 +40,13 @@ const { app } = (() => {
 
   // Cors Middleware
   // https://expressjs.com/en/resources/middleware/cors.html
-  app.use(cors());
+  // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
+  app.use(
+    cors({
+      origin: config.app.corsOrigin, // Access-Control-Allow-Origin
+      credentials: true, // Access-Control-Allow-Credentials
+    }),
+  );
 
   // Cookie-Parser Middleware
   // The middleware will parse the Cookie header on the request and expose the cookie data as the property req.cookies

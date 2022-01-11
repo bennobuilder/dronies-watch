@@ -11,4 +11,5 @@ export default {
     port.toString(),
   )}/${version}`,
   afterOAuth2RedirectUri: process.env.AFTER_OAUTH2_REDIRECT_URI,
+  corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:3000',
 };

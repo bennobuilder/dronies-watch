@@ -124,3 +124,8 @@ https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
 
 ### Learn Docker - DevOps with Node.js & Express
 - https://www.youtube.com/watch?v=9zUHg7xjIqQ
+
+### CORS: credentials mode is 'include'
+- https://stackoverflow.com/questions/42803394/cors-credentials-mode-is-include
+- http://50linesofco.de/post/2017-03-06-cors-a-guided-tour
+- https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
