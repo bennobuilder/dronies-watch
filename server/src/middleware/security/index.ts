@@ -9,7 +9,11 @@ export const { rateLimiterMiddleware } = (() => {
   // });
 
   // TODO // https://github.com/animir/node-rate-limiter-flexible/wiki/Overall-example#authorized-and-not-authorized-users
-  function rateLimiterMiddleware (req: Request, res: Response, next: NextFunction) {
+  function rateLimiterMiddleware(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ) {
     // rateLimiterRedis
     //   .consume(req.ip)
     //   .then(() => {
@@ -19,11 +23,7 @@ export const { rateLimiterMiddleware } = (() => {
     //     res.status(429).send('Too Many Requests');
     //   });
     return next();
-  };
+  }
 
   return { rateLimiterMiddleware };
 })();
-
-export async function cryptoMiddleware(req: Request, res: Response, next: NextFunction){
-// TODO decrypt json bodies
-}

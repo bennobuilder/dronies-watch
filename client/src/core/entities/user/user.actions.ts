@@ -1,19 +1,19 @@
-import axios from 'axios';
-import { User } from './user.types';
-import config from '../../../config';
 import { CURRENT_USER, USERS } from './user.controller';
-
-export const fetchUsers = (ids: string[]) => {
-  // TODO
-};
+import { FETCH_AUTHENTICATED_USER, REVOKE_AUTH } from './user.api';
 
 export const fetchAuthenticatedUser = async () => {
-  // Fetch authenticated User
-  const response = await axios.get<User>(config.api.routes.currentUser, {
-    withCredentials: true,
-  });
-  const user = response.data;
-
+  const user = await FETCH_AUTHENTICATED_USER();
   USERS.collect(user);
   CURRENT_USER.select(user.id);
+};
+
+export const revokeAuth = async () => {
+  const success = await REVOKE_AUTH();
+
+  // Remove User from global store
+  if (success) {
+    CURRENT_USER.select(null);
+  }
+
+  return success;
 };

@@ -66,25 +66,38 @@ const Navbar: React.FC<Props> = (props) => {
 
         <RightContent>
           <AuthButtonContainer>
-            <Button
-              leftIcon={
-                currentUser != null ? (
-                  <UserImage src={currentUser.avatarUrl} loading="lazy" />
-                ) : (
-                  DiscordIcon
-                )
-              }
-              size="xs"
-              to={`${config.api.baseUrl}/auth/discord/login`}
-              onClick={() => {
-                trackEvent({
-                  action: 'pressed-login-btn',
-                  label: `Pressed Login Button`,
-                });
-              }}
-            >
-              {currentUser != null ? currentUser.name : 'Login'}
-            </Button>
+            {currentUser != null ? (
+              <Button
+                leftIcon={
+                  <UserImage src={currentUser.avatarUri} loading="lazy" />
+                }
+                size="xs"
+                onClick={() => {
+                  trackEvent({
+                    action: 'pressed-logout-btn',
+                    label: `Pressed Logout Button`,
+                  });
+
+                  user.revokeAuth();
+                }}
+              >
+                Logout
+              </Button>
+            ) : (
+              <Button
+                leftIcon={DiscordIcon}
+                size="xs"
+                to={`${config.api.baseUrl}/auth/discord/login`}
+                onClick={() => {
+                  trackEvent({
+                    action: 'pressed-login-btn',
+                    label: `Pressed Login Button`,
+                  });
+                }}
+              >
+                Login
+              </Button>
+            )}
           </AuthButtonContainer>
 
           {windowWidth > ui.WIDTH_BREAK_POINTS[1] && (

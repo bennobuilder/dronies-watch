@@ -61,7 +61,7 @@ export async function authDiscordRedirectController(
           expires: session.expiresAt,
         });
         res.redirect(
-          `${config.discord.afterOAuth2RedirectUri}/?success=${
+          `${config.discord.afterOAuth2RedirectUri}?success=${
             session != null
           }&userId=${session.userId}`,
         );

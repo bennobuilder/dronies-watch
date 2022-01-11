@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { fg_h, pipe_h, pipe_w } from './sprites';
 import { PipeSet } from './elements';
 import {
@@ -16,7 +15,7 @@ import {
   STATUS,
 } from './game.controller';
 import { GAME_STATUS } from './game.types';
-import config from '../../../config';
+import { SEND_SCORE } from './game.api';
 import { CURRENT_USER } from '../user';
 
 export const startGame = () => {
@@ -38,8 +37,8 @@ export const endGame = () => {
       HIGH_SCORE.set(SCORE.value);
     }
 
-    // Send score to backend
-    sendScore(SCORE.value);
+    // Send score to backend if a user is authenticated
+    if (CURRENT_USER.value != null) SEND_SCORE(SCORE.value);
 
     LATEST_SCORE.set(SCORE.value);
     SCORE.reset();
@@ -195,18 +194,6 @@ export const updatePipes = () => {
 
   // Apply changes to the UI
   PIPE_SETS.set(pipeSets);
-};
-
-export const fetchRecentHighScores = async (limit = 50) => {
-  const response = await axios.get(
-    `${config.api.routes.recentHighScores}?limit=${limit}`,
-  );
-  console.log(response);
-};
-
-export const sendScore = async (score: number) => {
-  // if (CURRENT_USER.value != null)
-  await axios.put(config.api.routes.played, JSON.stringify({ score }));
 };
 
 export const getScoreTweetUri = (score: number) =>

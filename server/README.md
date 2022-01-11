@@ -27,7 +27,7 @@ DISCORD_OAUTH_SESSION_ID=s%3ADIEAWKI3fYvmaeLLQuNMcu_1WWqc0kAC.%2Foy9fri87cjVzjCT
 **GET** /v1/user/current
 - Retrieves the authenticated user data.
 
-**PUT** /v1/games/flappydronie/played
+**POST** /v1/games/flappydronie/played
 - TODO
 
 ## Installation & Instructions

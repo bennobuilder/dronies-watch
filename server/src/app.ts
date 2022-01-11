@@ -9,6 +9,7 @@ import config from './config';
 import { deserializeSession } from './middleware/session';
 import { rateLimiterMiddleware } from './middleware/security';
 import helmet from 'helmet';
+import { cryptoJsonMiddleware } from './middleware/crypto';
 
 // TODO ---
 //  Failed to outsource this declarations into the global.d.ts file due to annoying errors
@@ -82,6 +83,7 @@ const { app } = (() => {
       type: 'application/json',
     }),
   );
+  app.use(cryptoJsonMiddleware);
 
   // Register Routes
   app.use('/', routes);
