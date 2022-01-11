@@ -7,6 +7,7 @@ import {
   UserCredentials,
 } from './user.types';
 import { deleteSession } from '../session';
+import config from '../../config';
 
 const userRepository = getRepository(User);
 
@@ -46,8 +47,8 @@ export async function getUser(userId: string): Promise<User | null> {
   if (userInDB == null) return null;
 
   // Decrypt user credentials
-  userInDB.accessToken = decrypt(userInDB.accessToken);
-  userInDB.refreshToken = decrypt(userInDB.refreshToken);
+  userInDB.accessToken = decrypt(userInDB.accessToken, config.orm.secret!);
+  userInDB.refreshToken = decrypt(userInDB.refreshToken, config.orm.secret!);
 
   // TODO Check for user profile updates
   // await getDiscordUserDetails(userInDB.accessToken);

@@ -1,4 +1,4 @@
-import express from 'express';
+import { NextFunction, Request, Response } from 'express';
 import { RateLimiterRedis } from 'rate-limiter-flexible';
 
 export const { rateLimiterMiddleware } = (() => {
@@ -9,7 +9,7 @@ export const { rateLimiterMiddleware } = (() => {
   // });
 
   // TODO // https://github.com/animir/node-rate-limiter-flexible/wiki/Overall-example#authorized-and-not-authorized-users
-  const rateLimiterMiddleware = (req, res, next) => {
+  function rateLimiterMiddleware (req: Request, res: Response, next: NextFunction) {
     // rateLimiterRedis
     //   .consume(req.ip)
     //   .then(() => {
@@ -23,3 +23,7 @@ export const { rateLimiterMiddleware } = (() => {
 
   return { rateLimiterMiddleware };
 })();
+
+export async function cryptoMiddleware(req: Request, res: Response, next: NextFunction){
+// TODO decrypt json bodies
+}

@@ -67,8 +67,13 @@ const Navbar: React.FC<Props> = (props) => {
         <RightContent>
           <AuthButtonContainer>
             <Button
-              text={currentUser != null ? currentUser.name : 'Login'}
-              icon={DiscordIcon}
+              leftIcon={
+                currentUser != null ? (
+                  <UserImage src={currentUser.avatarUrl} loading="lazy" />
+                ) : (
+                  DiscordIcon
+                )
+              }
               size="xs"
               to={`${config.api.baseUrl}/auth/discord/login`}
               onClick={() => {
@@ -77,7 +82,9 @@ const Navbar: React.FC<Props> = (props) => {
                   label: `Pressed Login Button`,
                 });
               }}
-            />
+            >
+              {currentUser != null ? currentUser.name : 'Login'}
+            </Button>
           </AuthButtonContainer>
 
           {windowWidth > ui.WIDTH_BREAK_POINTS[1] && (
@@ -161,6 +168,12 @@ const AuthButtonContainer = styled.div`
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
     margin-right: 0;
   }
+`;
+
+const UserImage = styled.img`
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
 `;
 
 const MenuContainer = styled.nav`

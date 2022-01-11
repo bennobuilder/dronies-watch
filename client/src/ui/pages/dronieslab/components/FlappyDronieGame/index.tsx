@@ -39,9 +39,8 @@ const FlappyDronieGame: React.FC = () => {
 
           {highScore > 5 && (
             <ShareScoreButton
-              text="Share Score"
-              icon={Icon.Twitter}
-              to={flappydronie.getScoreTweet(highScore)}
+              leftIcon={Icon.Twitter}
+              to={flappydronie.getScoreTweetUri(highScore)}
               target="_blank"
               // Analytics
               onClick={() =>
@@ -50,7 +49,9 @@ const FlappyDronieGame: React.FC = () => {
                   label: `Shared Flappy Dronie Score`,
                 })
               }
-            />
+            >
+              Share Score
+            </ShareScoreButton>
           )}
         </InfoContainer>
 

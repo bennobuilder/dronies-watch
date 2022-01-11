@@ -17,13 +17,17 @@ const Header: React.FC = () => {
       {/* Left */}
       <LeftContent>
         <TitleContainer linesCount={10}>
-          <Title>DRONIES<br/>LAB</Title>
+          <Title>
+            DRONIES
+            <br />
+            LAB
+          </Title>
         </TitleContainer>
         <TrainingProtocol />
 
         <SocialButtonContainer>
-          <SocialButton text="Twitter" icon={Icon.Twitter} />
-          <SocialButton text="Discord" icon={Icon.Discord} />
+          <SocialButton leftIcon={Icon.Twitter}>Twitter</SocialButton>
+          <SocialButton leftIcon={Icon.Discord}>Discord</SocialButton>
         </SocialButtonContainer>
       </LeftContent>
 
@@ -106,7 +110,7 @@ const LabIcon = styled(Icon.Lab)`
   position: absolute;
   right: -50px;
   top: 0;
-  
+
   width: 400px;
   height: 400px;
 
@@ -130,8 +134,8 @@ const LabIcon = styled(Icon.Lab)`
     }
   }
 
-  transition: margin-right, width, height ${({ theme }) => theme.transitionTimingFunction}
-  500ms;
+  transition: margin-right, width,
+    height ${({ theme }) => theme.transitionTimingFunction} 500ms;
 
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[3]}px) {
     right: 0;

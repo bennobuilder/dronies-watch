@@ -48,8 +48,8 @@ export async function authDiscordRedirectController(
           avatar: avatar || undefined,
         },
         {
-          accessToken: encrypt(accessToken),
-          refreshToken: encrypt(refreshToken),
+          accessToken: encrypt(accessToken, config.orm.secret!),
+          refreshToken: encrypt(refreshToken, config.orm.secret!),
         },
       );
 

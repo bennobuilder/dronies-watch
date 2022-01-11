@@ -17,6 +17,7 @@ import {
 } from './game.controller';
 import { GAME_STATUS } from './game.types';
 import config from '../../../config';
+import { CURRENT_USER } from '../user';
 
 export const startGame = () => {
   STATUS.set(GAME_STATUS.PLAYING);
@@ -36,6 +37,9 @@ export const endGame = () => {
     if (HIGH_SCORE.value < SCORE.value) {
       HIGH_SCORE.set(SCORE.value);
     }
+
+    // Send score to backend
+    sendScore(SCORE.value);
 
     LATEST_SCORE.set(SCORE.value);
     SCORE.reset();
@@ -200,5 +204,10 @@ export const fetchRecentHighScores = async (limit = 50) => {
   console.log(response);
 };
 
-export const getScoreTweet = (score: number) =>
+export const sendScore = async (score: number) => {
+  // if (CURRENT_USER.value != null)
+  await axios.put(config.api.routes.played, JSON.stringify({ score }));
+};
+
+export const getScoreTweetUri = (score: number) =>
   `https://twitter.com/intent/tweet?text=I%20just%20played%20Flappy%20Dronie%20and%20managed%20to%20score%20${score}%21%20Can%20you%20beat%20me%3F%20Try%20it%20here%20https%3A//dronies.watch/lab%20and%20train%20your%20@DronieNFT%21`;

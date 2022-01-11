@@ -12,4 +12,5 @@ export default {
   )}/${version}`,
   afterOAuth2RedirectUri: process.env.AFTER_OAUTH2_REDIRECT_URI,
   corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  payloadSecret: process.env.REACT_APP_PAYLOAD_SECRET || 'AVerySecretSecret',
 };
