@@ -31,17 +31,14 @@ export async function recentHighscoresConroller(req: Request, res: Response) {
     const gameLogs = await getRecentHighScores(GAME_TYPES.flappyDronie, _limit);
 
     res.send(
-      gameLogs.map((gameLog) => ({
-        id: gameLog.id,
+      gameLogs.map((gameLog, i) => ({
+        rank: i + 1,
+        name: gameLog.player?.name || 'unknown',
+        discriminator: gameLog.player?.discriminator || 'unknown',
+        // https://cdn.discordapp.com/avatars/637931838052237312/6d0a11e764bfe0cda5deda7e0aa8da6f.webp?size=32
+        avatarUri: `${config.discord.routes.imageBase}/avatars/${gameLog.player?.discordId}/${gameLog.player?.avatar}.webp?size=32`,
         score: gameLog.score,
         playedAt: gameLog.playedAt,
-        player: {
-          id: gameLog.player.id,
-          name: gameLog.player.name,
-          // https://cdn.discordapp.com/avatars/637931838052237312/6d0a11e764bfe0cda5deda7e0aa8da6f.webp?size=32
-          avatarUri: `${config.discord.routes.imageBase}/avatars/${gameLog.player.discordId}/${gameLog.player.avatar}.webp?size=32`,
-          discriminator: gameLog.player.discriminator,
-        },
       })),
     );
   } catch (err) {

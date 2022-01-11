@@ -42,6 +42,9 @@ Please follow the following instructions on how to set everything up.
     ```text
     # Express App Server Details
     PORT=9000
+    AFTER_OAUTH2_REDIRECT_URI=http://localhost:3000/lab
+    BASE_URL=http://localhost:%s
+    JSON_PAYLOAD_SECRET="NICE_KEY" # 256bit
     
     # Discord OAuth2 Client Details
     DISCORD_APPLICATION_ID={YOUR_APPLICATION_ID}
@@ -55,10 +58,10 @@ Please follow the following instructions on how to set everything up.
     DB_PASSWORD=postgres
     DB_NAME=dronies_watch
     DB_SYNC=true
-    DB_ENCRYPT_SECRET=n2r5u8x/A?D(G+KaPdSgVkYp3s6v9y$B # 256-bit
+    DB_ENCRYPT_SECRET="NICE_KEY" # 256bit
     
     # Cookie & Session Options
-    SESSION_SECRET=3t6w9z$C&F)H@McQfTjWnZr4u7x!A%D* # 256-bit
+    SESSION_SECRET="NICE_KEY" # 256bit
     ```
 
 ## 👨‍🎓 Learnings

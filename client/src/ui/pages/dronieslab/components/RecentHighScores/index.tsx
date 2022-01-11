@@ -1,27 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import HighScoreTable from '../../../../components/other/HighScoreTable';
-import { ui } from '../../../../../core';
+import { flappydronie, ui } from '../../../../../core';
 
 // Assets
 import DroniesGangImg from '../../../../../assets/app/dronies_gang.png';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
+import { HighScoreItem } from '../../../../../core/entities/flappydronie';
 
 const RecentHighScores: React.FC = () => {
   const { windowWidth } = useWindowSize();
-  const dummyData = Array.from(Array(23)).map((v, i) => ({
-    rank: i + 1,
-    name: 'Benno',
-    discriminator: '1234',
-    score: 47,
-    playedDateTime: new Date(Date.now() - 1000 * 60 * 60 * 8),
-  }));
+  const [recentHighScores, setRecentHighScores] = useState<HighScoreItem[]>(
+    Array.from(Array(23)).map((v, i) => ({
+      rank: i + 1,
+      name: 'Benno',
+      discriminator: '1234',
+      avatarUri:
+        'https://cdn.discordapp.com/avatars/637931838052237312/6d0a11e764bfe0cda5deda7e0aa8da6f.webp?size=32',
+      score: 47,
+      playedAt: new Date(Date.now() - 1000 * 60 * 60 * 8),
+    })) as any,
+  );
+
+  useEffect(() => {
+    const fetch = async () => {
+      const resentHighScores = await flappydronie.fetchRecentHighScores(100);
+      setRecentHighScores(resentHighScores);
+    };
+    fetch();
+  }, []);
 
   return (
     <Container>
       <Title>Recent Highscores</Title>
       <TableContainer>
-        <HighScoreTable data={dummyData.slice(0, 100)} />
+        <HighScoreTable data={recentHighScores.slice(0, 100)} />
         {windowWidth > ui.WIDTH_BREAK_POINTS[0] && (
           <OverlapImage src={DroniesGangImg} loading="lazy" />
         )}

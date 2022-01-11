@@ -9,7 +9,8 @@ const TableItem: React.FC<Props> = (props) => {
     name,
     discriminator,
     score,
-    playedDateTime,
+    playedAt,
+    avatarUri,
     showDivider = true,
   } = props;
 
@@ -18,10 +19,7 @@ const TableItem: React.FC<Props> = (props) => {
       <RankText>{rank}</RankText>
       <UserContainer>
         <InnerUserContainer>
-          <UserImage
-            src="https://cdn.discordapp.com/avatars/637931838052237312/6d0a11e764bfe0cda5deda7e0aa8da6f.webp?size=32"
-            loading="lazy"
-          />
+          <UserImage src={avatarUri} loading="lazy" />
           <NameContainer>
             <UserName>{name}</UserName>
             <UserDiscriminator>
@@ -31,7 +29,7 @@ const TableItem: React.FC<Props> = (props) => {
         </InnerUserContainer>
       </UserContainer>
       <ScoreText>{score}</ScoreText>
-      <TimeText>{timeSince(playedDateTime)}</TimeText>
+      <TimeText>{timeSince(playedAt)}</TimeText>
       {showDivider && <BottomDivider />}
     </Container>
   );
@@ -44,7 +42,8 @@ type Props = {
   name: string;
   discriminator: string;
   score: number;
-  playedDateTime: Date;
+  playedAt: Date;
+  avatarUri: string;
   showDivider?: boolean;
 };
 

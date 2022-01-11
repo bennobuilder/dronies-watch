@@ -2,8 +2,8 @@ import { NextFunction, Request, Response } from 'express';
 import { decrypt } from '../../services/crypto';
 import config from '../../config';
 
-// Yes, This isn't secure!
-// But at least a 'score' cheater needs to invest a bit of time to fake a score request ;D
+// Yes, this is NOT very secure!
+// But at least a amateur "score" cheater has to invest a little bit of time to fake his score ;D
 export async function cryptoJsonMiddleware(
   req: Request,
   res: Response,

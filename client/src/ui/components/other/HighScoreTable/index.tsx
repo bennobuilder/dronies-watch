@@ -4,6 +4,7 @@ import TableItem from './components/TableItem';
 import TableOutline from './components/TableOutline';
 import TableHeader from './components/TableHeader';
 import InfoBox from '../InfoBox';
+import { HighScoreItem } from '../../../../core/entities/flappydronie';
 
 const HighScoreTable: React.FC<Props> = (props) => {
   const { data } = props;
@@ -27,7 +28,8 @@ const HighScoreTable: React.FC<Props> = (props) => {
                 name={itemData.name}
                 discriminator={itemData.discriminator}
                 score={itemData.score}
-                playedDateTime={itemData.playedDateTime}
+                playedAt={itemData.playedAt}
+                avatarUri={itemData.avatarUri}
               />
             ))}
           </tbody>
@@ -40,15 +42,7 @@ const HighScoreTable: React.FC<Props> = (props) => {
 export default HighScoreTable;
 
 type Props = {
-  data: TableData[];
-};
-
-type TableData = {
-  rank: number;
-  name: string;
-  discriminator: string;
-  score: number;
-  playedDateTime: Date;
+  data: HighScoreItem[];
 };
 
 const Container = styled.div`
