@@ -12,8 +12,6 @@ export async function playedController(req: Request, res: Response) {
     // Extract data from req body
     const { score } = req.body;
 
-    console.log(req.body);
-
     // Save played game stats in database
     if (score != null) await createGameLog(parseInt(userId), score);
 
