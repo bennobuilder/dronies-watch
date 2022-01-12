@@ -13,7 +13,9 @@ const HighScoreTable: React.FC<Props> = (props) => {
   return (
     <Container>
       <InnerContainer>
-        {data.length === 0 && <StyledInfoBox text="No data captured yet!" />}
+        {data.length === 0 && (
+          <StyledInfoBox text="Recently no high scores were scored, as I've not manged to deploy my backend yet :/" />
+        )}
         <TableOutline />
         <StyledTable>
           {/* Table Content */}

@@ -30,7 +30,7 @@ const Header: React.FC = () => {
       </LeftContent>
 
       {/* Right */}
-      {windowWidth > ui.WIDTH_BREAK_POINTS[2] && <LabIcon color="#A42716" />}
+      {windowWidth > ui.WIDTH_BREAK_POINTS[2] && <LabIcon color="#C83521" />}
     </Container>
   );
 };
@@ -101,7 +101,7 @@ const TitleContainer = styled(LinesBackground)`
 `;
 
 const LabIcon = styled(Icon.Lab)`
-  filter: drop-shadow(0 0 20px ${({ theme }) => '#8b0000'});
+  filter: drop-shadow(0 0 20px ${({ theme }) => '#872717'});
 
   position: absolute;
   right: -50px;

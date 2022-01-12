@@ -44,7 +44,9 @@ const { app } = (() => {
   // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
   app.use(
     cors({
-      origin: config.app.corsOrigin, // Access-Control-Allow-Origin
+      // Access-Control-Allow-Origin
+      // https://stackoverflow.com/questions/26988071/allow-multiple-cors-domain-in-express-js
+      origin: config.app.corsOrigins,
       credentials: true, // Access-Control-Allow-Credentials
     }),
   );
