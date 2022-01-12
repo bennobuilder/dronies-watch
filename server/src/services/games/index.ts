@@ -41,7 +41,7 @@ export async function getRecentHighScores(
 
   // Query recent games with a high score
   // https://github.com/typeorm/typeorm/issues/5464
-  return await gameLogRepository
+  const query = await gameLogRepository
     .createQueryBuilder('gameLog')
     .leftJoin(
       (qb) =>
@@ -51,12 +51,16 @@ export async function getRecentHighScores(
           .addSelect('player_id')
           .groupBy('player_id'),
       'best_game',
-      'best_game.player_id = gameLog.player_id',
+      'best_game.player_id = gameLog.player_id', // = ON best_game.player_id = gameLog.player_id
     )
+    // https://stackoverflow.com/questions/65644410/typeorm-leftjoin-with-3-tables
+    .leftJoinAndSelect('gameLog.player', 'user', 'user.id = gameLog.player_id')
     .where('best_game.max_score = gameLog.score')
     .andWhere('gameLog.game_type = :gameType', { gameType })
     .andWhere('gameLog.played_at > :date', { date: endIncludeDate })
+    .distinctOn(['gameLog.score']) // https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group
     .orderBy('gameLog.score', 'DESC')
-    .limit(limit)
-    .getMany();
+    .limit(limit);
+
+  return query.getMany();
 }

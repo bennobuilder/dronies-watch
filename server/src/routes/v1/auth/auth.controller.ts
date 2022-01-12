@@ -94,7 +94,8 @@ export async function authDiscordRevokeController(req: Request, res: Response) {
 
     const success = await revokeDiscordToken(userId);
 
-    await deleteUser(userId);
+    // TODO should the user be deleted?
+    // await deleteUser(userId);
 
     res.send({ success });
   } catch (err) {

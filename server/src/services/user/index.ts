@@ -41,9 +41,13 @@ export async function updateUser(
 }
 
 export async function getUser(userId: string): Promise<User | null> {
-  const userInDB = await userRepository.findOne({
-    id: parseInt(userId),
-  });
+  const userInDB = await userRepository.findOne(
+    {
+      id: parseInt(userId),
+    },
+    // https://stackoverflow.com/questions/61236129/typeorm-custom-many-to-many-not-pulling-relation-data
+    // { relations: ['sessions', 'sessions.user', 'gameLogs', 'gameLogs.player'] },
+  );
   if (userInDB == null) return null;
 
   // Decrypt user credentials

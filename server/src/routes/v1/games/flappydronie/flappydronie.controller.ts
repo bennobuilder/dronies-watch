@@ -22,7 +22,7 @@ export async function playedController(req: Request, res: Response) {
   }
 }
 
-export async function recentHighscoresConroller(req: Request, res: Response) {
+export async function recentHighScoresController(req: Request, res: Response) {
   try {
     const { limit } = req.query;
     const _limit = typeof limit === 'string' ? parseInt(limit) : 50;

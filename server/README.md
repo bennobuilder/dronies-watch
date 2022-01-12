@@ -132,3 +132,7 @@ https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
 - https://stackoverflow.com/questions/42803394/cors-credentials-mode-is-include
 - http://50linesofco.de/post/2017-03-06-cors-a-guided-tour
 - https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
+
+### `DISTINT ON`
+- https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group
+- https://stackoverflow.com/questions/54666465/typeorm-queryrunner-select-distinct
