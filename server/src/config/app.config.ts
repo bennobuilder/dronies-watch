@@ -1,6 +1,9 @@
 import { sprintf } from '../utils/sprintf';
 
-const port = process.env.APP_PORT || 9000;
+const port =
+  process.env.PORT || // Used by services that offer managed hosting e.g. Heroku
+  process.env.APP_PORT ||
+  9000;
 const version = 'v1';
 
 export default {
