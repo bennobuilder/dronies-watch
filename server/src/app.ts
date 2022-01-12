@@ -44,7 +44,15 @@ const { app } = (() => {
   // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
   app.use(
     cors({
-      origin: config.app.corsOrigin, // Access-Control-Allow-Origin
+      // Access-Control-Allow-Origin
+      // https://www.npmjs.com/package/cors#configuring-cors-w-dynamic-origin
+      origin: (origin, callback) => {
+        if (origin != null && config.app.corsOrigin.indexOf(origin) !== -1) {
+          callback(null, true);
+        } else {
+          callback(new Error('Not allowed by CORS!'));
+        }
+      },
       credentials: true, // Access-Control-Allow-Credentials
     }),
   );

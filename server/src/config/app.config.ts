@@ -14,6 +14,8 @@ export default {
     port.toString(),
   )}/${version}`,
   afterOAuth2RedirectUri: process.env.APP_AFTER_OAUTH2_REDIRECT_URI,
-  corsOrigin: process.env.APP_CORS_ORIGIN || 'http://localhost:3000',
+  corsOrigin: (process.env.APP_CORS_ORIGIN || 'http://localhost:3000').split(
+    ', ',
+  ),
   jsonPayloadSecret: process.env.APP_JSON_PAYLOAD_SECRET || 'AVerySecretSecret',
 };
