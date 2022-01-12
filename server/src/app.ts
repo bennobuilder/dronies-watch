@@ -45,14 +45,8 @@ const { app } = (() => {
   app.use(
     cors({
       // Access-Control-Allow-Origin
-      // https://www.npmjs.com/package/cors#configuring-cors-w-dynamic-origin
-      origin: (origin, callback) => {
-        if (origin != null && config.app.corsOrigin.indexOf(origin) !== -1) {
-          callback(null, true);
-        } else {
-          callback(new Error('Not allowed by CORS!'));
-        }
-      },
+      // https://stackoverflow.com/questions/26988071/allow-multiple-cors-domain-in-express-js
+      origin: config.app.corsOrigins,
       credentials: true, // Access-Control-Allow-Credentials
     }),
   );
