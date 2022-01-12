@@ -12,7 +12,7 @@ export const InfoBox: React.FC<Props> = (props) => {
   return (
     <Container linesCount={0} className={className}>
       <InnerContainer>
-        <Icon.Info color={theme.colors.layout.p} width={50} height={50} />
+        <InfoIcon color={theme.colors.layout.p} width={50} height={50} />
         <Text>{text}</Text>
       </InnerContainer>
     </Container>
@@ -52,6 +52,13 @@ const InnerContainer = styled.div`
 
     padding: 30px 20px;
   }
+`;
+
+const InfoIcon = styled(Icon.Info)`
+  min-width: 35px;
+  min-height: 35px;
+  max-width: 35px;
+  max-height: 35px;
 `;
 
 const Text = styled.p`

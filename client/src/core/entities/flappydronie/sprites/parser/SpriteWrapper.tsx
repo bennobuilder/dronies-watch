@@ -6,7 +6,7 @@ const SpriteWrapper: React.FC<Props> = (props) => {
   const { gameSprite, onClickHandler, collisionBoxColor, children } = props;
 
   const rotate = `rotate(${gameSprite.rotation}rad)`;
-  const translate = `translate(${gameSprite.cx}px, ${gameSprite.cy}px)`;
+  const translate = `translate(${gameSprite.rx}px, ${gameSprite.ry}px)`;
 
   return (
     <div
@@ -44,8 +44,8 @@ const CollisionBox = styled.div<{
   color: string;
 }>`
   position: absolute;
-  bottom: ${({ offset }) => offset?.y ?? 0}px;
-  left: ${({ offset }) => offset?.x ?? 0}px;
+  bottom: ${({ offset }) => offset.y}px;
+  left: ${({ offset }) => offset.x}px;
 
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;

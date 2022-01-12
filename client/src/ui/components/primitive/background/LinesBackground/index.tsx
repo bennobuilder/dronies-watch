@@ -59,12 +59,8 @@ type Props = {
 };
 
 const Container = styled.div`
+  display: table; // https://stackoverflow.com/questions/12708381/display-block-without-100-width
   position: relative;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
 
   padding: 20px;
 `;
@@ -85,8 +81,6 @@ const LinesContainer = styled.div<{ opacity: number }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  width: 100%;
 
   opacity: ${({ opacity }) => opacity};
   z-index: 1;

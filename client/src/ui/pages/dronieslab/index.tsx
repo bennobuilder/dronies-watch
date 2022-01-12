@@ -8,6 +8,7 @@ import Header from './components/Header';
 import HeaderBackgroundImg from '../../../assets/app/dronies_background.png';
 import FlappyDronieGame from './components/FlappyDronieGame';
 import Spacer from '../../components/other/Spacer';
+import RecentHighScores from './components/RecentHighScores';
 
 const FlappyDronieScreen: React.FC = () => (
   <PageLayout meta={{ title: 'Lab' }}>
@@ -17,6 +18,8 @@ const FlappyDronieScreen: React.FC = () => (
       <Spacer height={200} />
       <FlappyDronieGame />
       <Spacer height={200} />
+      <RecentHighScores />
+      <Spacer height={400} />
     </Container>
   </PageLayout>
 );
@@ -26,10 +29,11 @@ export default FlappyDronieScreen;
 const Container = styled.div`
   display: flex;
   flex: 1;
-  margin-top: ${ui.NAVBAR_HEIGHT}px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  margin-top: ${ui.NAVBAR_HEIGHT}px;
 
   width: 100%;
 `;

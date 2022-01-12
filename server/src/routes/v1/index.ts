@@ -1,14 +1,5 @@
-import express from 'express';
+import routes from './v1.routes';
 
-// Routes
-import flappyDronieRoutes from './flappy-dronie';
-import rootRoutes from './root';
-import authRoutes from './auth';
+export * from './v1.routes';
 
-const router = express.Router();
-
-router.use('/', rootRoutes);
-router.use('/flappy-dronie', flappyDronieRoutes);
-router.use('/auth', authRoutes);
-
-export default router;
+export default routes;

@@ -1,10 +1,13 @@
 import { flappydronie } from '../../../../core';
-import { GAME_STATUS } from '../../../../core/entities/flappydronie';
 import { trackEvent } from '../../../hooks/useEventTracker';
+import { GAME_STATUS } from '../../../../core/entities/flappydronie';
 
 export const inputHandler = () => {
-  if (!flappydronie.COOLDOWN.value) {
-    switch (flappydronie.STATUS.value) {
+  const cooldown = flappydronie.COOLDOWN.value;
+  const status = flappydronie.STATUS.value;
+
+  if (!cooldown) {
+    switch (status) {
       case GAME_STATUS.SPLASH:
         console.log('START GAME');
 
@@ -40,4 +43,9 @@ export const inputHandler = () => {
         break;
     }
   }
+};
+
+export const toggledDeveloperMode = () => {
+  flappydronie.SHOW_COLLIDERS.set((v) => !v);
+  flappydronie.SHOW_PERFORMANCE.set((v) => !v);
 };

@@ -23,3 +23,12 @@
 
 ### GA with React-Router
 - https://github.com/react-ga/react-ga/issues/122
+
+### calc()
+- https://www.w3schools.com/cssref/func_calc.asp
+    ```css
+    width: calc(100% + 100px)
+    ```
+
+### Access Control Origin Header error using Axios
+- https://stackoverflow.com/questions/45975135/access-control-origin-header-error-using-axios

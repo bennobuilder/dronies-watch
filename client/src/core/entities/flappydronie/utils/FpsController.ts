@@ -1,54 +1,52 @@
-// TODO https://gafferongames.com/post/fix_your_timestep/
-
+// https://gafferongames.com/post/fix_your_timestep/
+// https://stackoverflow.com/questions/39042859/most-performant-way-to-call-update-loop-of-a-javascript-physics-engine
+// https://stackoverflow.com/questions/25612452/html5-canvas-game-loop-delta-time-calculations
 // https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
+// https://jsbin.com/ditad/10/edit?js,output
 export class FpsController {
   public config: FpsControllerConfig;
-  public fps: number = 0;
-  public isDrawing = false;
-  public drawCallback: () => void;
+  public fps = 0; // Current 'Frames per Second'
 
-  private fpsInterval: number = 0;
-  private now: number = 0;
-  private then: number = 0;
-  private elapsed: number = 0;
+  public isDrawing = false; // Whether the FpsController is current drawing/rendering
   private stop = true;
-  private calculateFpsInterval: NodeJS.Timeout | null = null;
 
-  constructor(fps: number) {
+  private frameDuration = 0; // Fps in ms (-> Frame per Millisecond)
+  private then = 0; // Latest draw time
+  private elapsed = 0; // Elapsed time to the latest draw time
+  private lag: number = 0; // Lag offset
+
+  private updateCallback?: () => void;
+  private renderCallback?: (lagOffset: number) => void;
+  private readonly performanceCallback?: (performance: Performance) => void;
+
+  constructor(
+    fps: number,
+    performanceCallback?: (performance: Performance) => void,
+  ) {
     this.config = {
       fps,
     };
-    this.drawCallback = () => {
-      console.log('No draw callback set!');
-    };
+    this.performanceCallback = performanceCallback;
   }
 
-  public startDrawing(drawCallback: () => void) {
+  public startDrawing(
+    updateCallback: () => void,
+    renderCallback: (lagOffset: number) => void,
+  ) {
     console.log('START DRAWING');
-    this.drawCallback = drawCallback;
+    this.renderCallback = renderCallback;
+    this.updateCallback = updateCallback;
 
     this.stop = false;
     this.isDrawing = true;
 
-    this.fpsInterval = 1000 / this.config.fps;
+    this.frameDuration = 1000 / this.config.fps;
     this.then = window.performance.now();
+
     this.draw();
-    this.startCalculatingCurrentFps();
   }
 
-  public stopDrawing() {
-    // Weired check because off 'TypeError: Cannot set properties of null (setting 'stop')' issue
-    if (this != null) {
-      this.stop = true;
-      this.isDrawing = false;
-
-      // Clear 'calculateFps' interval
-      if (this.calculateFpsInterval != null)
-        clearInterval(this.calculateFpsInterval);
-    }
-  }
-
-  private draw(newTime: number = window.performance.now()) {
+  private draw(now: number = window.performance.now()) {
     // Stop drawing
     if (this.stop) return;
 
@@ -56,29 +54,53 @@ export class FpsController {
     requestAnimationFrame((t) => this.draw(t));
 
     // Calculate elapsed time since last loop
-    this.now = newTime;
-    this.elapsed = this.now - this.then;
+    this.elapsed = now - this.then;
+    this.then = now;
 
-    // If enough time has elapsed, draw the next frame
-    if (this.elapsed > this.fpsInterval) {
-      // Get ready for next frame by setting then=now, but also adjust for your
-      // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
-      this.then = this.now - (this.elapsed % this.fpsInterval);
+    // Add the elapsed time to the lag counter
+    this.lag += this.elapsed;
 
-      // Call draw method
-      this.fps++;
-      this.drawCallback();
+    // Update the frame if the lag counter is greater than or
+    // equal to the frame duration
+    while (this.lag >= this.frameDuration) {
+      // Update the logic
+      if (this.updateCallback != null) this.updateCallback();
+
+      // Reduce the lag counter by the frame duration
+      this.lag -= this.frameDuration;
     }
+
+    // Calculate the lag offset and use it to render the sprites
+    const lagOffset = this.lag / this.frameDuration;
+    if (this.renderCallback != null) this.renderCallback(lagOffset);
+
+    // Calculate and apply 'analytics'
+    this.fps = Math.floor(1000 / this.elapsed);
+    if (this.performanceCallback != null)
+      this.performanceCallback({
+        fps: this.fps,
+        lag: Math.floor(this.lag),
+        offset: Math.round(lagOffset * 100) / 100,
+        elapsed: Math.floor(this.elapsed),
+      });
   }
 
-  // Calculate FPS
-  private startCalculatingCurrentFps() {
-    this.calculateFpsInterval = setInterval(() => {
-      this.fps = 0;
-    }, 1000);
+  public stopDrawing() {
+    // Weired check because off 'TypeError: Cannot set properties of null (setting 'stop')' issue
+    if (this != null) {
+      this.stop = true;
+      this.isDrawing = false;
+    }
   }
 }
 
 type FpsControllerConfig = {
   fps: number;
+};
+
+export type Performance = {
+  elapsed: number;
+  lag: number;
+  fps: number;
+  offset: number;
 };

@@ -47,7 +47,7 @@ const Footer: React.FC = () => {
             </a>
           </TextWithLink>
           <TextWithLink textAlign="right">
-            Created By{' '}
+            Created by{' '}
             <a
               href="https://twitter.com/DevBenno"
               target="_blank"

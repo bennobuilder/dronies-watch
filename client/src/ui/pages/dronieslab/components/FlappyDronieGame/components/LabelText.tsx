@@ -26,17 +26,17 @@ const Container = styled.div`
   align-items: center;
   justify-content: flex-start;
 
-  margin-top: 10px;
+  padding: 5px 0;
 `;
 
 const Label = styled.p`
-  margin: 0 10px 0 0;
+  margin: 0 20px 0 0;
 
   text-align: left;
   font-family: ${({ theme }) => theme.fontFamily};
   font-weight: lighter;
   color: ${({ theme }) => theme.colors.layout.rHc};
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 `;
 
 const Value = styled.p`

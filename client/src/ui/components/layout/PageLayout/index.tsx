@@ -8,7 +8,7 @@ import { useWindowSize } from '../../../hooks/useWindowSize';
 
 // Assets
 import PageRulerImg from '../../../../assets/app/side_decoration.png';
-import BackgroundRepeat from '../../../../assets/app/background_repeat.png';
+import BackgroundRepeatImg from '../../../../assets/app/background_repeat.png';
 
 const PageLayout: React.FC<Props> = (props) => {
   const {
@@ -62,7 +62,7 @@ const Container = styled.div`
   width: 100%;
   overflow: hidden;
 
-  background-image: url(${BackgroundRepeat}),
+  background-image: url(${BackgroundRepeatImg}),
     linear-gradient(
       120deg,
       ${({ theme }) => theme.primitiveColors.black},

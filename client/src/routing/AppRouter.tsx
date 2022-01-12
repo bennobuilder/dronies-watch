@@ -11,7 +11,7 @@ import DisclaimerScreen from '../ui/pages/disclaimer';
 
 const AppRouter: React.FC = () => (
   <BrowserRouter>
-    <GAListener trackingId={config.google.GA_TRACKING_CODE as any}>
+    <GAListener trackingId={config.google.gaTrackingCode as any}>
       <Routes>
         <Route path="/" element={<HomeScreen />} />
         <Route path="/lab" element={<DroniesLabScreen />} />

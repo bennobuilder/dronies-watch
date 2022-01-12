@@ -7,26 +7,41 @@ import { useTheme } from '../../../../theme/useTheme';
 import { ui } from '../../../../../core';
 
 const iconSizes = {
-  xs: 12,
-  sm: 16,
-  md: 26,
-  lg: 32,
+  xs: 20,
+  sm: 26,
+  md: 30,
+  lg: 36,
   xl: 48,
 };
 
 const buttonHeight = {
-  xs: 44,
+  xs: 32,
   sm: 54,
   md: 68,
   lg: 78,
   xl: 94,
 };
 
+const borderWidth = {
+  xs: 1,
+  sm: 1,
+  md: 2,
+  lg: 2,
+  xl: 3,
+};
+
+const horizontalPadding = {
+  xs: 15,
+  sm: 20,
+  md: 20,
+  lg: 24,
+  xl: 28,
+};
+
 const Button: React.FC<Props> = (props) => {
   const theme = useTheme();
   const {
-    text,
-    icon: DeclaredIcon,
+    leftIcon,
     to,
     onClick,
     size = 'md',
@@ -34,6 +49,7 @@ const Button: React.FC<Props> = (props) => {
     hoverColor = theme.colors.layout.rHc,
     target = '_self',
     className,
+    children,
   } = props;
   const _size = ui.getSizeValue(size, iconSizes);
 
@@ -49,15 +65,23 @@ const Button: React.FC<Props> = (props) => {
     >
       {(isHovering: boolean) => (
         <>
-          {DeclaredIcon != null && (
-            <ButtonIcon
-              as={DeclaredIcon}
-              width={_size}
-              height={_size}
-              color={isHovering ? hoverColor : color}
-            />
+          {leftIcon != null && (
+            <LeftIconContainer>
+              {/* https://stackoverflow.com/questions/33199959/how-to-detect-a-react-component-vs-a-react-element */}
+              {React.isValidElement(leftIcon) ? (
+                leftIcon
+              ) : (
+                <LeftIcon
+                  as={leftIcon}
+                  // In case the Element is an Icon
+                  width={_size}
+                  height={_size}
+                  color={isHovering ? hoverColor : color}
+                />
+              )}
+            </LeftIconContainer>
           )}
-          <div>{text}</div>
+          <span>{children}</span>
         </>
       )}
     </Container>
@@ -67,8 +91,7 @@ const Button: React.FC<Props> = (props) => {
 export default Button;
 
 type Props = {
-  text: string;
-  icon?: ExtractComponents<typeof Icon>;
+  leftIcon?: React.ReactElement | ExtractComponents<typeof Icon>;
   size?: NumberSize;
   color?: string;
   hoverColor?: string;
@@ -78,8 +101,16 @@ type ExtractComponents<T> = {
   [K in keyof T]: T[K] extends typeof Icon.Dronies ? T[K] : never;
 }[keyof T];
 
-const ButtonIcon = styled(Icon.Twitter)`
-  margin-right: 14px;
+const LeftIconContainer = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: 10px;
+`;
+
+const LeftIcon = styled.div`
+  transition: color 0.3s, filter 0.3s;
 `;
 
 const Container = styled(ButtonWrapper)<{
@@ -87,14 +118,15 @@ const Container = styled(ButtonWrapper)<{
   hoverColor: string;
   size: NumberSize;
 }>`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   flex-direction: row;
 
   height: ${({ size }) => getSizeValue(size, buttonHeight)}px;
-  padding: 0 28px 0 28px;
+  padding: 0 ${({ size }) => getSizeValue(size, horizontalPadding)}px;
 
-  border: 3px solid ${({ color }) => color};
+  border: ${({ size }) => getSizeValue(size, borderWidth)}px solid
+    ${({ color }) => color};
   color: ${({ color }) => color};
 
   letter-spacing: 4px;
@@ -105,7 +137,7 @@ const Container = styled(ButtonWrapper)<{
 
   cursor: pointer;
 
-  transition: color 0.3s, text-shadow 0.3s, box-shadow 0.3s;
+  transition: color 0.3s, text-shadow 0.3s, filter 0.3s;
 
   :hover {
     border-color: ${({ hoverColor }) => hoverColor};
@@ -114,7 +146,7 @@ const Container = styled(ButtonWrapper)<{
       0px 0px 5px ${({ hoverColor }) => ui.hexToRgba(hoverColor, 0.5)}
     );
 
-    ${ButtonIcon} {
+    ${LeftIcon} {
       filter: drop-shadow(
         0px 0px 5px ${({ hoverColor }) => ui.hexToRgba(hoverColor, 0.5)}
       );

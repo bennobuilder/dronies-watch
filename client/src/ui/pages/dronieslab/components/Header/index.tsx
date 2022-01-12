@@ -16,20 +16,24 @@ const Header: React.FC = () => {
     <Container>
       {/* Left */}
       <LeftContent>
-        <TitleContainer linesCount={5}>
-          <Title>DRONIES LAB</Title>
+        <TitleContainer linesCount={10}>
+          <Title>
+            DRONIES
+            <br />
+            LAB
+          </Title>
         </TitleContainer>
         <TrainingProtocol />
 
         <SocialButtonContainer>
-          <SocialButton text="Twitter" icon={Icon.Twitter} />
-          <SocialButton text="Discord" icon={Icon.Discord} />
+          <SocialButton leftIcon={Icon.Twitter}>Twitter</SocialButton>
+          <SocialButton leftIcon={Icon.Discord}>Discord</SocialButton>
         </SocialButtonContainer>
       </LeftContent>
 
       {/* Right */}
       {windowWidth > ui.WIDTH_BREAK_POINTS[2] && (
-        <LabIcon width={500} height={500} color={theme.colors.layout.rHc} />
+        <LabIcon color={theme.colors.layout.rHc} />
       )}
     </Container>
   );
@@ -46,7 +50,7 @@ const Container = styled.div`
   align-items: flex-start;
 
   z-index: 1;
-  margin-top: 80px;
+  margin-top: 150px;
 
   width: 100%;
 
@@ -68,20 +72,14 @@ const LeftContent = styled.div`
   }
 `;
 
-const TitleContainer = styled(LinesBackground)`
-  position: relative;
-
-  margin: 0 0 80px 0;
-  padding: 10px 40px;
-`;
-
 const Title = styled.h1`
   margin: -10px 0 0 0;
 
-  font-size: 6rem;
+  font-size: 125px;
   font-family: ${({ theme }) => theme.headings.fontFamily};
-  white-space: nowrap;
+  white-space: pre-wrap;
   text-transform: uppercase;
+  line-height: 95%;
   color: ${({ theme }) => theme.colors.layout.p};
 
   text-shadow: 0 0 50px
@@ -90,19 +88,31 @@ const Title = styled.h1`
   transition: font-size ${({ theme }) => theme.transitionTimingFunction} 500ms;
 
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
-    font-size: 4rem;
+    font-size: 5rem;
     white-space: pre-wrap;
   }
 
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
-    font-size: 3rem;
+    font-size: 4rem;
   }
+`;
+
+const TitleContainer = styled(LinesBackground)`
+  position: relative;
+
+  margin: 0 0 60px 0;
+  padding: 10px 40px;
 `;
 
 const LabIcon = styled(Icon.Lab)`
   filter: drop-shadow(0 0 20px ${({ theme }) => theme.colors.layout.rHc});
 
-  margin-right: -100px;
+  position: absolute;
+  right: -50px;
+  top: 0;
+
+  width: 400px;
+  height: 400px;
 
   animation: spin 10s ${({ theme }) => theme.transitionTimingFunction} infinite;
 
@@ -124,11 +134,13 @@ const LabIcon = styled(Icon.Lab)`
     }
   }
 
-  transition: margin-right ${({ theme }) => theme.transitionTimingFunction}
-    500ms;
+  transition: margin-right, width,
+    height ${({ theme }) => theme.transitionTimingFunction} 500ms;
 
-  @media (max-width: ${ui.WIDTH_BREAK_POINTS[3]}) {
-    margin-right: 0;
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[3]}px) {
+    right: 0;
+    width: 300px;
+    height: 300px;
   }
 `;
 

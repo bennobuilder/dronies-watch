@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAgile } from '@agile-ts/react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import AppRouter from './routing/AppRouter';
 import ThemeProvider from './ui/theme/ThemeProvider';
-import { ui } from './core';
+import { ui, user } from './core';
 
 // UI-Themes
 const themes = {
@@ -12,6 +12,11 @@ const themes = {
 
 const App: React.FC = () => {
   const activeTheme = useAgile(ui.THEME_TYPE);
+
+  // TODO think about a better starting point of fetching
+  useEffect(() => {
+    user.fetchAuthenticatedUser();
+  }, []);
 
   return (
     <ThemeProvider activeThemeKey={activeTheme} themes={themes}>

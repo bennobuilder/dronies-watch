@@ -9,11 +9,11 @@ import TrainingProtocolImg from '../../../../../../../assets/app/training_protoc
 const TrainingProtocol: React.FC = () => (
   <Container linesCount={0} opacity={0.3}>
     <InnerContainer>
-      <img src={TrainingProtocolImg} loading="lazy" alt="TrainingProtocolImg" />
+      <FolderImage src={TrainingProtocolImg} loading="lazy" alt="TrainingProtocolImg" />
       <Text>
         <span style={{ fontWeight: 'bold' }}>Dronies Lab is an initiative</span>{' '}
         that was founded after some Dronies were discovered and destroied by
-        humanity. Train your Dronie here to give it a better chance of survival.
+        humanity. Train your Dronie to give it a better chance of survival.
       </Text>
     </InnerContainer>
   </Container>
@@ -37,11 +37,15 @@ const InnerContainer = styled.div`
   }
 `;
 
+const FolderImage = styled.img`
+  max-width: 100px;
+`
+
 const Text = styled.p`
   max-width: 450px;
   margin-left: 25px;
 
-  text-align: left;
+  text-align: justify;
   font-family: ${({ theme }) => theme.fontFamily};
   color: ${({ theme }) => theme.colors.layout.p};
   font-size: 1rem;

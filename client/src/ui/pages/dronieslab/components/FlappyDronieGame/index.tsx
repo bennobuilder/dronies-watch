@@ -10,6 +10,7 @@ import Icon from '../../../../components/icons';
 import InfoBox from '../../../../components/other/InfoBox';
 import { useEventTracker } from '../../../../hooks/useEventTracker';
 import { useTheme } from '../../../../theme/useTheme';
+import { GAME_STATUS } from '../../../../../core/entities/flappydronie';
 
 const FlappyDronieGame: React.FC = () => {
   const [score, latestScore, highScore, gameStatus] = useAgile([
@@ -30,16 +31,16 @@ const FlappyDronieGame: React.FC = () => {
 
       <ContentContainer>
         <InfoContainer>
-          <StatsContainer>
+          <StatsContainer linesCount={0} opacity={0.3}>
             <LabelText label="Score: " value={score.toString()} />
             <LabelText label="Latest Score: " value={latestScore.toString()} />
             <LabelText label="High Score: " value={highScore.toString()} />
           </StatsContainer>
+
           {highScore > 5 && (
             <ShareScoreButton
-              text="Share Score"
-              icon={Icon.Twitter}
-              to={flappydronie.getScoreTweet(highScore)}
+              leftIcon={Icon.Twitter}
+              to={flappydronie.getScoreTweetUri(highScore)}
               target="_blank"
               // Analytics
               onClick={() =>
@@ -48,18 +49,17 @@ const FlappyDronieGame: React.FC = () => {
                   label: `Shared Flappy Dronie Score`,
                 })
               }
-            />
+            >
+              Share Score
+            </ShareScoreButton>
           )}
-          <StyledInfoBox text="Some new features like a Leaderboard might be added in the near future." />
         </InfoContainer>
 
         <GameContainer>
           <Game linesCount={20}>
             <FlappyDronie />
           </Game>
-          <ClickToStartContainer
-            hide={gameStatus !== flappydronie.GAME_STATUS.SPLASH}
-          >
+          <ClickToStartContainer hide={gameStatus !== GAME_STATUS.SPLASH}>
             <Icon.Click width={30} height={30} color={theme.colors.layout.hc} />
             <ClickToStartText>Click to Start</ClickToStartText>
           </ClickToStartContainer>
@@ -164,12 +164,13 @@ const InfoContainer = styled.div`
   }
 `;
 
-const StatsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+const StatsContainer = styled(LinesBackground)`
+  padding: 20px 60px;
 `;
 
 const ShareScoreButton = styled(Button)`
+  display: flex;
+
   margin-top: 50px;
 `;
 
