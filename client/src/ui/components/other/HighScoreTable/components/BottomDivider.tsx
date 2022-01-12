@@ -21,7 +21,7 @@ const EdgeMiddle = styled.div<{ position: 'left' | 'right' }>`
 
   width: 10px;
   height: 2px;
-  background-color: ${({ theme }) => theme.colors.layout.rHc};
+  background-color: ${({ theme }) => theme.colors.layout.rHc2};
 `;
 
 const DottedLine = styled.div`

@@ -18,10 +18,13 @@ export class ForegroundWrapper extends Base {
     });
 
     this.foregrounds = [
-      new Foreground(game, { cx: 0, cy: game.canvasDimensions.height - fg_h }),
+      new Foreground(game, {
+        cx: 0,
+        cy: game.canvasDimensions.height - fg_h + 1,
+      }),
       new Foreground(game, {
         cx: fg_w,
-        cy: game.canvasDimensions.height - fg_h,
+        cy: game.canvasDimensions.height - fg_h + 1,
       }),
     ];
   }
@@ -33,14 +36,14 @@ export class ForegroundWrapper extends Base {
     this.foregrounds[0].move(
       {
         cx: newForegroundPos,
-        cy: this.game.canvasDimensions.height - fg_h, // Required when resizing
+        cy: this.game.canvasDimensions.height - fg_h + 1, // Required when resizing
       },
       true,
     );
     this.foregrounds[1].move(
       {
         cx: newForegroundPos + (fg_w - 5), // -5 to hide white stripe between the two images
-        cy: this.game.canvasDimensions.height - fg_h, // Required when resizing
+        cy: this.game.canvasDimensions.height - fg_h + 1, // Required when resizing
       },
       true,
     );

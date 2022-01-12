@@ -22,9 +22,7 @@ const PageLayout: React.FC<Props> = (props) => {
 
   return (
     <Container>
-      {windowWidth > ui.WIDTH_BREAK_POINTS[1] && (
-        <PageRuler src={PageRulerImg} loading="lazy" />
-      )}
+      {windowWidth > ui.WIDTH_BREAK_POINTS[1] && <PageRuler />}
 
       {shouldRenderHeader && <Head {...metaConfig} />}
       {shouldRenderNavbar && <Navbar />}
@@ -72,13 +70,17 @@ const Container = styled.div`
   background-size: 1600px, auto;
 `;
 
-const PageRuler = styled.img`
+const PageRuler = styled.div`
   position: absolute;
   left: 0;
   top: 0;
   right: auto;
   bottom: auto;
   width: 96px;
+  height: 100%;
+
+  background-image: url(${PageRulerImg});
+  background-repeat: repeat-y;
 `;
 
 const InnerContainer = styled.div<{ maxWidth: number }>`
@@ -89,12 +91,12 @@ const InnerContainer = styled.div<{ maxWidth: number }>`
   flex-direction: column;
 
   max-width: ${({ maxWidth }) => maxWidth}px;
-  width: 100%;
+  width: ${ui.INNER_WIDTH}%;
 
   margin-left: auto;
   margin-right: auto;
 
-  padding: 0 ${ui.INNER_PADDING}px;
+  padding: 0;
 `;
 
 const Main = styled.main`

@@ -21,12 +21,13 @@ const Navbar: React.FC<Props> = (props) => {
   const goToHome = () => navigate('/');
 
   useEffect(() => {
-    const scrollHandler = () => {
-      if (!fixed) setNavbarTransparent(true);
-      else setNavbarTransparent(window.scrollY >= ui.NAVBAR_HEIGHT);
-    };
+    if (fixed) {
+      const scrollHandler = () => {
+        setNavbarTransparent(window.scrollY <= ui.NAVBAR_HEIGHT);
+      };
 
-    window.addEventListener('scroll', scrollHandler);
+      window.addEventListener('scroll', scrollHandler);
+    }
   }, [fixed]);
 
   return (
@@ -144,8 +145,8 @@ const Container = styled.div<{ fixed: boolean; navbarTransparent: boolean }>`
 
   background: ${({ theme, navbarTransparent }) =>
     navbarTransparent
-      ? ui.hexToRgba(theme.colors.layout.bg, 0.9)
-      : 'transparent'};
+      ? 'transparent'
+      : ui.hexToRgba(theme.colors.layout.bg, 0.9)};
 
   transition: background 200ms linear;
 `;
@@ -156,15 +157,11 @@ const InnerContainer = styled.div<{ maxWidth: number }>`
   align-items: center;
   justify-content: space-between;
 
-  width: 100%;
+  width: ${ui.INNER_WIDTH}%;
   max-width: ${({ maxWidth }) => maxWidth}px;
 
   margin-left: auto;
   margin-right: auto;
-
-  @media (max-width: ${ui.MAX_WIDTH}px) {
-    padding: 0 ${ui.INNER_PADDING}px;
-  }
 `;
 
 const RightContent = styled.div`
@@ -200,10 +197,11 @@ const MenuText = styled.div`
   margin: 0 10px 0 10px;
   padding: 20px;
 
-  color: ${({ theme }) => theme.colors.interactive.primary.p0};
+  color: ${({ theme }) => theme.colors.interactive.primary.n0};
   font-family: ${({ theme }) => theme.fontFamily};
   font-size: ${({ theme }) => theme.fontSizes.md}px;
   text-transform: uppercase;
+  letter-spacing: 2.5px;
 
   cursor: pointer;
 

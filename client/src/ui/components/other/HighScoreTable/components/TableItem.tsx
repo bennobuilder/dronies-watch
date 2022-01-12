@@ -91,7 +91,7 @@ const UserName = styled.div`
   font-family: ${({ theme }) => theme.fontFamily};
   font-size: 18px;
   font-weight: normal;
-  color: ${({ theme }) => theme.colors.interactive.primary.p0};
+  color: ${({ theme }) => theme.colors.layout.rHc2};
   text-align: left;
 `;
 

@@ -34,7 +34,7 @@ const RightEdgeContainer = styled(EdgeContainer)`
 
   align-items: flex-start;
 
-  border-left: 2px solid ${({ theme }) => theme.colors.layout.rHc};
+  border-left: 2px solid ${({ theme }) => theme.colors.layout.rHc2};
   border-right-style: none;
 `;
 
@@ -46,12 +46,12 @@ const LeftEdgeContainer = styled(EdgeContainer)`
 
   align-items: flex-end;
 
-  border-right: 2px solid ${({ theme }) => theme.colors.layout.rHc};
+  border-right: 2px solid ${({ theme }) => theme.colors.layout.rHc2};
   border-left-style: none;
 `;
 
 const EdgeEnd = styled.div`
   width: 100%;
   height: 2px;
-  background-color: ${({ theme }) => theme.colors.layout.rHc};
+  background-color: ${({ theme }) => theme.colors.layout.rHc2};
 `;

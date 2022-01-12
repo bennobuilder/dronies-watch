@@ -53,6 +53,7 @@ const Title = styled.h1`
   font-family: ${({ theme }) => theme.headings.fontFamily};
   white-space: nowrap;
   text-transform: uppercase;
+  text-align: center;
 
   transition: font-size ${({ theme }) => theme.transitionTimingFunction} 500ms;
 

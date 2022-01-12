@@ -5,6 +5,7 @@ import TableOutline from './components/TableOutline';
 import TableHeader from './components/TableHeader';
 import InfoBox from '../InfoBox';
 import { HighScoreItem } from '../../../../core/entities/flappydronie';
+import { ui } from '../../../../core';
 
 const HighScoreTable: React.FC<Props> = (props) => {
   const { data } = props;
@@ -71,9 +72,15 @@ const StyledTable = styled.table`
 
 const StyledInfoBox = styled(InfoBox)`
   position: absolute;
-  top: 30%;
-  left: 0;
-  right: 0;
-  margin-left: auto;
-  margin-right: auto;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    top: 45%;
+  }
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
+    top: 50%;
+  }
 `;

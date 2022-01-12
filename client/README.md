@@ -32,3 +32,6 @@
 
 ### Access Control Origin Header error using Axios
 - https://stackoverflow.com/questions/45975135/access-control-origin-header-error-using-axios
+
+### Absolute Centering in CSS
+https://medium.com/front-end-weekly/absolute-centering-in-css-ea3a9d0ad72e#:~:text=External%20JavaScript&text=If%20you%20want%20to%20center%20something%20horizontally%20in%20CSS%20you,when%20working%20with%20block%20element).
