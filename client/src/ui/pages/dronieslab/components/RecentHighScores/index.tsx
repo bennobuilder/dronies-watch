@@ -10,17 +10,7 @@ import { HighScoreItem } from '../../../../../core/entities/flappydronie';
 
 const RecentHighScores: React.FC = () => {
   const { windowWidth } = useWindowSize();
-  const [recentHighScores, setRecentHighScores] = useState<HighScoreItem[]>(
-    Array.from(Array(23)).map((v, i) => ({
-      rank: i + 1,
-      name: 'Benno',
-      discriminator: '1234',
-      avatarUri:
-        'https://cdn.discordapp.com/avatars/637931838052237312/6d0a11e764bfe0cda5deda7e0aa8da6f.webp?size=32',
-      score: 47,
-      playedAt: new Date(Date.now() - 1000 * 60 * 60 * 8),
-    })) as any,
-  );
+  const [recentHighScores, setRecentHighScores] = useState<HighScoreItem[]>([]);
 
   useEffect(() => {
     const fetch = async () => {
