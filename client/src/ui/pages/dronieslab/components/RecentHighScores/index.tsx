@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import HighScoreTable from '../../../../components/other/HighScoreTable';
 import { flappydronie, ui } from '../../../../../core';
+import { HighScoreItem } from '../../../../../core/entities/flappydronie';
+import { useWindowSize } from '../../../../hooks/useWindowSize';
 
 // Assets
 import DroniesGangImg from '../../../../../assets/app/dronies_gang.png';
-import { useWindowSize } from '../../../../hooks/useWindowSize';
-import { HighScoreItem } from '../../../../../core/entities/flappydronie';
 
 const RecentHighScores: React.FC = () => {
   const { windowWidth } = useWindowSize();

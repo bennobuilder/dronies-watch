@@ -1,5 +1,4 @@
 import appConfig from './app.config';
-import { urlEncodeData } from '../utils/urlEncodeData';
 
 const apiEndpoint = 'https://discord.com/api/v8';
 const applicationId = process.env.DISCORD_APPLICATION_ID;

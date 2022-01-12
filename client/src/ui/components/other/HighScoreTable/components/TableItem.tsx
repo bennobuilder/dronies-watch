@@ -23,7 +23,7 @@ const TableItem: React.FC<Props> = (props) => {
           <NameContainer>
             <UserName>{name}</UserName>
             <UserDiscriminator>
-              #{discriminator.replace('#', '')}
+              #{discriminator?.replace('#', '')}
             </UserDiscriminator>
           </NameContainer>
         </InnerUserContainer>
