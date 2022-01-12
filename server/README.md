@@ -137,3 +137,14 @@ https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
 ### `DISTINT ON`
 - https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group
 - https://stackoverflow.com/questions/54666465/typeorm-queryrunner-select-distinct
+
+### Deploy to Digital Ocean Droplet
+- https://www.youtube.com/watch?v=6-RtA6FlbgQ
+- https://www.youtube.com/watch?v=JsOoUrII3EY
+- https://faun.pub/full-ci-cd-with-docker-github-actions-digitalocean-droplets-container-registry-db2938db8246
+
+### Setting Cookies to another domain
+Doesn't work -> can't use Heroku as it doesn't want to accept my debit card, and thus I can't change the url :/
+- https://stackoverflow.com/questions/40097648/express-cookie-with-redirect-does-not-set-cookie-on-client
+- https://github.com/expressjs/express/issues/4416
+- https://stackoverflow.com/questions/40400436/express-js-redirect-cookies-not-sent
