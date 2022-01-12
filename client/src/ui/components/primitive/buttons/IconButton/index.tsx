@@ -21,7 +21,7 @@ const IconButton: React.FC<Props> = (props) => {
     onClick,
     size = 'md',
     color = theme.colors.layout.hc,
-    hoverColor = theme.colors.layout.rHc,
+    hoverColor = theme.colors.interactive.primary.p1,
     target = '_self',
     className,
   } = props;

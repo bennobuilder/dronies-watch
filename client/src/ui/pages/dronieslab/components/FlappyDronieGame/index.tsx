@@ -103,6 +103,7 @@ const Title = styled.h1`
   font-family: ${({ theme }) => theme.headings.fontFamily};
   white-space: nowrap;
   text-transform: uppercase;
+  text-align: center;
 
   transition: font-size ${({ theme }) => theme.transitionTimingFunction} 500ms;
 
@@ -115,14 +116,14 @@ const Title = styled.h1`
   }
 
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 `;
 
 const Subtitle = styled.h3`
   margin: 0;
 
-  color: ${({ theme }) => theme.colors.interactive.primary.p0};
+  color: ${({ theme }) => theme.colors.interactive.primary.n0};
   font-size: 1.5rem;
   font-family: ${({ theme }) => theme.fontFamily};
   white-space: nowrap;

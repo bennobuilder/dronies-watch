@@ -1,8 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTheme } from '../../../../theme/useTheme';
 
 const LinesBackground: React.FC<Props> = (props) => {
-  const { linesCount = 10, opacity = 1, className, children } = props;
+  const theme = useTheme();
+  const {
+    linesCount = 10,
+    opacity = 1,
+    color = theme.colors.layout.rHc2,
+    className,
+    children,
+  } = props;
 
   return (
     <Container className={className}>
@@ -14,34 +22,34 @@ const LinesBackground: React.FC<Props> = (props) => {
             {Array.from(Array(linesCount)).map((v, i) => (
               <DottedLine key={i} />
             ))}
-            <LeftEdgeContainer>
+            <LeftEdgeContainer color={color}>
               {Array.from(Array(linesCount)).map((v, i) =>
                 i === 0 || i === linesCount - 1 ? (
-                  <EdgeEnd key={i} />
+                  <EdgeEnd key={i} color={color} />
                 ) : (
-                  <EdgeMiddle key={i} />
+                  <EdgeMiddle key={i} color={color} />
                 ),
               )}
             </LeftEdgeContainer>
-            <RightEdgeContainer>
+            <RightEdgeContainer color={color}>
               {Array.from(Array(linesCount)).map((v, i) =>
                 i === 0 || i === linesCount - 1 ? (
-                  <EdgeEnd key={i} />
+                  <EdgeEnd key={i} color={color} />
                 ) : (
-                  <EdgeMiddle key={i} />
+                  <EdgeMiddle key={i} color={color} />
                 ),
               )}
             </RightEdgeContainer>
           </>
         ) : (
           <>
-            <LeftEdgeContainer>
-              <EdgeEnd />
-              <EdgeEnd />
+            <LeftEdgeContainer color={color}>
+              <EdgeEnd color={color} />
+              <EdgeEnd color={color} />
             </LeftEdgeContainer>
-            <RightEdgeContainer>
-              <EdgeEnd />
-              <EdgeEnd />
+            <RightEdgeContainer color={color}>
+              <EdgeEnd color={color} />
+              <EdgeEnd color={color} />
             </RightEdgeContainer>
           </>
         )}
@@ -55,6 +63,7 @@ export default LinesBackground;
 type Props = {
   linesCount?: number;
   opacity?: number;
+  color?: string;
   className?: string; // Required to apply styling via Styled-Components
 };
 
@@ -102,7 +111,7 @@ const EdgeContainer = styled.div`
   width: 15px;
 `;
 
-const RightEdgeContainer = styled(EdgeContainer)`
+const RightEdgeContainer = styled(EdgeContainer)<{ color: string }>`
   left: 0;
   top: 0;
   right: auto;
@@ -110,11 +119,11 @@ const RightEdgeContainer = styled(EdgeContainer)`
 
   align-items: flex-start;
 
-  border-left: 2px solid ${({ theme }) => theme.colors.layout.rHc};
+  border-left: 2px solid ${({ color }) => color};
   border-right-style: none;
 `;
 
-const LeftEdgeContainer = styled(EdgeContainer)`
+const LeftEdgeContainer = styled(EdgeContainer)<{ color: string }>`
   left: auto;
   top: 0;
   right: 0;
@@ -122,18 +131,18 @@ const LeftEdgeContainer = styled(EdgeContainer)`
 
   align-items: flex-end;
 
-  border-right: 2px solid ${({ theme }) => theme.colors.layout.rHc};
+  border-right: 2px solid ${({ color }) => color};
   border-left-style: none;
 `;
 
-const EdgeEnd = styled.div`
+const EdgeEnd = styled.div<{ color: string }>`
   width: 100%;
   height: 2px;
-  background-color: ${({ theme }) => theme.colors.layout.rHc};
+  background-color: ${({ color }) => color};
 `;
 
-const EdgeMiddle = styled.div`
+const EdgeMiddle = styled.div<{ color: string }>`
   width: 40%;
   height: 2px;
-  background-color: ${({ theme }) => theme.colors.layout.rHc};
+  background-color: ${({ color }) => color};
 `;

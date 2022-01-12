@@ -24,13 +24,11 @@ const Footer: React.FC = () => {
               to="https://discord.com/invite/8naUgEcYEx"
               target="_blank"
               icon={DiscordIcon}
-              color={theme.colors.layout.rHc}
             />
             <IconButton
               to="https://twitter.com/DroniesNFT"
               target="_blank"
               icon={TwitterIcon}
-              color={theme.colors.layout.rHc}
             />
           </SocialContainer>
         </TopContainer>
@@ -80,15 +78,11 @@ const InnerContainer = styled.div<{ maxWidth: number }>`
   display: flex;
   flex-direction: column;
 
-  width: 100%;
+  width: ${ui.INNER_WIDTH}%;
   max-width: ${({ maxWidth }) => maxWidth}px;
 
   margin-left: auto;
   margin-right: auto;
-
-  @media (max-width: ${ui.MAX_WIDTH}px) {
-    padding: 0 ${ui.INNER_PADDING}px;
-  }
 `;
 
 const TopContainer = styled.div`
@@ -115,7 +109,7 @@ const DiscordIcon = styled(Icon.Discord)`
 `;
 
 const StyledDivider = styled(Divider)`
-  padding: 48px 0 32px 0;
+  margin: 48px 0 32px 0;
 `;
 
 const BottomContainer = styled.div`

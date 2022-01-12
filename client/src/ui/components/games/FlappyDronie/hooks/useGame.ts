@@ -24,7 +24,7 @@ export function useGame() {
       flappydronie.GAME.canvasDimensions = DEFAULT_CANVAS_DIMENSIONS;
     } else {
       flappydronie.GAME.canvasDimensions = {
-        width: windowWidth - ui.INNER_PADDING * 2,
+        width: windowWidth * (ui.INNER_WIDTH / 100),
         height: flappydronie.DEFAULT_CANVAS_DIMENSIONS.height,
       };
     }

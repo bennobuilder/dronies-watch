@@ -23,7 +23,7 @@ const TableItem: React.FC<Props> = (props) => {
           <NameContainer>
             <UserName>{name}</UserName>
             <UserDiscriminator>
-              #{discriminator.replace('#', '')}
+              #{discriminator?.replace('#', '')}
             </UserDiscriminator>
           </NameContainer>
         </InnerUserContainer>
@@ -91,7 +91,7 @@ const UserName = styled.div`
   font-family: ${({ theme }) => theme.fontFamily};
   font-size: 18px;
   font-weight: normal;
-  color: ${({ theme }) => theme.colors.interactive.primary.p0};
+  color: ${({ theme }) => theme.colors.layout.rHc2};
   text-align: left;
 `;
 

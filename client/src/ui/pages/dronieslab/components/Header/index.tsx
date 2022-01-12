@@ -4,13 +4,11 @@ import Icon from '../../../../components/icons';
 import { ui } from '../../../../../core';
 import { Button } from '../../../../components/primitive';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
-import { useTheme } from '../../../../theme/useTheme';
 import LinesBackground from '../../../../components/primitive/background/LinesBackground';
 import TrainingProtocol from './components/TrainingProtocol';
 
 const Header: React.FC = () => {
   const { windowWidth } = useWindowSize();
-  const theme = useTheme();
 
   return (
     <Container>
@@ -32,9 +30,7 @@ const Header: React.FC = () => {
       </LeftContent>
 
       {/* Right */}
-      {windowWidth > ui.WIDTH_BREAK_POINTS[2] && (
-        <LabIcon color={theme.colors.layout.rHc} />
-      )}
+      {windowWidth > ui.WIDTH_BREAK_POINTS[2] && <LabIcon color="#A42716" />}
     </Container>
   );
 };
@@ -50,7 +46,7 @@ const Container = styled.div`
   align-items: flex-start;
 
   z-index: 1;
-  margin-top: 150px;
+  margin-top: 100px;
 
   width: 100%;
 
@@ -105,7 +101,7 @@ const TitleContainer = styled(LinesBackground)`
 `;
 
 const LabIcon = styled(Icon.Lab)`
-  filter: drop-shadow(0 0 20px ${({ theme }) => theme.colors.layout.rHc});
+  filter: drop-shadow(0 0 20px ${({ theme }) => '#8b0000'});
 
   position: absolute;
   right: -50px;
@@ -147,6 +143,7 @@ const LabIcon = styled(Icon.Lab)`
 const SocialButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
+  width: ${ui.INNER_WIDTH}%;
 
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
     flex-direction: column;

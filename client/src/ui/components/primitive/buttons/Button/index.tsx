@@ -33,9 +33,9 @@ const borderWidth = {
 const horizontalPadding = {
   xs: 15,
   sm: 20,
-  md: 20,
-  lg: 24,
-  xl: 28,
+  md: 30,
+  lg: 35,
+  xl: 40,
 };
 
 const Button: React.FC<Props> = (props) => {
@@ -45,8 +45,8 @@ const Button: React.FC<Props> = (props) => {
     to,
     onClick,
     size = 'md',
-    color = theme.colors.interactive.primary.p0,
-    hoverColor = theme.colors.layout.rHc,
+    color = theme.colors.interactive.primary.n0,
+    hoverColor = theme.colors.interactive.primary.p1,
     target = '_self',
     className,
     children,

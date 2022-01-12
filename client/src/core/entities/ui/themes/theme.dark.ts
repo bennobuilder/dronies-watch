@@ -6,7 +6,8 @@ export const theme: OverwriteTheme = {
   colors: {
     interactive: {
       primary: {
-        p0: primitiveColors.green,
+        n0: primitiveColors.green,
+        p1: primitiveColors.green_lighter,
       },
     },
     layout: {
@@ -15,6 +16,7 @@ export const theme: OverwriteTheme = {
       lc: primitiveColors.green_dark,
       hc: primitiveColors.white,
       rHc: primitiveColors.green_lighter,
+      rHc2: primitiveColors.green,
     },
   },
 };

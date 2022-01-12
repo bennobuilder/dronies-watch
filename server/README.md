@@ -41,10 +41,11 @@ Please follow the following instructions on how to set everything up.
     Don't share the value of your variables publicly as these include critical information.
     ```text
     # Express App Server Details
-    PORT=9000
-    AFTER_OAUTH2_REDIRECT_URI=http://localhost:3000/lab
-    BASE_URL=http://localhost:%s
-    JSON_PAYLOAD_SECRET="NICE_KEY" # 256bit
+    APP_PORT=9000
+    APP_AFTER_OAUTH2_REDIRECT_URI=http://localhost:3000/lab
+    APP_BASE_URL=http://localhost:%s
+    APP_JSON_PAYLOAD_SECRET="NICE_KEY" # 256bit
+    APP_CORS_ORIGIN=http://localhost:3000
     
     # Discord OAuth2 Client Details
     DISCORD_APPLICATION_ID={YOUR_APPLICATION_ID}
