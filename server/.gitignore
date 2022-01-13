@@ -22,6 +22,9 @@ yalc.lock
 .env.production.local
 .idea
 
+# Docker
+.volumes
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

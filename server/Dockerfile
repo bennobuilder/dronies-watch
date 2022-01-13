@@ -15,10 +15,13 @@ RUN yarn install
 
 # Bundle app source
 # (Not moving . (everything) as we don't need everything to execute our server)
-# COPY ./src /app
-# COPY ./tsconfig.json /app
-# TODO Moving everything because of error: 'error TS18003: No inputs were found in config file '/app/tsconfig.json'. Specified 'include' paths were '["src"]' and 'exclude' paths were '["./dist"]'.'
+COPY ./src /app
+COPY ./tsconfig.json /app
+
+# TODO Moving everything because of error:
+#  'error TS18003: No inputs were found in config file '/app/tsconfig.json'. Specified 'include' paths were '["src"]' and 'exclude' paths were '["./dist"]'.'
 COPY . /app
+
 RUN yarn build
 
 EXPOSE 5000

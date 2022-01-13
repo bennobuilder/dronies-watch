@@ -157,6 +157,10 @@ https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
   
   > Deleted: sha256:1be73bba18859b5b9cc18c65f9fc13af5024e6dc46d2156551a284bdf9dae8ca
   ```
+- Connect to running Server
+  ```bash
+  docker exec -it container-name bash 
+  ```
 
 #### Node.js & Express
 - https://www.youtube.com/watch?v=9zUHg7xjIqQ
@@ -193,6 +197,8 @@ https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
   
   > a636127d2a35
   ```
+  
+- https://herewecode.io/blog/create-a-postgresql-database-using-docker-compose/
   
 #### Docker Compose
 - Run Docker Compose Script
