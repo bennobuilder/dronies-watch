@@ -1,0 +1,23 @@
+name: Release
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build-and-deploy-backend:
+    name: 🛠 Build Backend Image for Prod & Push to Dockerhub
+    runs-on: ubuntu-latest
+    steps:
+        # Checkout Project
+      - name: 📚 Checkout
+        uses: actions/checkout@v2
+
+        # Build Docker Image
+      - name: 🐳 Build and push Docker image
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: bennodev19/dronies-watch-backend
+          dockerfile: backend/Dockerfile
+          tags: latest
