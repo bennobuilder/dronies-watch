@@ -126,9 +126,6 @@ There was an error initializing DB: no pg_hba.conf entry for host "x", user "y",
 ```
 https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
 
-### Learn Docker - DevOps with Node.js & Express
-- https://www.youtube.com/watch?v=9zUHg7xjIqQ
-
 ### CORS: credentials mode is 'include'
 - https://stackoverflow.com/questions/42803394/cors-credentials-mode-is-include
 - http://50linesofco.de/post/2017-03-06-cors-a-guided-tour
@@ -143,8 +140,80 @@ https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
 - https://www.youtube.com/watch?v=JsOoUrII3EY
 - https://faun.pub/full-ci-cd-with-docker-github-actions-digitalocean-droplets-container-registry-db2938db8246
 
+### Docker
+
+- Remove Images (Docker Images are like a Blueprint to Docker Containers)
+  ```shell
+  # Display all installed Docker Images
+  docker images
+  
+  > REPOSITORY                        TAG       IMAGE ID       CREATED             SIZE
+  > dronies-watch-server              latest    1be73bba1885   About an hour ago   1.04GB
+  > node                              latest    14777a723ec4   34 hours ago        993MB
+  > postgres                          latest    07e2ee723e2d   9 days ago          374MB
+  
+  # Remove Docker Image with the name 'x'
+  docker rmi dronies-watch-server
+  
+  > Deleted: sha256:1be73bba18859b5b9cc18c65f9fc13af5024e6dc46d2156551a284bdf9dae8ca
+  ```
+
+#### Node.js & Express
+- https://www.youtube.com/watch?v=9zUHg7xjIqQ
+- https://blog.morizyun.com/javascript/docker-dockerfile-basic-nodejs.html
+
+#### Postgres
+- https://hub.docker.com/_/postgres
+- https://www.baeldung.com/ops/docker-attach-detach-container
+- Start Postgres Docker Container
+  ```shell
+  # --name = Specify name of Postgres Docker Container
+  # -e     = Specify environment variables (in this case the POSTGRES_PASSWORD)
+  # -d     = Detach Docker Container (Starts the container, prints its id, and then returns to the shell prompt. Thus, we can continue with other tasks while the container continues to run in the background.)
+  # -p     = Specify the port ([exposed port]:[internal port])
+  docker run --name dronies-watch-postgres -e POSTGRES_PASSWORD=postgres -d -p 5000:5432 postgres
+  ```
+  
+- Stop and Remove Postgres Docker Container
+  ```shell
+  # Show running Docker Containers
+  docker ps
+  
+  > CONTAINER ID   IMAGE      COMMAND                  CREATED          STATUS          PORTS                    NAMES
+  > a636127d2a35   postgres   "docker-entrypoint.s…"   14 minutes ago   Up 14 minutes   0.0.0.0:5432->5432/tcp   dronies-watch-postgres
+  
+  # Stop Docker Container with the ID 'x'
+  # ('-t 0' to stop it immediately because the default shut down time is 10s)
+  docker stop a636127d2a35 -t 0
+  
+  > a636127d2a35
+  
+  # Remove Docker Container with the ID 'x'
+  docker rm a636127d2a35
+  
+  > a636127d2a35
+  ```
+  
+#### Docker Compose
+- Run Docker Compose Script
+  ```shell
+  # Executes the docker-compose.yml script in the current folder in detached mode (-d)
+  # [--build] checks if something has changed and if so build the images from scratch,
+  # otherwise it would execute the existing images (if some where already built)
+  docker-compose up --build -d
+  ```
+- Shut down Docker Container (that were created via the `docker-compose.yml` script) and remove them 
+  ```shell
+  docker-compose down
+  ```
+- https://codewithhugo.com/node-postgres-express-docker-compose/
+- https://www.youtube.com/watch?v=A9bA5HpOk30
+
 ### Setting Cookies to another domain
 Doesn't work -> can't use Heroku as it doesn't want to accept my debit card, and thus I can't change the url :/
 - https://stackoverflow.com/questions/40097648/express-cookie-with-redirect-does-not-set-cookie-on-client
 - https://github.com/expressjs/express/issues/4416
 - https://stackoverflow.com/questions/40400436/express-js-redirect-cookies-not-sent
+
+### How to fix: "error fsevents@2.0.7: The platform "linux" is incompatible with this module."
+- https://stackoverflow.com/questions/57082249/how-to-fix-error-fsevents2-0-7-the-platform-linux-is-incompatible-with-thi

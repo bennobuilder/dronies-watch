@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  server:
+    build: .
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - '5000:9000'
+    environment:
+      APP_PORT: 9000
+      DB_HOST: 'db'
+      DB_PORT: 5001
+      DB_USERNAME: 'postgres'
+      DB_PASSWORD: 'postgres'
+      DB_NAME: 'dronies_watch'
+
+  db:
+    image: 'postgres'
+    restart: always
+    ports:
+      - '5001:5432'
+    # Volume so that the database doesn't get lost if the Container shuts down and gets deleted
+    # -> stores it outside the Docker Container
+    volumes:
+      - './pgdata:/varlib/postgresql/data'
+    environment:
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_USER: 'postgres'
+
+volumes:
+  data:
