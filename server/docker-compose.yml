@@ -21,16 +21,8 @@ services:
       - '5000:9000'
 
     # Environment Variables
-    environment:
-      APP_PORT: 9000
-      DB_HOST: 'db' # https://stackoverflow.com/questions/33357567/econnrefused-for-postgres-on-nodejs-with-dockers
-      DB_PORT: 5432
-      DB_USERNAME: 'postgres'
-      DB_PASSWORD: 'postgres'
-      DB_NAME: 'dronies_watch'
-
-    # env_file:
-    #   - .env.local
+    env_file:
+      - .env.local
 
   db:
     # Official Postgres image (Blueprint for Container) from DockerHub
@@ -61,6 +53,3 @@ services:
       POSTGRES_USER: 'postgres' # The PostgreSQL user (useful to connect to the database)
       POSTGRES_PASSWORD: 'postgres' # The PostgreSQL password (useful to connect to the database)
       POSTGRES_DB: 'dronies_watch' # The PostgreSQL default database (automatically created at first launch)
-
-volumes:
-  data:

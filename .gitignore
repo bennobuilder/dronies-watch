@@ -6,5 +6,7 @@
 .env.production.local
 .idea
 
+.env.*
+
 # security
 .ssh
