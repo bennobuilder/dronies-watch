@@ -4,10 +4,10 @@ const port =
   process.env.PORT || // Used by services that offer managed hosting e.g. Heroku
   process.env.APP_PORT ||
   9000;
-const version = 'v1';
+const version = process.env.APP_VERSION || 'v1';
 
 export default {
-  version: 'v1',
+  version: version,
   port,
   baseUrl: `${sprintf(
     process.env.APP_BASE_URL || 'http://localhost:%s',

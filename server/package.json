@@ -5,12 +5,14 @@
   "description": "dronies.watch backend",
   "license": "MIT",
   "scripts": {
-    "postinstall": "yarn run build",
-    "build": "yarn run tsc",
+    "build": "tsc",
     "start": "node ./dist/index.js",
     "start:dev": "nodemon",
     "prettier": "prettier --config .prettierrc --write \"**/*.{js,ts}\"",
-    "lint": "eslint --cache \"**/*.{js,ts}\""
+    "lint": "eslint --cache \"**/*.{js,ts}\"",
+    "docker:build": "docker-compose build --progress=plain --no-cache",
+    "docker:up" : "docker-compose up --build -d",
+    "docker:down": "docker-compose down"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

@@ -1,0 +1,66 @@
+version: '3.9'
+
+services:
+  server:
+    # Name of the Container (by default the 'services' name)
+    container_name: 'dronies-watch-server'
+
+    # Build 'server' Container using the 'Dockerfile'
+    build: .
+
+    # Always restart the Container when the Container crashes
+    restart: always
+
+    # Only starting this Container once the 'db' service finished starting up
+    depends_on:
+      - db
+
+    # Expose internal port 9000 at external port 5000.
+    # When we expose a port, it allows us to access the server via 'localhost:5000'
+    ports:
+      - '5000:9000'
+
+    # Environment Variables
+    environment:
+      APP_PORT: 9000
+      DB_HOST: 'db' # https://stackoverflow.com/questions/33357567/econnrefused-for-postgres-on-nodejs-with-dockers
+      DB_PORT: 5432
+      DB_USERNAME: 'postgres'
+      DB_PASSWORD: 'postgres'
+      DB_NAME: 'dronies_watch'
+
+    # env_file:
+    #   - .env.local
+
+  db:
+    # Official Postgres image (Blueprint for Container) from DockerHub
+    image: 'postgres:latest'
+
+    # Always restart the Container when the Container crashes
+    restart: always
+
+    # By default, a Postgres database is running on the 5432 port.
+    # If we want to access the database from outside the Container (e.g. from a local computer),
+    # we need to tell our computer which port of the Container to connect to,
+    # in order to access the database in the Container.
+    # The syntax to do so is [port we need to connect to externally]:[port we want to retrieve in the container]
+    # https://docs.docker.com/compose/networking/
+    ports:
+      - '5432:5432' # Using also 5432 as exposed port because otherwise I always got an error
+
+    # The `volumes` tag allows us to share a folder with our Container.
+    # Its syntax is as follows: [folder path on our machine]:[folder path to retrieve in the container]
+    volumes:
+      # Here, we share the folder `.volumes/db-data` in our root repository, with the default PostgreSQL data path.
+      # It means that every time the repository is modifying the data inside
+      # of `/var/lib/postgresql/data/`, automatically the change will appear in `db-data`.
+      - './.volumes/db-data:/varlib/postgresql/data'
+
+    # Environment Variables
+    environment:
+      POSTGRES_USER: 'postgres' # The PostgreSQL user (useful to connect to the database)
+      POSTGRES_PASSWORD: 'postgres' # The PostgreSQL password (useful to connect to the database)
+      POSTGRES_DB: 'dronies_watch' # The PostgreSQL default database (automatically created at first launch)
+
+volumes:
+  data:
