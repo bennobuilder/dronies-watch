@@ -5,8 +5,8 @@ on:
       - master
     # https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#onpushpull_requestpull_request_targetpathspaths-ignore
     paths:
-      - "backend/**"
-      - "workflows/**"
+      - "server/**"
+      - ".github/workflows/**"
 
 jobs:
   build-and-deploy-backend:
