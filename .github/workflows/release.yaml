@@ -40,7 +40,11 @@ jobs:
           file: server/Dockerfile # Path to the Dockerfile from which to build the Docker Image from (default {context}/Dockerfile)
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: bennodev19/dronies-watch-server:latest # Tag the build with the 'latest' tag (Docker Tags are like tags on GitHub, to differentiate between versions of the same Repository)
+          # https://github.com/docker/build-push-action/blob/master/docs/advanced/tags-labels.md
+          # Tag the build with the 'latest' tag (Docker Tags are like tags on GitHub, to differentiate between versions of the same Repository)
+          # Note that the corresponding repository (bennodev19/dronies-watch-server) needs to be specified here too.
+          # Otherwise, the 'build-push-action' doesn't know where to push the Docker Image to.
+          tags: bennodev19/dronies-watch-server:latest
 
         # https://www.mikenewswanger.com/posts/2020/docker-image-digests/#:~:text=Docker%20digest%20is%20provided%20as,based%20on%20the%20image%20build.
       - name: Image digest
