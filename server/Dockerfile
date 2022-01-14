@@ -14,13 +14,13 @@ ENV APP_VERSION=v1
 
 # Install app dependencies using yarn
 # (With './' we reference the current working directory -> '/app')
-COPY package.json ./
-COPY yarn.lock ./
+COPY ./package.json ./
+COPY ./yarn.lock ./
 RUN yarn install
 
 # Move required app source into the working directory referenced with './'
-COPY src ./src
-COPY tsconfig.json ./
+COPY ./src ./src
+COPY ./tsconfig.json ./
 
 # For debugging:
 # Lists all the files and folder that we have copied inside the working directory.
