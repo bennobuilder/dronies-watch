@@ -1,17 +1,31 @@
 version: '3.9'
 
 services:
-  server:
-    container_name: 'dronies-watch-server'
-    image: bennodev19/dronies-watch-server:latest
+
+  # Container that proxies requests to internal services
+  # https://www.youtube.com/watch?v=hxngRDmHTM0
+  reverse-proxy:
+    image: nginx
+    depends_on:
+      - backend
+    volumes:
+      - './.volumes/reverse-proxy/nginx.conf:/etc/nginx/nginx.conf'
+    ports:
+      - '80:80'
+
+  # API Container
+  backend:
+    image: bennodev19/dronies-watch-backend:latest
+    container_name: 'dronies-watch-backend'
     restart: always
     env_file:
-      - .env.server
+      - .env.backend
     depends_on:
       - db
     ports:
       - '5000:9000'
 
+  # Database Container
   db:
     image: 'postgres:latest'
     restart: always

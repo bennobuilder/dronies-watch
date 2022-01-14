@@ -45,7 +45,7 @@ jobs:
           # Tag the build with the 'latest' tag (Docker Tags are like tags on GitHub, to differentiate between versions of the same Repository)
           # Note that the corresponding repository (bennodev19/dronies-watch-server) needs to be specified here too. (repository_name:tag_name)
           # Otherwise, the 'build-push-action' doesn't know where to push the Docker Image to.
-          tags: bennodev19/dronies-watch-server:latest
+          tags: bennodev19/dronies-watch-backend:latest
 
         # https://www.mikenewswanger.com/posts/2020/docker-image-digests/#:~:text=Docker%20digest%20is%20provided%20as,based%20on%20the%20image%20build.
       - name: Image digest

@@ -1,11 +1,11 @@
 version: '3.9'
 
 services:
-  server:
+  backend:
     # Name of the Container (by default the 'services' name)
-    container_name: 'dronies-watch-server'
+    container_name: 'dronies-watch-backend'
 
-    # Build 'server' Container using the 'Dockerfile'
+    # Build 'backend' Container using the 'Dockerfile'
     build: .
 
     # Always restart the Container when the Container crashes
@@ -16,7 +16,7 @@ services:
       - db
 
     # Expose internal port 9000 at external port 5000.
-    # When we expose a port, it allows us to access the server via 'localhost:5000'
+    # When we expose a port, it allows us to access the backend via 'localhost:5000'
     ports:
       - '5000:9000'
 
