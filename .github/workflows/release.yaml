@@ -36,7 +36,7 @@ jobs:
         id: docker_build
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./server
           file: server/Dockerfile # Path to the Dockerfile from which to build the Docker Image from (default {context}/Dockerfile)
           builder: ${{ steps.buildx.outputs.name }}
           push: true
