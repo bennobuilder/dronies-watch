@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  server:
+    container_name: 'dronies-watch-server'
+    image: bennodev19/dronies-watch-server:latest
+    restart: always
+    env_file:
+      - .env.server
+    depends_on:
+      - db
+    ports:
+      - '5000:9000'
+
+  db:
+    image: 'postgres:latest'
+    restart: always
+    env_file:
+      - .env.db
+    ports:
+      - '5432:5432' # Using also 5432 as exposed port because otherwise I always got an error
+    volumes:
+      - './.volumes/db-data:/varlib/postgresql/data'
+
+  # Allows us to update the running version of the containerized app simply by pushing a new image to the Docker Hub
+  # https://github.com/containrrr/watchtower
+  watchtower:
+    image: 'containrrr/watchtower'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '$HOME/.docker/config.json:/config.json'
+    command: --interval 30
+
+volumes:
+  data:
