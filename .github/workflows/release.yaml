@@ -40,6 +40,10 @@ jobs:
           file: server/Dockerfile # Path to the Dockerfile from which to build the Docker Image from (default {context}/Dockerfile)
           builder: ${{ steps.buildx.outputs.name }}
           push: true
+          # https://github.com/docker/build-push-action/issues/449
+          # https://github.com/docker/build-push-action/issues/422#issuecomment-889352615
+          # https://github.com/docker/buildx/issues/681#issuecomment-934211900
+          no-cache: true
           tags: latest # Tag the build with the 'latest' tag (Docker Tags are like tags on GitHub, to differentiate between versions of the same Repository)
 
         # https://www.mikenewswanger.com/posts/2020/docker-image-digests/#:~:text=Docker%20digest%20is%20provided%20as,based%20on%20the%20image%20build.
