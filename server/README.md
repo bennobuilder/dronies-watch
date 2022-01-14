@@ -110,21 +110,28 @@ TODO
 - https://orkhan.gitbook.io/typeorm/docs/relations
 - https://stackoverflow.com/questions/61361008/typeorm-insert-with-relationid
 
-### How to deploy multiple apps in monorepo with Heroku
+### Heroku
+
+<details>
+<summary>Heroku Learnings</summary>
+
+#### How to deploy multiple apps in monorepo with Heroku
 - https://michaellin.me/deploy-multiple-apps-in-monorepo-to-heroku/
 
-### Deploying a PostgreSQL database on Heroku
+#### Deploying a PostgreSQL database on Heroku
 - https://www.youtube.com/watch?v=80oty2v4HsE
   ```text
   // Connect to Heroku Database from local end machine
   psql --host=ec2-34-255-225-151.eu-west-1.compute.amazonaws.com --port=5432 --username=htozchapbteyzi --password --dbname=dbuea1u652cemv
   ```
 
-### Unable to connect to Heroku Postgres
+#### Unable to connect to Heroku Postgres
 ```
 There was an error initializing DB: no pg_hba.conf entry for host "x", user "y", database "z", SSL off
 ```
 https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
+
+</details>
 
 ### CORS: credentials mode is 'include'
 - https://stackoverflow.com/questions/42803394/cors-credentials-mode-is-include
@@ -136,11 +143,14 @@ https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
 - https://stackoverflow.com/questions/54666465/typeorm-queryrunner-select-distinct
 
 ### Deploy to Digital Ocean Droplet
-- https://www.youtube.com/watch?v=6-RtA6FlbgQ
 - https://www.youtube.com/watch?v=JsOoUrII3EY
+- https://www.youtube.com/watch?v=hf8wUUrGCgU&t=282s
 - https://faun.pub/full-ci-cd-with-docker-github-actions-digitalocean-droplets-container-registry-db2938db8246
 
 ### Docker
+
+<details>
+<summary>Docker Learnings</summary>
 
 - Remove Images (Docker Images are like a Blueprint to Docker Containers)
   ```shell
@@ -214,6 +224,8 @@ https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
   ```
 - https://codewithhugo.com/node-postgres-express-docker-compose/
 - https://www.youtube.com/watch?v=A9bA5HpOk30
+
+</details>
 
 ### Setting Cookies to another domain
 Doesn't work -> can't use Heroku as it doesn't want to accept my debit card, and thus I can't change the url :/
