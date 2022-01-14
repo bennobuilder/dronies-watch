@@ -32,8 +32,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./backend/Dockerfile # Path to the Dockerfile from which to build the Docker Image from (default {context}/Dockerfile)
-          # builder: ${{ steps.buildx.outputs.name }}
+          file: backend/Dockerfile # Path to the Dockerfile from which to build the Docker Image from (default {context}/Dockerfile)
+          builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: latest # Tag the build with the 'latest' tag (Docker Tags are like tags on GitHub, to differentiate between versions of the same Repository)
 
