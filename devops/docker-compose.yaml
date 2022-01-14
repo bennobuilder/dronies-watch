@@ -4,6 +4,7 @@ services:
 
   # Container that proxies requests to internal services
   # https://www.youtube.com/watch?v=hxngRDmHTM0
+  # https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04
   reverse-proxy:
     image: nginx
     depends_on:
@@ -11,7 +12,8 @@ services:
     volumes:
       - './.volumes/reverse-proxy/nginx.conf:/etc/nginx/nginx.conf'
     ports:
-      - '80:80'
+      - '80:80' # http
+      - '443:443' # https
 
   # API Container
   backend:

@@ -8,7 +8,7 @@ services:
     # Build 'backend' Container using the 'Dockerfile'
     build: .
 
-    # Always restart the Container when the Container crashes
+    # Always restart the Container (in the case of a crash or a system reboot
     restart: always
 
     # Only starting this Container once the 'db' service finished starting up
@@ -28,7 +28,7 @@ services:
     # Official Postgres image (Blueprint for Container) from DockerHub
     image: 'postgres:latest'
 
-    # Always restart the Container when the Container crashes
+    # Always restart the Container (in the case of a crash or a system reboot
     restart: always
 
     # By default, a Postgres database is running on the 5432 port.
