@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+
+  # Container that proxies requests to internal services
+  # https://www.youtube.com/watch?v=hxngRDmHTM0
+  # https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-18-04
+  reverse-proxy:
+    image: nginx
+    depends_on:
+      - backend
+    volumes:
+      - './.volumes/reverse-proxy/nginx.conf:/etc/nginx/nginx.conf'
+    ports:
+      - '80:80' # http
+      - '443:443' # https
+
+  # API Container
+  backend:
+    image: bennodev19/dronies-watch-backend:latest
+    container_name: 'dronies-watch-backend'
+    restart: always
+    env_file:
+      - .env.backend
+    depends_on:
+      - db
+    ports:
+      - '5000:9000'
+
+  # Database Container
+  db:
+    image: 'postgres:latest'
+    restart: always
+    env_file:
+      - .env.db
+    ports:
+      - '5432:5432' # Using also 5432 as exposed port because otherwise I always got an error
+    volumes:
+      - './.volumes/db-data:/varlib/postgresql/data'
+
+  # Allows us to update the running version of the containerized app simply by pushing a new image to the Docker Hub
+  # https://github.com/containrrr/watchtower
+  watchtower:
+    image: 'containrrr/watchtower'
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock'
+      - '$HOME/.docker/config.json:/config.json'
+    command: --interval 30

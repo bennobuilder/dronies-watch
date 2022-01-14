@@ -1,0 +1,3 @@
+# misc
+.env.backend
+.env.db

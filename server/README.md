@@ -50,7 +50,6 @@ Please follow the following instructions on how to set everything up.
     # Discord OAuth2 Client Details
     DISCORD_APPLICATION_ID={YOUR_APPLICATION_ID}
     DISCORD_CLIENT_SECRET={YOUR_CLIENT_SECRET}
-    DISCORD_REDIRECT_URL=http://localhost:9000/%s/auth/discord/redirect
     
     # Postgres & TypeORM Connection Options
     DB_HOST=localhost

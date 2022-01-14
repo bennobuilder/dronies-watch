@@ -1,14 +1,14 @@
 version: '3.9'
 
 services:
-  server:
+  backend:
     # Name of the Container (by default the 'services' name)
-    container_name: 'dronies-watch-server'
+    container_name: 'dronies-watch-backend'
 
-    # Build 'server' Container using the 'Dockerfile'
+    # Build 'backend' Container using the 'Dockerfile'
     build: .
 
-    # Always restart the Container when the Container crashes
+    # Always restart the Container (in the case of a crash or a system reboot
     restart: always
 
     # Only starting this Container once the 'db' service finished starting up
@@ -16,27 +16,19 @@ services:
       - db
 
     # Expose internal port 9000 at external port 5000.
-    # When we expose a port, it allows us to access the server via 'localhost:5000'
+    # When we expose a port, it allows us to access the backend via 'localhost:5000'
     ports:
       - '5000:9000'
 
     # Environment Variables
-    environment:
-      APP_PORT: 9000
-      DB_HOST: 'db' # https://stackoverflow.com/questions/33357567/econnrefused-for-postgres-on-nodejs-with-dockers
-      DB_PORT: 5432
-      DB_USERNAME: 'postgres'
-      DB_PASSWORD: 'postgres'
-      DB_NAME: 'dronies_watch'
-
-    # env_file:
-    #   - .env.local
+    env_file:
+      - .env.local
 
   db:
     # Official Postgres image (Blueprint for Container) from DockerHub
     image: 'postgres:latest'
 
-    # Always restart the Container when the Container crashes
+    # Always restart the Container (in the case of a crash or a system reboot
     restart: always
 
     # By default, a Postgres database is running on the 5432 port.
@@ -61,6 +53,3 @@ services:
       POSTGRES_USER: 'postgres' # The PostgreSQL user (useful to connect to the database)
       POSTGRES_PASSWORD: 'postgres' # The PostgreSQL password (useful to connect to the database)
       POSTGRES_DB: 'dronies_watch' # The PostgreSQL default database (automatically created at first launch)
-
-volumes:
-  data:
