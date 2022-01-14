@@ -12,6 +12,8 @@ jobs:
       - name: 📚 Checkout
         uses: actions/checkout@v2
 
+        # Setup Docker Builder
+        # -> The tool we are going to build our Docker Image
         # https://github.com/marketplace/actions/docker-setup-buildx
       - name: 🐳 Set up Docker Buildx
         id: buildx
@@ -24,13 +26,14 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
         # https://github.com/marketplace/actions/build-and-push-docker-images
+        # https://www.docker.com/blog/docker-v2-github-action-is-now-ga/
       - name: 🐳 Build and push Docker Image to DockerHub
         id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./backend/Dockerfile # Path to the Dockerfile from which to build the Docker Image from (default {context}/Dockerfile)
-          builder: ${{ steps.buildx.outputs.name }}
+          # builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: latest # Tag the build with the 'latest' tag (Docker Tags are like tags on GitHub, to differentiate between versions of the same Repository)
 
