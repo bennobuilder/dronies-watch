@@ -67,6 +67,7 @@ const { app } = (() => {
       saveUninitialized: false, // https://stackoverflow.com/questions/40381401/when-to-use-saveuninitialized-and-resave-in-express-session
       cookie: {
         maxAge: discordSessionConfig.maxAge,
+        domain: 'dronies.watch', // https://stackoverflow.com/questions/18492576/share-cookie-between-subdomain-and-domain
       },
     }),
   );
