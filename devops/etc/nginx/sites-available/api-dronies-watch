@@ -1,0 +1,43 @@
+server {
+    # Name of the Server (Domain Name)
+	server_name api.dronies.watch
+
+    # Log configuration
+	access_log /var/log/nginx/st-access.log;
+	error_log /var/log/nginx/st-error.log debug;
+
+	location / {
+		proxy_pass http://localhost:5000; # Pass traffic to the port 5000 where the Server is running
+		proxy_http_version 1.1;
+		proxy_buffering off;
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection 'upgrade';
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_cache_bypass $http_upgrade;
+	}
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/api.dronies.watch/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/api.dronies.watch/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = api.dronies.watch) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+	server_name api.dronies.watch
+
+    # Log configuration
+	access_log /var/log/nginx/st-access.log;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
