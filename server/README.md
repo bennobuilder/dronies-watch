@@ -224,6 +224,15 @@ https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
 - https://codewithhugo.com/node-postgres-express-docker-compose/
 - https://www.youtube.com/watch?v=A9bA5HpOk30
 
+#### Build Docker Container
+https://stackoverflow.com/questions/28996907/docker-build-requires-1-argument-see-docker-build-help
+https://docs.docker.com/docker-hub/
+```shell
+# -t = Specifying the Name:Tag of the Docker Image
+# . = Context (-> where to search for the Dockerfile)
+docker build -t bennodev19/dronies-watch-backend:latest .
+```
+
 </details>
 
 ### Setting Cookies to another domain
