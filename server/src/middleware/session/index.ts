@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { signedCookie } from 'cookie-parser';
 import { getRepository } from 'typeorm';
-import { Session } from '../../db/entities/Session.entity';
+import { Session } from '../../db';
 import config from '../../config';
 
 const sessionRepository = getRepository(Session);
@@ -13,11 +13,16 @@ export async function deserializeSession(
   res: Response,
   next: NextFunction,
 ) {
-  if (req.cookies[discordSessionConfig.name] == null) return next();
+  const sessionCookie = req.cookies[discordSessionConfig.name];
+  console.log('DeserializeSession', {
+    cookies: req.cookies,
+    session: req.session,
+  }); // TODO REMOVE
+  if (sessionCookie == null) return next();
 
-  // Retrieve Session id from the cookies
+  // Retrieve the actual session id from the session cookie
   const sessionId = signedCookie(
-    req.cookies[discordSessionConfig.name],
+    sessionCookie,
     discordSessionConfig.secret,
   ).toString();
 

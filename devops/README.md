@@ -7,7 +7,7 @@
 APP_PORT=9000
 APP_AFTER_OAUTH2_REDIRECT_URI=https://dronies.watch/lab
 APP_BASE_URL=https://api.dronies.watch
-APP_JSON_PAYLOAD_SECRET="NICE_KEY" # 256bit
+APP_JSON_PAYLOAD_SECRET={NICE_256BIT_KEY}
 APP_CORS_ORIGIN=https://dronies.watch
 
 # Discord OAuth2 Client Details
@@ -21,10 +21,10 @@ DB_USERNAME=postgres
 DB_PASSWORD=postgres
 DB_NAME=dronies_watch
 DB_SYNC=true
-DB_ENCRYPT_SECRET="NICE_KEY" # 256bit
+DB_ENCRYPT_SECRET={NICE_256BIT_KEY}
 
 # Cookie & Session Options
-SESSION_SECRET="NICE_KEY" # 256bit
+SESSION_SECRET={NICE_256BIT_KEY}
 ```
 
 ### `.env.db`

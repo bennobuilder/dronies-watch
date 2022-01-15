@@ -46,7 +46,7 @@ services:
       # Here, we share the folder `.volumes/db-data` in our root repository, with the default PostgreSQL data path.
       # It means that every time the repository is modifying the data inside
       # of `/var/lib/postgresql/data/`, automatically the change will appear in `db-data`.
-      - './.volumes/db-data:/varlib/postgresql/data'
+      - './.volumes/db-data:/var/lib/postgresql/data'
 
     # Environment Variables
     environment:

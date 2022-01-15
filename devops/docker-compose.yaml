@@ -25,11 +25,13 @@ services:
     volumes:
       - './.volumes/db-data:/varlib/postgresql/data'
 
-  # Allows us to update the running version of the containerized app simply by pushing a new image to the Docker Hub
+  # Allows us to update the running version of the containerized app
+  # simply by pushing a new image to the Docker Hub
   # https://github.com/containrrr/watchtower
+  # https://www.youtube.com/watch?v=5lP_pdjcVMo
   watchtower:
     image: 'containrrr/watchtower'
+    restart: always
     volumes:
       - '/var/run/docker.sock:/var/run/docker.sock'
-      - '$HOME/.docker/config.json:/config.json'
-    command: --interval 30
+    command: --cleanup --interval 300 # Checks for updates for all running Containers every 5min (300s)

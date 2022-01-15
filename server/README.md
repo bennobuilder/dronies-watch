@@ -44,7 +44,7 @@ Please follow the following instructions on how to set everything up.
     APP_PORT=9000
     APP_AFTER_OAUTH2_REDIRECT_URI=http://localhost:3000/lab
     APP_BASE_URL=http://localhost:%s
-    APP_JSON_PAYLOAD_SECRET="NICE_KEY" # 256bit
+    APP_JSON_PAYLOAD_SECRET={NICE_256BIT_KEY}
     APP_CORS_ORIGIN=http://localhost:3000
     
     # Discord OAuth2 Client Details
@@ -58,10 +58,10 @@ Please follow the following instructions on how to set everything up.
     DB_PASSWORD=postgres
     DB_NAME=dronies_watch
     DB_SYNC=true
-    DB_ENCRYPT_SECRET="NICE_KEY" # 256bit
+    DB_ENCRYPT_SECRET={NICE_256BIT_KEY}
     
     # Cookie & Session Options
-    SESSION_SECRET="NICE_KEY" # 256bit
+    SESSION_SECRET={NICE_256BIT_KEY}
     ```
 
 ## 👨‍🎓 Learnings
@@ -119,10 +119,15 @@ TODO
 
 #### Deploying a PostgreSQL database on Heroku
 - https://www.youtube.com/watch?v=80oty2v4HsE
-  ```text
-  // Connect to Heroku Database from local end machine
-  psql --host=ec2-34-255-225-151.eu-west-1.compute.amazonaws.com --port=5432 --username=htozchapbteyzi --password --dbname=dbuea1u652cemv
-  ```
+
+#### Connect to Postgres Database from local end machine
+```text
+# Heroku Example
+psql --host=ec2-34-255-225-151.eu-west-1.compute.amazonaws.com --port=5432 --username=htozchapbteyzi --password --dbname=dbuea1u652cemv
+
+# Custom Server Example
+psql --host=api.dronies.watch --port=5432 --username=postgres --password --dbname=dronies_watch
+```
 
 #### Unable to connect to Heroku Postgres
 ```
@@ -224,6 +229,15 @@ https://community.n8n.io/t/unable-to-connect-to-heroku-postgres-in-0-104-0/4721
 - https://codewithhugo.com/node-postgres-express-docker-compose/
 - https://www.youtube.com/watch?v=A9bA5HpOk30
 
+#### Build Docker Container
+https://stackoverflow.com/questions/28996907/docker-build-requires-1-argument-see-docker-build-help
+https://docs.docker.com/docker-hub/
+```shell
+# -t = Specifying the Name:Tag of the Docker Image
+# . = Context (-> where to search for the Dockerfile)
+docker build -t bennodev19/dronies-watch-backend:latest .
+```
+
 </details>
 
 ### Setting Cookies to another domain
@@ -234,3 +248,8 @@ Doesn't work -> can't use Heroku as it doesn't want to accept my debit card, and
 
 ### How to fix: "error fsevents@2.0.7: The platform "linux" is incompatible with this module."
 - https://stackoverflow.com/questions/57082249/how-to-fix-error-fsevents2-0-7-the-platform-linux-is-incompatible-with-thi
+
+### Weired set cookie
+Look at the cookies set in the request (Chrome)
+and check if the cookie is set correctly there or if it exists twice.
+Spent 2h to figure that out lol :/

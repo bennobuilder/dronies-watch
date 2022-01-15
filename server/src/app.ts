@@ -52,7 +52,7 @@ const { app } = (() => {
   );
 
   // Cookie-Parser Middleware
-  // The middleware will parse the Cookie header on the request and expose the cookie data as the property req.cookies
+  // The middleware will parse the Cookie header on the request and expose the cookie data as the property 'req.cookies'
   // https://expressjs.com/en/resources/middleware/cookie-parser.html
   app.use(cookieParser());
 
@@ -64,10 +64,10 @@ const { app } = (() => {
       secret: discordSessionConfig.secret,
       name: discordSessionConfig.name,
       resave: false,
-      saveUninitialized: false, // https://stackoverflow.com/questions/40381401/when-to-use-saveuninitialized-and-resave-in-express-session
+      saveUninitialized: true, // https://stackoverflow.com/questions/40381401/when-to-use-saveuninitialized-and-resave-in-express-session
       cookie: {
         maxAge: discordSessionConfig.maxAge,
-        domain: 'dronies.watch', // https://stackoverflow.com/questions/18492576/share-cookie-between-subdomain-and-domain
+        domain: config.session.discord.domain, // https://stackoverflow.com/questions/18492576/share-cookie-between-subdomain-and-domain
       },
     }),
   );
