@@ -57,9 +57,6 @@ export async function authDiscordRedirectController(
       const session = await serializeSession(req, user.id.toString());
 
       if (config.discord.afterOAuth2RedirectUri != null) {
-        res.cookie(config.session.discord.name, session.sessionId, {
-          expires: session.expiresAt,
-        });
         res.redirect(
           `${config.discord.afterOAuth2RedirectUri}?success=${
             session != null
