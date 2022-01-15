@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "1.0.1",
+  "version": "1.0.7",
   "private": true,
   "description": "dronies.watch backend",
   "license": "MIT",
@@ -11,10 +11,11 @@
     "prettier": "prettier --config .prettierrc --write \"**/*.{js,ts}\"",
     "lint": "eslint --cache \"**/*.{js,ts}\"",
     "dc:build": "docker-compose build --progress=plain --no-cache",
-    "dc:up" : "docker-compose up --build -d",
+    "dc:up": "docker-compose up --build -d",
     "dc:down": "docker-compose down",
     "docker:build": "docker build -t bennodev19/dronies-watch-backend:latest .",
-    "docker:push": "docker push bennodev19/dronies-watch-backend"
+    "docker:push": "docker push bennodev19/dronies-watch-backend",
+    "docker:release": "npm version patch && yarn run docker:build && yarn run docker:push"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

@@ -119,10 +119,15 @@ TODO
 
 #### Deploying a PostgreSQL database on Heroku
 - https://www.youtube.com/watch?v=80oty2v4HsE
-  ```text
-  // Connect to Heroku Database from local end machine
-  psql --host=ec2-34-255-225-151.eu-west-1.compute.amazonaws.com --port=5432 --username=htozchapbteyzi --password --dbname=dbuea1u652cemv
-  ```
+
+#### Connect to Postgres Database from local end machine
+```text
+# Heroku Example
+psql --host=ec2-34-255-225-151.eu-west-1.compute.amazonaws.com --port=5432 --username=htozchapbteyzi --password --dbname=dbuea1u652cemv
+
+# Custom Server Example
+psql --host=api.dronies.watch --port=5432 --username=postgres --password --dbname=dronies_watch
+```
 
 #### Unable to connect to Heroku Postgres
 ```
