@@ -51,6 +51,11 @@ const { app } = (() => {
     }),
   );
 
+  // Cookie-Parser Middleware
+  // The middleware will parse the Cookie header on the request and expose the cookie data as the property 'req.cookies'
+  // https://expressjs.com/en/resources/middleware/cookie-parser.html
+  app.use(cookieParser());
+
   // Session Middleware
   // https://github.com/expressjs/session
   const discordSessionConfig = config.session.discord;
@@ -59,19 +64,13 @@ const { app } = (() => {
       secret: discordSessionConfig.secret,
       name: discordSessionConfig.name,
       resave: false,
-      saveUninitialized: false, // https://stackoverflow.com/questions/40381401/when-to-use-saveuninitialized-and-resave-in-express-session
+      saveUninitialized: true, // https://stackoverflow.com/questions/40381401/when-to-use-saveuninitialized-and-resave-in-express-session
       cookie: {
         maxAge: discordSessionConfig.maxAge,
         domain: config.session.discord.domain, // https://stackoverflow.com/questions/18492576/share-cookie-between-subdomain-and-domain
       },
     }),
   );
-
-  // Cookie-Parser Middleware
-  // The middleware will parse the Cookie header on the request and expose the cookie data as the property req.cookies
-  // Note: After 'express-session' due to this "Using cookie-parser may result in issues if the secret is not the same between this module and cookie-parser."
-  // https://expressjs.com/en/resources/middleware/cookie-parser.html
-  app.use(cookieParser());
 
   // Middleware that protects against to many requests
   app.use(rateLimiterMiddleware);

@@ -44,7 +44,7 @@ Please follow the following instructions on how to set everything up.
     APP_PORT=9000
     APP_AFTER_OAUTH2_REDIRECT_URI=http://localhost:3000/lab
     APP_BASE_URL=http://localhost:%s
-    APP_JSON_PAYLOAD_SECRET="NICE_KEY" # 256bit
+    APP_JSON_PAYLOAD_SECRET={NICE_256BIT_KEY}
     APP_CORS_ORIGIN=http://localhost:3000
     
     # Discord OAuth2 Client Details
@@ -58,10 +58,10 @@ Please follow the following instructions on how to set everything up.
     DB_PASSWORD=postgres
     DB_NAME=dronies_watch
     DB_SYNC=true
-    DB_ENCRYPT_SECRET="NICE_KEY" # 256bit
+    DB_ENCRYPT_SECRET={NICE_256BIT_KEY}
     
     # Cookie & Session Options
-    SESSION_SECRET="NICE_KEY" # 256bit
+    SESSION_SECRET={NICE_256BIT_KEY}
     ```
 
 ## 👨‍🎓 Learnings
