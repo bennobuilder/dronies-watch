@@ -1,0 +1,2 @@
+# NOTE: Pointer to '/etc/nginx/sites-available/default'
+default@ --> /etc/nginx/sites-available/default

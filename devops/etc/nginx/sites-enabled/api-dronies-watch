@@ -1,0 +1,5 @@
+# NOTE: Pointer to '/etc/nginx/sites-available/api.dronies.watch'
+default@ --> /etc/nginx/sites-available/api-dronies-watch
+
+# Create Pointer (https://www.youtube.com/watch?v=hf8wUUrGCgU&list=LL&index=1&t=1888s)
+ln -s /etc/nginx/sites-available/api.dronies.watch /etc/nginx/sites-enabled/api-dronies-watch
