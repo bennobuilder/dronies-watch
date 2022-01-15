@@ -248,3 +248,8 @@ Doesn't work -> can't use Heroku as it doesn't want to accept my debit card, and
 
 ### How to fix: "error fsevents@2.0.7: The platform "linux" is incompatible with this module."
 - https://stackoverflow.com/questions/57082249/how-to-fix-error-fsevents2-0-7-the-platform-linux-is-incompatible-with-thi
+
+### Weired set cookie
+Look at the cookies set in the request (Chrome)
+and check if the cookie is set correctly there or if it exists twice.
+Spent 2h to figure that out lol :/
