@@ -25,6 +25,10 @@ services:
       - .env.local
 
   db:
+    # Name of the Container (by default the 'services' name)
+    # Can be used to connect to this container from another container
+    container_name: 'dronies-watch-db'
+
     # Official Postgres image (Blueprint for Container) from DockerHub
     image: 'postgres:latest'
 
@@ -38,7 +42,7 @@ services:
     # The syntax to do so is [port we need to connect to externally]:[port we want to retrieve in the container]
     # https://docs.docker.com/compose/networking/
     ports:
-      - '5432:5432' # Using also 5432 as exposed port because otherwise I always got an error
+      - '5001:5432'
 
     # The `volumes` tag allows us to share a folder with our Container.
     # Its syntax is as follows: [folder path on our machine]:[folder path to retrieve in the container]

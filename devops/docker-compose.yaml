@@ -17,11 +17,12 @@ services:
   # Database Container
   db:
     image: 'postgres:latest'
+    container_name: 'dronies-watch-db'
     restart: always
     env_file:
       - .env.db
     ports:
-      - '5432:5432' # Using also 5432 as exposed port because otherwise I always got an error
+      - '5001:5432'
     volumes:
       - './.volumes/db-data:/varlib/postgresql/data'
 
