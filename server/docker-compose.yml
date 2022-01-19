@@ -42,7 +42,7 @@ services:
     # The syntax to do so is [port we need to connect to externally]:[port we want to retrieve in the container]
     # https://docs.docker.com/compose/networking/
     ports:
-      - '5001:5432'
+      - '5432:5432' # Somehow I can only use the default psql port to connect to the database via the server docker container (locally, on a Linux server it works also with other ports e.g. 5001)
 
     # The `volumes` tag allows us to share a folder with our Container.
     # Its syntax is as follows: [folder path on our machine]:[folder path to retrieve in the container]

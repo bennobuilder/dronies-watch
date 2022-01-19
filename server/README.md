@@ -53,7 +53,7 @@ Please follow the following instructions on how to set everything up.
     
     # Postgres & TypeORM Connection Options
     DB_HOST=dronies-watch-db
-    DB_PORT=5001
+    DB_PORT=5432
     DB_USERNAME=postgres
     DB_PASSWORD=postgres
     DB_NAME=dronies_watch
