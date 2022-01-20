@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { animated, interpolate } from 'react-spring';
 import Icon from '../../../../components/icons';
 import { ui } from '../../../../../core';
 import { Button } from '../../../../components/primitive';
@@ -9,6 +10,7 @@ import TrainingProtocol from './components/TrainingProtocol';
 import Cloud from '../../../../components/icons/components/Cloud';
 import { useTheme } from '../../../../theme/useTheme';
 import { MAX_WIDTH } from '../../../../../core/entities/ui';
+import { useBirdAnimation } from './hooks/useBirdAnimation';
 
 // Assets
 import BirdInPlaneImg from '../../../../../assets/app/bird_in_plane.png';
@@ -27,6 +29,8 @@ const cloudMetaData = [
 const Header: React.FC = () => {
   const { windowWidth } = useWindowSize();
   const theme = useTheme();
+
+  const { isHovering, setIsHovering, birdAnimation } = useBirdAnimation();
 
   return (
     <Container>
@@ -60,14 +64,23 @@ const Header: React.FC = () => {
       </LeftContent>
 
       {/* Right */}
-      {/* {windowWidth > ui.WIDTH_BREAK_POINTS[2] && <LabIcon color="#C83521" />} */}
-      <BirdInPlaneContainer>
-        <BirdInPlane
-          src={BirdInPlaneImg}
-          loading="lazy"
-          alt="TrainingProtocolImg"
-        />
-      </BirdInPlaneContainer>
+      <BirdInPlane
+        src={BirdInPlaneImg}
+        loading="lazy"
+        alt="TrainingProtocolImg"
+        onClick={() => {
+          if (windowWidth > ui.WIDTH_BREAK_POINTS[1]) setIsHovering(false);
+        }}
+        style={{
+          transform: interpolate(
+            [birdAnimation.x, birdAnimation.y, birdAnimation.r],
+            (x, y, r) =>
+              `translate3d(${x}px, ${
+                isHovering ? 15 * Math.sin(y + (2 * Math.PI) / 1.6) : y
+              }px, 0) rotateZ(${r}deg)`,
+          ),
+        }}
+      />
     </Container>
   );
 };
@@ -137,45 +150,11 @@ const TitleContainer = styled(LinesBackground)`
   padding: 10px 40px;
 `;
 
-const BirdInPlaneContainer = styled.div`
-  animation: scoping 3s alternate linear infinite;
-
-  @keyframes scoping {
-    0% {
-      transform: translateY(0px);
-    }
-    100% {
-      transform: translateY(50px);
-    }
-  }
+const BirdInPlane = styled(animated.img)`
+  z-index: 100;
 
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
-    margin-top: 50px;
-  }
-`;
-
-const BirdInPlane = styled.img`
-  animation: soaring 6s forwards linear infinite;
-
-  @keyframes soaring {
-    0% {
-      transform: rotate(0deg);
-    }
-    20% {
-      transform: rotate(-15deg);
-    }
-    40% {
-      transform: rotate(-15deg);
-    }
-    50% {
-      transform: rotate(-1deg);
-    }
-    60% {
-      transform: rotate(5);
-    }
-    100% {
-      transform: rotate(0deg);
-    }
+    margin-top: 100px;
   }
 `;
 
