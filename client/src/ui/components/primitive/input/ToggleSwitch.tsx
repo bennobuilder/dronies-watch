@@ -32,10 +32,17 @@ const switchLabel = {
 };
 
 const ToggleSwitch: React.FC<Props> = (props) => {
-  const { id = generateId(), size = 'md', toggled, onChange } = props;
+  const {
+    id = generateId(),
+    size = 'md',
+    toggled,
+    onChange,
+    label,
+    className,
+  } = props;
 
   return (
-    <Container>
+    <Container className={className}>
       <>
         <SwitchInput
           className="switch-checkbox"
@@ -48,6 +55,7 @@ const ToggleSwitch: React.FC<Props> = (props) => {
           <SwitchButton size={size} />
         </SwitchLabel>
       </>
+      {label != null && <Label htmlFor="performance">{label}</Label>}
     </Container>
   );
 };
@@ -57,15 +65,25 @@ type Props = {
   size?: NumberSize;
   toggled?: boolean;
   onChange: (checked: boolean) => void;
+  label?: string;
+  className?: string; // Required to apply styling via Styled-Components
 };
 
 export default ToggleSwitch;
 
 const Container = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const SwitchInput = styled.input`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   height: 0;
   width: 0;
   visibility: hidden;
@@ -108,4 +126,9 @@ const SwitchButton = styled.span<{ size: NumberSize }>`
     left: calc(100% - 2px);
     transform: translateX(-100%);
   }
+`;
+
+const Label = styled.label`
+  margin: 0 0 2px 10px;
+  color: ${({ theme }) => theme.colors.layout.hc};
 `;

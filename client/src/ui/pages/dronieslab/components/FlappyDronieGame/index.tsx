@@ -4,7 +4,7 @@ import { useAgile } from '@agile-ts/react';
 import { flappydronie, ui } from '../../../../../core';
 import LinesBackground from '../../../../components/primitive/background/LinesBackground';
 import FlappyDronie from '../../../../components/games/FlappyDronie';
-import LabelText from './components/LabelText';
+import LabelText from '../../../../components/primitive/text/LabelText';
 import { Button } from '../../../../components/primitive';
 import Icon from '../../../../components/icons';
 import InfoBox from '../../../../components/other/InfoBox';

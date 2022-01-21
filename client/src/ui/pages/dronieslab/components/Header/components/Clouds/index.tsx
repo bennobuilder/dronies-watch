@@ -25,12 +25,13 @@ const Clouds: React.FC = () => {
     <>
       {cloudsMeta.map((cloud) => (
         <StyledCloud
+          key={JSON.stringify(cloud)}
           width={cloud.width}
-          windowWidth={windowWidth}
-          cloudWidth={cloud.width}
-          speed={cloud.speed}
-          bottomOffset={cloud.bottomOffset}
-          delay={cloud.delay}
+          $windowWidth={windowWidth}
+          $cloudWidth={cloud.width}
+          $speed={cloud.speed}
+          $bottomOffset={cloud.bottomOffset}
+          $delay={cloud.delay}
           color={theme.colors.layout.p}
         />
       ))}
@@ -47,34 +48,35 @@ type CloudMeta = {
 
 export default Clouds;
 
+// https://stackoverflow.com/questions/57586654/styled-component-attrs-react-does-not-recognize-prop
 const StyledCloud = styled(Cloud)<{
-  windowWidth: number;
-  cloudWidth: number;
-  speed: number;
-  bottomOffset: number;
-  delay: number;
+  $windowWidth: number;
+  $cloudWidth: number;
+  $speed: number;
+  $bottomOffset: number;
+  $delay: number;
 }>`
   position: absolute;
   right: 0;
   left: 0;
-  bottom: ${({ bottomOffset }) => bottomOffset}px;
+  bottom: ${({ $bottomOffset }) => $bottomOffset}px;
 
   z-index: 0;
   opacity: 0;
 
-  animation: movement ${({ speed }) => 40 - speed}s forwards linear infinite;
-  animation-delay: ${({ delay }) =>
-    -delay}s; // https://stackoverflow.com/questions/10540720/how-can-i-start-css3-animations-at-a-specific-spot
+  animation: movement ${({ $speed }) => 40 - $speed}s forwards linear infinite;
+  animation-delay: ${({ $delay }) =>
+    -$delay}s; // https://stackoverflow.com/questions/10540720/how-can-i-start-css3-animations-at-a-specific-spot
 
   @keyframes movement {
     0% {
       opacity: 0;
 
       transform: translateX(
-        ${({ cloudWidth, windowWidth }) =>
-          windowWidth > MAX_WIDTH
-            ? -cloudWidth - (windowWidth - MAX_WIDTH) / 2
-            : -cloudWidth}px
+        ${({ $cloudWidth, $windowWidth }) =>
+          $windowWidth > MAX_WIDTH
+            ? -$cloudWidth - ($windowWidth - MAX_WIDTH) / 2
+            : -$cloudWidth}px
       );
     }
     10% {
@@ -92,6 +94,6 @@ const StyledCloud = styled(Cloud)<{
   }
 
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
-    bottom: ${({ bottomOffset }) => bottomOffset - 200}px;
+    bottom: ${({ $bottomOffset }) => $bottomOffset - 200}px;
   }
 `;

@@ -31,16 +31,13 @@ const Header: React.FC = () => {
           <SocialButton leftIcon={Icon.Twitter}>Twitter</SocialButton>
           <SocialButton leftIcon={Icon.Discord}>Discord</SocialButton>
         </SocialButtonContainer>
-        <div>
-          <ToggleSwitch
-            id="performance"
-            toggled={slowPerformance}
-            onChange={ui.setSlowPerformance}
-            size="sm"
-          />
-          {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          <label htmlFor="performance">Performance Mode</label>
-        </div>
+        <StyledSwitch
+          id="performance"
+          toggled={slowPerformance}
+          onChange={ui.setSlowPerformance}
+          size="sm"
+          label="Performance Mode"
+        />
       </LeftContent>
 
       {/* Right */}
@@ -132,4 +129,8 @@ const SocialButton = styled(Button)`
     margin: 20px 0 0 0;
     width: 100%;
   }
+`;
+
+const StyledSwitch = styled(ToggleSwitch)`
+  margin-top: 20px;
 `;
