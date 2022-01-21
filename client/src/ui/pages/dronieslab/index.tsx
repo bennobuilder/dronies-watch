@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { ui } from '../../../core';
 import PageLayout from '../../components/layout/PageLayout';
 import Header from './components/Header';
-
-// Assets
-import HeaderBackgroundImg from '../../../assets/app/dronies_background.png';
 import FlappyDronieGame from './components/FlappyDronieGame';
 import Spacer from '../../components/other/Spacer';
 import RecentHighScores from './components/RecentHighScores';
+import MemoryGame from './components/MemoryGame';
+
+// Assets
+import HeaderBackgroundImg from '../../../assets/app/dronies_background.png';
 
 const FlappyDronieScreen: React.FC = () => (
   <PageLayout meta={{ title: 'Lab' }}>
@@ -19,6 +20,8 @@ const FlappyDronieScreen: React.FC = () => (
       <FlappyDronieGame />
       <Spacer height={200} />
       <RecentHighScores />
+      <Spacer height={300} />
+      <MemoryGame />
       <Spacer height={400} />
     </Container>
   </PageLayout>

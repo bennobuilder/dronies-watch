@@ -26,6 +26,7 @@
     "react-hotkeys-hook": "^3.4.4",
     "react-router-dom": "^6.2.1",
     "react-scripts": "5.0.0",
+    "react-spring": "^9.4.2",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {

@@ -5,6 +5,9 @@ export const THEME_TYPE = createState<ThemeTypes>('dark').persist({
   key: 'theme',
 });
 export const INITIALIZED_GA = createState(false);
+export const SLOW_PERFORMANCE = createState(false).persist({
+  key: 'slow-performance',
+});
 
 export const MAX_WIDTH = 1100;
 export const INNER_WIDTH = 90; // %

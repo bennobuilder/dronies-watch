@@ -35,5 +35,6 @@ module.exports = {
     'jsx-a11y/click-events-have-key-events': WARNING,
     'jsx-a11y/no-static-element-interactions': WARNING,
     'spaced-comment': WARNING,
+    'no-await-in-loop': WARNING,
   },
 };

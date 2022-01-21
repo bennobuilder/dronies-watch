@@ -1,47 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useAgile } from '@agile-ts/react';
 import Icon from '../../../../components/icons';
 import { ui } from '../../../../../core';
 import { Button } from '../../../../components/primitive';
-import { useWindowSize } from '../../../../hooks/useWindowSize';
 import LinesBackground from '../../../../components/primitive/background/LinesBackground';
 import TrainingProtocol from './components/TrainingProtocol';
-import Cloud from '../../../../components/icons/components/Cloud';
-import { useTheme } from '../../../../theme/useTheme';
-import { MAX_WIDTH } from '../../../../../core/entities/ui';
-
-// Assets
-import BirdInPlaneImg from '../../../../../assets/app/bird_in_plane.png';
-
-const cloudMetaData = [
-  { width: 300, speed: 2, bottomOffset: 0, delay: 0 },
-  { width: 400, speed: 1, bottomOffset: 50, delay: 12 },
-  { width: 130, speed: 3, bottomOffset: 120, delay: 60 },
-  { width: 250, speed: 3.5, bottomOffset: 200, delay: 50 },
-  { width: 350, speed: 1, bottomOffset: 150, delay: 30 },
-  { width: 150, speed: 2, bottomOffset: 300, delay: 20 },
-  { width: 200, speed: 3, bottomOffset: 400, delay: 2 },
-  { width: 120, speed: 3, bottomOffset: 10, delay: 80 },
-];
+import BirdInPlane from './components/BirdInPlane';
+import Clouds from './components/Clouds';
+import ToggleSwitch from '../../../../components/primitive/input/ToggleSwitch';
 
 const Header: React.FC = () => {
-  const { windowWidth } = useWindowSize();
-  const theme = useTheme();
+  const slowPerformance = useAgile(ui.SLOW_PERFORMANCE);
 
   return (
     <Container>
-      {cloudMetaData.map((meta) => (
-        <StyledCloud
-          width={meta.width}
-          windowWidth={windowWidth}
-          cloudWidth={meta.width}
-          speed={meta.speed}
-          bottomOffset={meta.bottomOffset}
-          delay={meta.delay}
-          color={theme.colors.layout.p}
-        />
-      ))}
-
+      {!slowPerformance && <Clouds />}
       {/* Left */}
       <LeftContent>
         <TitleContainer linesCount={10}>
@@ -57,17 +31,17 @@ const Header: React.FC = () => {
           <SocialButton leftIcon={Icon.Twitter}>Twitter</SocialButton>
           <SocialButton leftIcon={Icon.Discord}>Discord</SocialButton>
         </SocialButtonContainer>
+        <StyledSwitch
+          id="performance"
+          toggled={slowPerformance}
+          onChange={ui.setSlowPerformance}
+          size="sm"
+          label="Performance Mode"
+        />
       </LeftContent>
 
       {/* Right */}
-      {/* {windowWidth > ui.WIDTH_BREAK_POINTS[2] && <LabIcon color="#C83521" />} */}
-      <BirdInPlaneContainer>
-        <BirdInPlane
-          src={BirdInPlaneImg}
-          loading="lazy"
-          alt="TrainingProtocolImg"
-        />
-      </BirdInPlaneContainer>
+      {!slowPerformance && <BirdInPlane />}
     </Container>
   );
 };
@@ -137,97 +111,6 @@ const TitleContainer = styled(LinesBackground)`
   padding: 10px 40px;
 `;
 
-const BirdInPlaneContainer = styled.div`
-  animation: scoping 3s alternate linear infinite;
-
-  @keyframes scoping {
-    0% {
-      transform: translateY(0px);
-    }
-    100% {
-      transform: translateY(50px);
-    }
-  }
-
-  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
-    margin-top: 50px;
-  }
-`;
-
-const BirdInPlane = styled.img`
-  animation: soaring 6s forwards linear infinite;
-
-  @keyframes soaring {
-    0% {
-      transform: rotate(0deg);
-    }
-    20% {
-      transform: rotate(-15deg);
-    }
-    40% {
-      transform: rotate(-15deg);
-    }
-    50% {
-      transform: rotate(-1deg);
-    }
-    60% {
-      transform: rotate(5);
-    }
-    100% {
-      transform: rotate(0deg);
-    }
-  }
-`;
-
-const StyledCloud = styled(Cloud)<{
-  windowWidth: number;
-  cloudWidth: number;
-  speed: number;
-  bottomOffset: number;
-  delay: number;
-}>`
-  position: absolute;
-  right: 0;
-  left: 0;
-  bottom: ${({ bottomOffset }) => bottomOffset}px;
-
-  z-index: 0;
-  opacity: 0;
-
-  animation: movement ${({ speed }) => 40 - speed}s forwards linear infinite;
-  animation-delay: ${({ delay }) =>
-    -delay}s; // https://stackoverflow.com/questions/10540720/how-can-i-start-css3-animations-at-a-specific-spot
-
-  @keyframes movement {
-    0% {
-      opacity: 0;
-
-      transform: translateX(
-        ${({ cloudWidth, windowWidth }) =>
-          windowWidth > MAX_WIDTH
-            ? -cloudWidth - (windowWidth - MAX_WIDTH) / 2
-            : -cloudWidth}px
-      );
-    }
-    10% {
-      opacity: 0.2;
-    }
-    90% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 0;
-      transform: translateX(
-        2000px
-      ); // Static value for consistent speed over different screen sizes
-    }
-  }
-
-  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
-    bottom: ${({ bottomOffset }) => bottomOffset - 200}px;
-  }
-`;
-
 const SocialButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -246,4 +129,8 @@ const SocialButton = styled(Button)`
     margin: 20px 0 0 0;
     width: 100%;
   }
+`;
+
+const StyledSwitch = styled(ToggleSwitch)`
+  margin-top: 20px;
 `;
