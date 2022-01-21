@@ -9,13 +9,15 @@ import TrainingProtocol from './components/TrainingProtocol';
 import BirdInPlane from './components/BirdInPlane';
 import Clouds from './components/Clouds';
 import ToggleSwitch from '../../../../components/primitive/input/ToggleSwitch';
+import { useWindowSize } from '../../../../hooks/useWindowSize';
 
 const Header: React.FC = () => {
   const slowPerformance = useAgile(ui.SLOW_PERFORMANCE);
+  const { windowWidth } = useWindowSize();
 
   return (
     <Container>
-      {!slowPerformance && <Clouds />}
+      {!slowPerformance && windowWidth > ui.WIDTH_BREAK_POINTS[1] && <Clouds />}
       {/* Left */}
       <LeftContent>
         <TitleContainer linesCount={10}>
@@ -41,7 +43,9 @@ const Header: React.FC = () => {
       </LeftContent>
 
       {/* Right */}
-      {!slowPerformance && <BirdInPlane />}
+      {!slowPerformance && windowWidth > ui.WIDTH_BREAK_POINTS[1] && (
+        <BirdInPlane />
+      )}
     </Container>
   );
 };
