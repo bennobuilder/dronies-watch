@@ -28,25 +28,42 @@ export const startGame = () => {
 
 export const endGame = () => {
   const highScore = HIGH_SCORE.value;
-  const cardsInGame = CARDS.value.length;
+  const totalCardInGame = CARDS.value.length;
   const moves = MOVES_COUNT.value;
   const maxTime = MAX_TIME.value;
-  const timeLeft = maxTime - TIME_PLAYED.value;
-  const cardsLeft = cardsInGame - Object.keys(CLEARED_CARDS.value).length * 2;
+  const timePlayed = TIME_PLAYED.value;
+  const timeLeft = maxTime - timePlayed;
+  const cardsLeft =
+    totalCardInGame - Object.keys(CLEARED_CARDS.value).length * 2;
 
   // End Timer
   TIME_PLAYED.clearInterval();
 
+  console.log('Game Information', {
+    timePlayed,
+    maxTime,
+    cardsLeft,
+    moves,
+    timeLeft,
+  });
+
   // Calculate Score
-  let tilesBonus = (cardsInGame - cardsLeft) * 20; // 20 points for each successful card
-  let timeBonus = (maxTime - timeLeft) * 8; // 8 points for each second
+  let tilesBonus = (totalCardInGame - cardsLeft) * 20; // 20 points for each successful flipped card
+  let timeBonus = timeLeft * 8; // 8 points for each second left
   let triesBonus = (48 - moves) * 10; // (deduct) 10 points for each try
+
+  console.log('Game Bonuses', {
+    tilesBonus,
+    timeBonus,
+    triesBonus,
+  });
 
   if (tilesBonus < 0) tilesBonus = 0;
   if (timeBonus < 0) timeBonus = 0;
   if (triesBonus < 0) triesBonus = 0;
 
   const finalScore = tilesBonus + timeBonus + triesBonus;
+  console.log({ finalScore, highScore });
   if (finalScore > highScore) HIGH_SCORE.set(finalScore);
 
   LATEST_SCORE.set(finalScore);
@@ -77,13 +94,9 @@ export const shuffleCards = (cards: CardMeta[]) => {
 };
 
 export const checkGameCompletion = () => {
-  const moves = MOVES_COUNT.value;
   const clearedCards = CLEARED_CARDS.value;
 
-  if (Object.keys(clearedCards).length === CARDS_META.length) {
-    if (moves < HIGH_SCORE.value) HIGH_SCORE.set(moves);
-    endGame();
-  }
+  if (Object.keys(clearedCards).length === CARDS_META.length) endGame();
 };
 
 export const evaluate = () => {
