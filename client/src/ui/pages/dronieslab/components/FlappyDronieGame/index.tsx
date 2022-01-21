@@ -25,8 +25,9 @@ const FlappyDronieGame: React.FC = () => {
   return (
     <Container>
       <HeaderContainer>
-        <Title>Start Training!</Title>
-        <Subtitle>With Flappy Dronie</Subtitle>
+        <Title>Train Flying</Title>
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
+        <Subtitle>With "Flappy Dronie"</Subtitle>
       </HeaderContainer>
 
       <ContentContainer>
@@ -173,10 +174,6 @@ const ShareScoreButton = styled(Button)`
   display: flex;
 
   margin-top: 50px;
-`;
-
-const StyledInfoBox = styled(InfoBox)`
-  margin-top: 100px;
 `;
 
 const GameContainer = styled.div`

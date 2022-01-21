@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAgile } from '@agile-ts/react';
-import { memory } from '../../../../core';
+import { memory, ui } from '../../../../core';
 import Card from './components/Cards';
 
 const Memory: React.FC = () => {
@@ -40,4 +40,9 @@ const Container = styled.div`
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 1rem;
+
+  @media (max-width: ${ui.WIDTH_BREAK_POINTS[1]}px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
 `;

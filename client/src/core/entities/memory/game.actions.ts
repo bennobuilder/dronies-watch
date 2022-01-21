@@ -160,3 +160,6 @@ export const isFlipped = (index: number) => OPEN_CARDS.value.includes(index);
 
 export const isInactive = (card: CardMeta) =>
   Boolean(CLEARED_CARDS.value[card.type]);
+
+export const getScoreTweetUri = (score: number) =>
+  `https://twitter.com/intent/tweet?text=I%20just%20played%20Memory%20Dronie%20and%20managed%20to%20score%20${score}%21%20Can%20you%20beat%20me%3F%20Try%20it%20here%20https%3A//dronies.watch/lab%20and%20train%20your%20@DronieNFT%21`;
