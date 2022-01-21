@@ -1,17 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useAgile } from '@agile-ts/react';
 import Icon from '../../../../components/icons';
 import { ui } from '../../../../../core';
 import { Button } from '../../../../components/primitive';
-import { useWindowSize } from '../../../../hooks/useWindowSize';
 import LinesBackground from '../../../../components/primitive/background/LinesBackground';
 import TrainingProtocol from './components/TrainingProtocol';
+import BirdInPlane from './components/BirdInPlane';
+import Clouds from './components/Clouds';
+import ToggleSwitch from '../../../../components/primitive/input/ToggleSwitch';
 
 const Header: React.FC = () => {
-  const { windowWidth } = useWindowSize();
+  const slowPerformance = useAgile(ui.SLOW_PERFORMANCE);
 
   return (
     <Container>
+      {!slowPerformance && <Clouds />}
       {/* Left */}
       <LeftContent>
         <TitleContainer linesCount={10}>
@@ -27,10 +31,17 @@ const Header: React.FC = () => {
           <SocialButton leftIcon={Icon.Twitter}>Twitter</SocialButton>
           <SocialButton leftIcon={Icon.Discord}>Discord</SocialButton>
         </SocialButtonContainer>
+        <StyledSwitch
+          id="performance"
+          toggled={slowPerformance}
+          onChange={ui.setSlowPerformance}
+          size="sm"
+          label="Performance Mode"
+        />
       </LeftContent>
 
       {/* Right */}
-      {windowWidth > ui.WIDTH_BREAK_POINTS[2] && <LabIcon color="#C83521" />}
+      {!slowPerformance && <BirdInPlane />}
     </Container>
   );
 };
@@ -43,7 +54,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
 
   z-index: 1;
   margin-top: 100px;
@@ -100,46 +111,6 @@ const TitleContainer = styled(LinesBackground)`
   padding: 10px 40px;
 `;
 
-const LabIcon = styled(Icon.Lab)`
-  filter: drop-shadow(0 0 20px ${({ theme }) => '#872717'});
-
-  position: absolute;
-  right: -50px;
-  top: 0;
-
-  width: 400px;
-  height: 400px;
-
-  animation: spin 10s ${({ theme }) => theme.transitionTimingFunction} infinite;
-
-  @keyframes spin {
-    0% {
-      transform: rotate(0);
-    }
-    25% {
-      transform: rotate(-20deg);
-    }
-    50% {
-      transform: rotate(0);
-    }
-    75% {
-      transform: rotate(20deg);
-    }
-    100% {
-      transform: rotate(0);
-    }
-  }
-
-  transition: margin-right, width,
-    height ${({ theme }) => theme.transitionTimingFunction} 500ms;
-
-  @media (max-width: ${ui.WIDTH_BREAK_POINTS[3]}px) {
-    right: 0;
-    width: 300px;
-    height: 300px;
-  }
-`;
-
 const SocialButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -158,4 +129,8 @@ const SocialButton = styled(Button)`
     margin: 20px 0 0 0;
     width: 100%;
   }
+`;
+
+const StyledSwitch = styled(ToggleSwitch)`
+  margin-top: 20px;
 `;

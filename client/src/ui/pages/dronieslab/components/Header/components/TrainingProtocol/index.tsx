@@ -39,7 +39,7 @@ const InnerContainer = styled.div`
 
 const FolderImage = styled.img`
   max-width: 100px;
-`
+`;
 
 const Text = styled.p`
   max-width: 450px;

@@ -56,8 +56,12 @@ export const PERFORMANCE = createState<Performance>({
 // Game Properties
 export const STATUS = createState<GAME_STATUS>(GAME_STATUS.SPLASH);
 export const SCORE = createState(0);
-export const LATEST_SCORE = createState(0).persist({ key: 'latest-score' });
-export const HIGH_SCORE = createState(0).persist({ key: 'high-score' });
+export const LATEST_SCORE = createState(0).persist({
+  key: 'flappydronie-latest-score',
+});
+export const HIGH_SCORE = createState(0).persist({
+  key: 'flappydronie-high-score',
+});
 export const COOLDOWN = createState(false);
 
 // Game Objects

@@ -10,11 +10,15 @@ import Foreground from './components/sprites/Foreground';
 import { useGame } from './hooks/useGame';
 import { inputHandler, toggledDeveloperMode } from './controller';
 import PerformanceIndicator from './components/PerformanceIndicator';
+import { MAP_SKIN } from '../../../../core/entities/flappydronie';
 
 const FlappyDronie: React.FC = () => {
   const { backgrounds, foregrounds, bird, pipeSets } = useGame();
   const showPerformance = useAgile(flappydronie.SHOW_PERFORMANCE);
   useHotkeys('d', toggledDeveloperMode);
+  useHotkeys('m', () => {
+    MAP_SKIN.set(MAP_SKIN.value === 1 ? 0 : 1);
+  });
 
   return (
     <Container

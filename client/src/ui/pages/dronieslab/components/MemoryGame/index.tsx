@@ -1,53 +1,48 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useAgile } from '@agile-ts/react';
-import { flappydronie, ui } from '../../../../../core';
-import LinesBackground from '../../../../components/primitive/background/LinesBackground';
-import FlappyDronie from '../../../../components/games/FlappyDronie';
+import styled from 'styled-components';
+import Memory from '../../../../components/games/Memory';
+import { memory, ui } from '../../../../../core';
 import LabelText from '../../../../components/primitive/text/LabelText';
-import { Button } from '../../../../components/primitive';
+import LinesBackground from '../../../../components/primitive/background/LinesBackground';
 import Icon from '../../../../components/icons';
-import InfoBox from '../../../../components/other/InfoBox';
 import { useEventTracker } from '../../../../hooks/useEventTracker';
-import { useTheme } from '../../../../theme/useTheme';
-import { GAME_STATUS } from '../../../../../core/entities/flappydronie';
+import { Button } from '../../../../components/primitive';
 
-const FlappyDronieGame: React.FC = () => {
-  const [score, latestScore, highScore, gameStatus] = useAgile([
-    flappydronie.SCORE,
-    flappydronie.LATEST_SCORE,
-    flappydronie.HIGH_SCORE,
-    flappydronie.STATUS,
+const MemoryGame: React.FC = () => {
+  const [highScore, moves, timePlayed, maxTime, latestScore] = useAgile([
+    memory.HIGH_SCORE,
+    memory.MOVES_COUNT,
+    memory.TIME_PLAYED,
+    memory.MAX_TIME,
+    memory.LATEST_SCORE,
   ]);
-  const trackEvent = useEventTracker('Lab - FlappyDronieGame Section');
-  const theme = useTheme();
+  const trackEvent = useEventTracker('Lab - MemoryDronieGame Section');
 
   return (
     <Container>
       <HeaderContainer>
-        <Title>Train Flying</Title>
+        <Title>Improve Focus</Title>
         {/* eslint-disable-next-line react/no-unescaped-entities */}
-        <Subtitle>With "Flappy Dronie"</Subtitle>
+        <Subtitle>With "Memory Dronie"</Subtitle>
       </HeaderContainer>
 
       <ContentContainer>
         <InfoContainer>
           <StatsContainer linesCount={0} opacity={0.3}>
-            <LabelText label="Score: " value={score.toString()} />
             <LabelText label="Latest Score: " value={latestScore.toString()} />
             <LabelText label="High Score: " value={highScore.toString()} />
           </StatsContainer>
-
-          {highScore > 5 && (
+          {highScore > 500 && (
             <ShareScoreButton
               leftIcon={Icon.Twitter}
-              to={flappydronie.getScoreTweetUri(highScore)}
+              to={memory.getScoreTweetUri(highScore)}
               target="_blank"
               // Analytics
               onClick={() =>
                 trackEvent({
                   action: 'share-score',
-                  label: `Shared Flappy Dronie Score`,
+                  label: `Shared Memory Dronie Score`,
                 })
               }
             >
@@ -56,21 +51,22 @@ const FlappyDronieGame: React.FC = () => {
           )}
         </InfoContainer>
 
-        <GameContainer>
-          <Game linesCount={20}>
-            <FlappyDronie />
-          </Game>
-          <ClickToStartContainer hide={gameStatus !== GAME_STATUS.SPLASH}>
-            <Icon.Click width={30} height={30} color={theme.colors.layout.hc} />
-            <ClickToStartText>Click to Start</ClickToStartText>
-          </ClickToStartContainer>
-        </GameContainer>
+        <MemoryContainer>
+          <Memory />
+          <GameInfoContainer>
+            <LabelText label="Moves: " value={moves.toString()} />
+            <LabelText
+              label="Time: "
+              value={(maxTime - timePlayed).toString()}
+            />
+          </GameInfoContainer>
+        </MemoryContainer>
       </ContentContainer>
     </Container>
   );
 };
 
-export default FlappyDronieGame;
+export default MemoryGame;
 
 const Container = styled.div`
   position: relative;
@@ -151,12 +147,16 @@ const ContentContainer = styled.div`
   }
 `;
 
-const Game = styled(LinesBackground)`
-  @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
-    padding: 5px;
-  }
+const MemoryContainer = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
+const GameInfoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -166,54 +166,13 @@ const InfoContainer = styled.div`
   }
 `;
 
-const StatsContainer = styled(LinesBackground)`
-  padding: 20px 60px;
-`;
-
 const ShareScoreButton = styled(Button)`
   display: flex;
 
   margin-top: 50px;
 `;
 
-const GameContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const ClickToStartContainer = styled.div<{ hide: boolean }>`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
+const StatsContainer = styled(LinesBackground)`
   margin-top: 20px;
-
-  opacity: ${({ hide }) => (hide ? 0 : 1)};
-
-  transition: opacity ${({ theme }) => theme.transitionTimingFunction} 500ms;
-  animation: pulse 1s linear infinite;
-
-  @keyframes pulse {
-    0% {
-      transform: scale(1, 1);
-    }
-
-    50% {
-      transform: scale(1.05, 1.05);
-    }
-
-    100% {
-      transform: scale(1, 1);
-    }
-  }
-`;
-
-const ClickToStartText = styled.p`
-  margin: 0 0 0 10px;
-
-  color: ${({ theme }) => theme.colors.layout.hc};
-  font-size: 1rem;
-  font-family: ${({ theme }) => theme.fontFamily};
-  text-align: center;
+  padding: 20px 60px;
 `;

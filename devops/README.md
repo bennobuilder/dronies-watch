@@ -15,8 +15,8 @@ DISCORD_APPLICATION_ID={YOUR_APPLICATION_ID}
 DISCORD_CLIENT_SECRET={YOUR_CLIENT_SECRET}
 
 # Postgres & TypeORM Connection Options
-DB_HOST=db # https://stackoverflow.com/questions/33357567/econnrefused-for-postgres-on-nodejs-with-dockers
-DB_PORT=5432
+DB_HOST=dronies-watch-db # https://stackoverflow.com/questions/33357567/econnrefused-for-postgres-on-nodejs-with-dockers
+DB_PORT=5001
 DB_USERNAME=postgres
 DB_PASSWORD=postgres
 DB_NAME=dronies_watch
