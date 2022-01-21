@@ -1,7 +1,11 @@
 import React from 'react';
 import { generateId } from '@agile-ts/core';
 import styled from 'styled-components';
-import { getSizeValue, NumberSize } from '../../../../core/entities/ui';
+import {
+  getSizeValue,
+  hexToRgba,
+  NumberSize,
+} from '../../../../core/entities/ui';
 
 const switchWidth = {
   xs: 20,
@@ -79,7 +83,7 @@ const SwitchLabel = styled.label<{ size: NumberSize }>`
   height: ${({ size }) => getSizeValue(size, switchHeight)}px;
 
   border-radius: 100px;
-  border: 2px solid ${({ theme }) => theme.colors.layout.rHc};
+  border: 2px solid ${({ theme }) => hexToRgba(theme.colors.layout.rHc2, 0.5)};
 
   transition: background-color 0.2s;
 `;
