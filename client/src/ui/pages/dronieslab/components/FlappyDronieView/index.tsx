@@ -1,7 +1,7 @@
 import React from 'react';
 import FlappyDronieGame from './components/FlappyDronieGame';
 import Spacer from '../../../../components/other/Spacer';
-import RecentHighScores from '../../../../components/other/RecentHighScores';
+import RecentHighScores from '../RecentHighScores';
 import { GAME_TYPES } from '../../../../../core/entities/games';
 
 const FlappyDronieView: React.FC = () => (

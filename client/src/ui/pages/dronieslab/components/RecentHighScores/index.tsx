@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useWindowSize } from '../../../hooks/useWindowSize';
-import { HighScoreItem } from '../../../../core/entities/games';
-import { games, ui } from '../../../../core';
-import HighScoreTable from '../HighScoreTable';
+import { useWindowSize } from '../../../../hooks/useWindowSize';
+import { HighScoreItem } from '../../../../../core/entities/games';
+import { games, ui } from '../../../../../core';
+import HighScoreTable from '../../../../components/other/HighScoreTable';
 
 // Assets
-import DroniesGangImg from '../../../../assets/app/dronies_gang.png';
+import DroniesGangImg from '../../../../../assets/app/dronies_gang.png';
 
 const RecentHighScores: React.FC<Props> = (props) => {
   const { gameType } = props;

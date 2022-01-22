@@ -43,31 +43,16 @@ export const endGame = () => {
   // End Timer
   TIME_PLAYED.clearInterval();
 
-  console.log('Game Information', {
-    timePlayed,
-    maxTime,
-    cardsLeft,
-    moves,
-    timeLeft,
-  });
-
   // Calculate Score
   let tilesBonus = (totalCardInGame - cardsLeft) * 20; // 20 points for each successful flipped card
   let timeBonus = timeLeft * 8; // 8 points for each second left
   let triesBonus = (48 - moves) * 10; // (deduct) 10 points for each try
-
-  console.log('Game Bonuses', {
-    tilesBonus,
-    timeBonus,
-    triesBonus,
-  });
 
   if (tilesBonus < 0) tilesBonus = 0;
   if (timeBonus < 0) timeBonus = 0;
   if (triesBonus < 0) triesBonus = 0;
 
   const finalScore = tilesBonus + timeBonus + triesBonus;
-  console.log({ finalScore, highScore });
   if (finalScore > highScore) HIGH_SCORE.set(finalScore);
 
   // Send score to backend if a user is authenticated
@@ -100,13 +85,13 @@ export const shuffleCards = (cards: CardMeta[]) => {
   return cards;
 };
 
-export const checkGameCompletion = () => {
+export const checkForGameCompletion = () => {
   const clearedCards = CLEARED_CARDS.value;
 
   if (Object.keys(clearedCards).length === CARDS_META.length) endGame();
 };
 
-export const evaluate = () => {
+export const evaluateOpenCards = () => {
   const openCards = OPEN_CARDS.value;
   const cards = CARDS.value;
   if (openCards.length !== 2) return;
@@ -120,7 +105,7 @@ export const evaluate = () => {
     OPEN_CARDS.set([]);
 
     // Check completion of the Game (-> whether all cards where correctly flipped)
-    checkGameCompletion();
+    checkForGameCompletion();
 
     return;
   }
@@ -149,7 +134,7 @@ export const flipCard = (index: number) => {
     DISABLE_ALL_CARDS.set(true);
 
     // Evaluate Result (after 300ms for a smooth animation)
-    setTimeout(evaluate, 300);
+    setTimeout(evaluateOpenCards, 300);
 
     return;
   }
