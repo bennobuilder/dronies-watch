@@ -19,8 +19,8 @@ export async function createGameLog(
 }
 
 export async function getRecentHighScores(
-  gameType: GAME_TYPES = GAME_TYPES.flappyDronie,
   limit = 50,
+  gameType: GAME_TYPES = GAME_TYPES.flappyDronie,
 ) {
   /**
    Query with SQL:

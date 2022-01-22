@@ -28,7 +28,7 @@ export async function recentHighScoresController(req: Request, res: Response) {
     const _limit = typeof limit === 'string' ? parseInt(limit) : 50;
 
     // Retrieve recent high scoring game logs from the database
-    const gameLogs = await getRecentHighScores(GAME_TYPES.memoryDronie, _limit) || [];
+    const gameLogs = await getRecentHighScores(_limit, GAME_TYPES.memoryDronie, ) || [];
 
     res.send(
       gameLogs.map((gameLog, i) => ({

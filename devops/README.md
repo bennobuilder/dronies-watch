@@ -74,7 +74,7 @@ ssh -i [SSH-KEY-NAME] root@[IP-ADDRESS]
 > ssh -i digital-ocean-droplet root@164.92.235.98
 ```
 
-### Transfer Files to Server via `FileZilla`
+### Transfer Files to Server (Droplet) via `FileZilla`
 - https://docs.digitalocean.com/products/droplets/how-to/transfer-files/#:~:text=Transfer%20Files%20with%20FileZilla,-Once%20connected%20to&text=Right%2Dclick%20the%20file%20you,download%20to%20your%20local%20machine.
 
 ### SSL Certification with [`Certbot`](https://certbot.eff.org/)
