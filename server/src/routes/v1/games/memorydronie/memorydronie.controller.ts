@@ -1,6 +1,6 @@
-import {Request, Response} from 'express';
-import {createGameLog, getRecentHighScores} from '../../../../services/games';
-import {GAME_TYPES} from '../../../../services/games/games.types';
+import { Request, Response } from 'express';
+import { createGameLog, getRecentHighScores } from '../../../../services/games';
+import { GAME_TYPES } from '../../../../services/games/games.types';
 import config from '../../../../config';
 
 export async function playedController(req: Request, res: Response) {
@@ -13,7 +13,7 @@ export async function playedController(req: Request, res: Response) {
     const { score } = req.body;
 
     // Save played game stats in database
-    if (score != null) await createGameLog(parseInt(userId), score, GAME_TYPES.flappyDronie);
+    if (score != null) await createGameLog(parseInt(userId), score, GAME_TYPES.memoryDronie);
 
     res.sendStatus(200);
   } catch (err) {
@@ -28,9 +28,7 @@ export async function recentHighScoresController(req: Request, res: Response) {
     const _limit = typeof limit === 'string' ? parseInt(limit) : 50;
 
     // Retrieve recent high scoring game logs from the database
-    const gameLogs = await getRecentHighScores( _limit, GAME_TYPES.flappyDronie) || [];
-
-    console.log("FlappyDronie Controller", gameLogs); // TODO REMOVE
+    const gameLogs = await getRecentHighScores(_limit, GAME_TYPES.memoryDronie, ) || [];
 
     res.send(
       gameLogs.map((gameLog, i) => ({

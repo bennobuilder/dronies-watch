@@ -19,7 +19,7 @@ const FlappyDronieScreen: React.FC = () => (
       <FlappyDronieView />
       <Spacer height={300} />
       <MemoryDronieView />
-      <Spacer height={200} />
+      <Spacer height={350} />
     </Container>
   </PageLayout>
 );
