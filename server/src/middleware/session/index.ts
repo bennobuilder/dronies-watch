@@ -14,10 +14,6 @@ export async function deserializeSession(
   next: NextFunction,
 ) {
   const sessionCookie = req.cookies[discordSessionConfig.name];
-  console.log('DeserializeSession', {
-    cookies: req.cookies,
-    session: req.session,
-  }); // TODO REMOVE
   if (sessionCookie == null) return next();
 
   // Retrieve the actual session id from the session cookie

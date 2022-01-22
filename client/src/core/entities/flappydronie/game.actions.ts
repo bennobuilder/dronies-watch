@@ -13,10 +13,11 @@ import {
   PIPE_SETS,
   SCORE,
   STATUS,
+  GAME_TYPE,
 } from './game.controller';
-import { GAME_STATUS, HighScoreItem } from './game.types';
-import { FETCH_RECENT_HIGH_SCORES, SEND_SCORE } from './game.api';
+import { GAME_STATUS } from './game.types';
 import { CURRENT_USER } from '../user';
+import { sendHighScore } from '../games';
 
 export const startGame = () => {
   STATUS.set(GAME_STATUS.PLAYING);
@@ -38,7 +39,7 @@ export const endGame = () => {
     }
 
     // Send score to backend if a user is authenticated
-    if (CURRENT_USER.value != null) SEND_SCORE(SCORE.value);
+    if (CURRENT_USER.value != null) sendHighScore(SCORE.value, GAME_TYPE);
 
     LATEST_SCORE.set(SCORE.value);
     SCORE.reset();
@@ -198,11 +199,3 @@ export const updatePipes = () => {
 
 export const getScoreTweetUri = (score: number) =>
   `https://twitter.com/intent/tweet?text=I%20just%20played%20Flappy%20Dronie%20and%20managed%20to%20score%20${score}%21%20Can%20you%20beat%20me%3F%20Try%20it%20here%20https%3A//dronies.watch/lab%20and%20train%20your%20@DronieNFT%21`;
-
-export const fetchRecentHighScores = async (
-  limit = 50,
-): Promise<HighScoreItem[]> => {
-  const response = await FETCH_RECENT_HIGH_SCORES(limit);
-  console.log('Recent High Scores: ', response);
-  return response;
-};

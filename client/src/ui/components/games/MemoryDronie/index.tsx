@@ -1,19 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAgile } from '@agile-ts/react';
-import { memory, ui } from '../../../../core';
+import { memorydronie, ui } from '../../../../core';
 import Card from './components/Cards';
 
 const Memory: React.FC = () => {
   const [cards, shouldDisableAllCards] = useAgile([
-    memory.CARDS,
-    memory.DISABLE_ALL_CARDS,
-    memory.OPEN_CARDS,
-    memory.CLEARED_CARDS,
+    memorydronie.CARDS,
+    memorydronie.DISABLE_ALL_CARDS,
+    memorydronie.OPEN_CARDS,
+    memorydronie.CLEARED_CARDS,
   ]);
 
   React.useEffect(() => {
-    memory.resetGame();
+    memorydronie.resetGame();
   }, []);
 
   return (
@@ -24,9 +24,9 @@ const Memory: React.FC = () => {
           card={card}
           index={index}
           isDisabled={shouldDisableAllCards}
-          isInactive={memory.isInactive(card)}
-          isFlipped={memory.isFlipped(index)}
-          onClick={memory.flipCard}
+          isInactive={memorydronie.isInactive(card)}
+          isFlipped={memorydronie.isFlipped(index)}
+          onClick={memorydronie.flipCard}
         />
       ))}
     </Container>

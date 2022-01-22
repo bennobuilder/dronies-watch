@@ -7,7 +7,8 @@ export default {
   routes: {
     discordAuth: `${baseUrl}/auth/discord/login`,
     currentUser: `${baseUrl}/user/current`,
-    played: `${baseUrl}/games/flappydronie/played`,
-    recentHighScores: `${baseUrl}/games/flappydronie/recent-highscores`,
+    played: (game: string) => `${baseUrl}/games/${game}/played`,
+    recentHighScores: (game: string) =>
+      `${baseUrl}/games/${game}/recent-highscores`,
   },
 };

@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CardMeta } from '../../../../../core/entities/memory';
 
 // Assets
 import BackImg from '../../../../../assets/games/memory/back.png';
+import { CardMeta } from '../../../../../core/entities/memorydronie';
 
 const Card: React.FC<Props> = (props) => {
   const {

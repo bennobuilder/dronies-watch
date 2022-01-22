@@ -1,13 +1,13 @@
 import { Router } from 'express';
+import config from "../config";
 
 // Routes
 import v1Routes from './v1';
-import config from '../config';
 
 const router = Router();
 
 router.use('/v1', v1Routes);
-router.use('/', (req, res) => {
+router.use('/info', (req, res) => {
   try {
     res.send({
       version: config.app.packageVersion,

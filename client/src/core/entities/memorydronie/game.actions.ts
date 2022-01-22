@@ -12,7 +12,11 @@ import {
   MAX_TIME,
   IS_PLAYING,
   LATEST_SCORE,
+  GAME_TYPE,
 } from './game.controller';
+import { sendHighScore } from '../games';
+import { CURRENT_USER } from '../user';
+import { SCORE } from '../flappydronie';
 
 export const startGame = () => {
   TIME_PLAYED.interval((v) => {
@@ -65,6 +69,9 @@ export const endGame = () => {
   const finalScore = tilesBonus + timeBonus + triesBonus;
   console.log({ finalScore, highScore });
   if (finalScore > highScore) HIGH_SCORE.set(finalScore);
+
+  // Send score to backend if a user is authenticated
+  if (CURRENT_USER.value != null) sendHighScore(SCORE.value, GAME_TYPE);
 
   LATEST_SCORE.set(finalScore);
   resetGame();

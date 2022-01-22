@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import HighScoreTable from '../../../../components/other/HighScoreTable';
-import { flappydronie, ui } from '../../../../../core';
-import { HighScoreItem } from '../../../../../core/entities/flappydronie';
-import { useWindowSize } from '../../../../hooks/useWindowSize';
+import { useWindowSize } from '../../../hooks/useWindowSize';
+import { HighScoreItem } from '../../../../core/entities/games';
+import { games, ui } from '../../../../core';
+import HighScoreTable from '../HighScoreTable';
 
 // Assets
-import DroniesGangImg from '../../../../../assets/app/dronies_gang.png';
+import DroniesGangImg from '../../../../assets/app/dronies_gang.png';
 
-const RecentHighScores: React.FC = () => {
+const RecentHighScores: React.FC<Props> = (props) => {
+  const { gameType } = props;
   const { windowWidth } = useWindowSize();
-  const [recentHighScores, setRecentHighScores] = useState<HighScoreItem[]>([]);
+  const [recentHighScores, setRecentHighScores] = React.useState<
+    HighScoreItem[]
+  >([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const fetch = async () => {
-      const resentHighScores = await flappydronie.fetchRecentHighScores(100);
+      const resentHighScores = await games.fetchRecentHighScores(100, gameType);
       setRecentHighScores(resentHighScores);
     };
     fetch();
@@ -34,6 +37,10 @@ const RecentHighScores: React.FC = () => {
 };
 
 export default RecentHighScores;
+
+type Props = {
+  gameType: string;
+};
 
 const Container = styled.div`
   position: relative;

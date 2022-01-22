@@ -8,6 +8,7 @@ import Front3Img from '../../../assets/games/memory/front3.png';
 import Front4Img from '../../../assets/games/memory/front4.png';
 import Front5Img from '../../../assets/games/memory/front5.png';
 import Front6Img from '../../../assets/games/memory/front6.png';
+import { GAME_TYPES } from '../games';
 // import Front7Img from '../../../assets/games/memory/front7.png';
 
 export const CARDS_META: CardMeta[] = [
@@ -36,6 +37,8 @@ export const CARDS_META: CardMeta[] = [
     image: Front6Img,
   },
 ];
+
+export const GAME_TYPE = GAME_TYPES.memoryDronie;
 
 // Game Properties
 export const HIGH_SCORE = createState(0).persist({ key: 'memory-high-score' });

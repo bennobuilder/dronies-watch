@@ -1,21 +1,21 @@
 import React from 'react';
 import { useAgile } from '@agile-ts/react';
 import styled from 'styled-components';
-import Memory from '../../../../components/games/Memory';
-import { memory, ui } from '../../../../../core';
-import LabelText from '../../../../components/primitive/text/LabelText';
-import LinesBackground from '../../../../components/primitive/background/LinesBackground';
-import Icon from '../../../../components/icons';
-import { useEventTracker } from '../../../../hooks/useEventTracker';
-import { Button } from '../../../../components/primitive';
+import Memory from '../../../../../../components/games/MemoryDronie';
+import { memorydronie, ui } from '../../../../../../../core';
+import LabelText from '../../../../../../components/primitive/text/LabelText';
+import LinesBackground from '../../../../../../components/primitive/background/LinesBackground';
+import Icon from '../../../../../../components/icons';
+import { useEventTracker } from '../../../../../../hooks/useEventTracker';
+import { Button } from '../../../../../../components/primitive';
 
 const MemoryGame: React.FC = () => {
   const [highScore, moves, timePlayed, maxTime, latestScore] = useAgile([
-    memory.HIGH_SCORE,
-    memory.MOVES_COUNT,
-    memory.TIME_PLAYED,
-    memory.MAX_TIME,
-    memory.LATEST_SCORE,
+    memorydronie.HIGH_SCORE,
+    memorydronie.MOVES_COUNT,
+    memorydronie.TIME_PLAYED,
+    memorydronie.MAX_TIME,
+    memorydronie.LATEST_SCORE,
   ]);
   const trackEvent = useEventTracker('Lab - MemoryDronieGame Section');
 
@@ -36,7 +36,7 @@ const MemoryGame: React.FC = () => {
           {highScore > 500 && (
             <ShareScoreButton
               leftIcon={Icon.Twitter}
-              to={memory.getScoreTweetUri(highScore)}
+              to={memorydronie.getScoreTweetUri(highScore)}
               target="_blank"
               // Analytics
               onClick={() =>
