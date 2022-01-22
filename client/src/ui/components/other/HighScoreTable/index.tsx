@@ -4,8 +4,8 @@ import TableItem from './components/TableItem';
 import TableOutline from './components/TableOutline';
 import TableHeader from './components/TableHeader';
 import InfoBox from '../InfoBox';
-import { HighScoreItem } from '../../../../core/entities/flappydronie';
 import { ui } from '../../../../core';
+import { HighScoreItem } from '../../../../core/entities/games';
 
 const HighScoreTable: React.FC<Props> = (props) => {
   const { data } = props;

@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import { ui } from '../../../core';
 import PageLayout from '../../components/layout/PageLayout';
-import Header from './components/Header';
-import FlappyDronieGame from './components/FlappyDronieGame';
+import Header from './components/HeaderView';
 import Spacer from '../../components/other/Spacer';
-import RecentHighScores from './components/RecentHighScores';
-import MemoryGame from './components/MemoryGame';
+import FlappyDronieView from './components/FlappyDronieView';
+import MemoryDronieView from './components/MemoryDronieView';
 
 // Assets
 import HeaderBackgroundImg from '../../../assets/app/dronies_background.png';
@@ -17,11 +16,9 @@ const FlappyDronieScreen: React.FC = () => (
       <Header />
       <HeaderBackground src={HeaderBackgroundImg} alt="HeaderBackground" />
       <Spacer height={200} />
-      <FlappyDronieGame />
-      <Spacer height={200} />
-      <RecentHighScores />
+      <FlappyDronieView />
       <Spacer height={300} />
-      <MemoryGame />
+      <MemoryDronieView />
       <Spacer height={200} />
     </Container>
   </PageLayout>

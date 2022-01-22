@@ -7,7 +7,7 @@ const gameLogRepository = getRepository(GameLog);
 export async function createGameLog(
   userId: number,
   score: number,
-  gameType: GAME_TYPES = GAME_TYPES.flappyDronie,
+  gameType: GAME_TYPES = GAME_TYPES.unknown,
 ) {
   const newGameLog = gameLogRepository.create({
     gameType,

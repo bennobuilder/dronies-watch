@@ -5,6 +5,9 @@ import { FpsController, Performance } from './utils/FpsController';
 import { BackgroundWrapper } from './elements/scenary/BackgroundWrapper';
 import { ForegroundWrapper } from './elements/scenary/ForegroundWrapper';
 import { GAME_STATUS } from './game.types';
+import { GAME_TYPES } from '../games';
+
+export const GAME_TYPE = GAME_TYPES.flappyDronie;
 
 // Configuration
 export const DEFAULT_CANVAS_DIMENSIONS = { width: 320, height: 480 };

@@ -1,16 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useAgile } from '@agile-ts/react';
-import { flappydronie, ui } from '../../../../../core';
-import LinesBackground from '../../../../components/primitive/background/LinesBackground';
-import FlappyDronie from '../../../../components/games/FlappyDronie';
-import LabelText from '../../../../components/primitive/text/LabelText';
-import { Button } from '../../../../components/primitive';
-import Icon from '../../../../components/icons';
-import InfoBox from '../../../../components/other/InfoBox';
-import { useEventTracker } from '../../../../hooks/useEventTracker';
-import { useTheme } from '../../../../theme/useTheme';
-import { GAME_STATUS } from '../../../../../core/entities/flappydronie';
+import { flappydronie, ui } from '../../../../../../../core';
+import LinesBackground from '../../../../../../components/primitive/background/LinesBackground';
+import FlappyDronie from '../../../../../../components/games/FlappyDronie';
+import LabelText from '../../../../../../components/primitive/text/LabelText';
+import { Button } from '../../../../../../components/primitive';
+import Icon from '../../../../../../components/icons';
+import { useEventTracker } from '../../../../../../hooks/useEventTracker';
+import { useTheme } from '../../../../../../theme/useTheme';
+import { GAME_STATUS } from '../../../../../../../core/entities/flappydronie';
 
 const FlappyDronieGame: React.FC = () => {
   const [score, latestScore, highScore, gameStatus] = useAgile([
