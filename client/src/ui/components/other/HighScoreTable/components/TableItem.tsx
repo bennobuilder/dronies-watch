@@ -19,7 +19,7 @@ const TableItem: React.FC<Props> = (props) => {
       <RankText>{rank}</RankText>
       <UserContainer>
         <InnerUserContainer>
-          <UserImage src={avatarUri} loading="lazy" />
+          <UserImage src={avatarUri || 'unknown'} loading="lazy" />
           <NameContainer>
             <UserName>{name}</UserName>
             <UserDiscriminator>
@@ -43,7 +43,7 @@ type Props = {
   discriminator: string;
   score: number;
   playedAt: Date;
-  avatarUri: string;
+  avatarUri: string | null;
   showDivider?: boolean;
 };
 

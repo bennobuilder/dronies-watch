@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { createQueryBuilder, getRepository } from 'typeorm';
 import { GameLog } from '../../db';
 import { GAME_TYPES } from './games.types';
 
@@ -23,38 +23,52 @@ export async function getRecentHighScores(
   gameType: GAME_TYPES = GAME_TYPES.flappyDronie,
 ) {
   /**
-   Query with SQL:
+     Query with SQL:
 
-   SELECT g.id AS id, g.score AS score, u.id AS userId, g.created_date_time AS playedAt
-   FROM game_log AS g
-   JOIN users AS u  -- Joining the two Tables does 'typeorm' via relations so before even asking for it
-   ON g.player_id = u.id
-   WHERE g.created_date_time > CURRENT_DATE - INTERVAL '7 days'
-   AND g.game_type = 'flappydronie'
-   GROUP BY u.id, g.id
-   ORDER BY g.score DESC
-   LIMIT 50;
-   */
+     SELECT g.id AS id, g.score AS score, u.id AS userId, g.created_date_time AS playedAt
+     FROM game_log AS g
+     JOIN users AS u  -- Joining the two Tables does 'typeorm' via relations so before even asking for it
+     ON g.player_id = u.id
+     WHERE g.created_date_time > CURRENT_DATE - INTERVAL '7 days'
+     AND g.game_type = 'flappydronie'
+     GROUP BY u.id, g.id
+     ORDER BY g.score DESC
+     LIMIT 50;
+     */
 
   const endIncludeDate = new Date();
   endIncludeDate.setDate(endIncludeDate.getDate() - 7);
 
-  // Query recent games with a high score
+  // Query all GameLogs in the specified game window and game type
+  const recentGameLogsQb = gameLogRepository
+    .createQueryBuilder('sub_sub_gameLog')
+    .select('*')
+    .where('game_type = :gameType', { gameType })
+    .andWhere('played_at > :date', { date: endIncludeDate });
+
+  // Extract all max scores grouped by the 'player_id'
+  // https://dev.to/yoshi_yoshi/typeorm-query-builder-with-subquery-490c
+  const maxScoreQb = createQueryBuilder()
+    .select('player_id')
+    .addSelect('MAX("score")', 'max_score')
+    .from(
+      // https://typeorm.io/#/select-query-builder/using-subqueries
+      `(${recentGameLogsQb.getQuery()})`,
+      'sub_gameLog',
+    )
+    .setParameters(recentGameLogsQb.getParameters()) // Add Parameters from 'recentGameLogsQb' (e.g. gameType, date)
+    .groupBy('player_id');
+
+  // Main Query
   // https://github.com/typeorm/typeorm/issues/5464
   const query = await gameLogRepository
     .createQueryBuilder('gameLog')
     .leftJoin(
-      (qb) =>
-        qb
-          .from(GameLog, 'sub_gameLog')
-          .select('MAX("score")', 'max_score')
-          .addSelect('player_id')
-          .where('game_type = :gameType', { gameType })
-          .andWhere('played_at > :date', { date: endIncludeDate })
-          .groupBy('player_id'),
+      `(${maxScoreQb.getQuery()})`,
       'best_game',
       'best_game.player_id = gameLog.player_id', // = ON best_game.player_id = gameLog.player_id
     )
+    .setParameters(maxScoreQb.getParameters()) // Add Parameters from 'maxScoreQb'
     // https://stackoverflow.com/questions/65644410/typeorm-leftjoin-with-3-tables
     .leftJoinAndSelect('gameLog.player', 'user', 'user.id = gameLog.player_id')
     .where('best_game.max_score = gameLog.score')

@@ -20,12 +20,25 @@ const FlappyDronie: React.FC = () => {
     MAP_SKIN.set(MAP_SKIN.value === 1 ? 0 : 1);
   });
 
+  // https://stackoverflow.com/questions/45612379/react-onclick-and-ontouchstart-fired-simultaneously
+  const prevent = React.useRef(false);
+
   return (
     <Container
       id="flappydronie"
       width={flappydronie.GAME.canvasDimensions.width}
       height={flappydronie.GAME.canvasDimensions.height}
-      onClick={inputHandler}
+      onMouseDown={(e) => {
+        if (!prevent.current) {
+          inputHandler();
+        } else {
+          prevent.current = false;
+        }
+      }}
+      onTouchStart={(e) => {
+        prevent.current = true;
+        inputHandler();
+      }}
     >
       {backgrounds.map((bg) => (
         <Background sprite={bg} key={bg.id} />
