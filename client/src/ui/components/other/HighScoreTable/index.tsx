@@ -6,9 +6,11 @@ import TableHeader from './components/TableHeader';
 import InfoBox from '../InfoBox';
 import { ui } from '../../../../core';
 import { HighScoreItem } from '../../../../core/entities/games';
+import { useWindowSize } from '../../../hooks/useWindowSize';
 
 const HighScoreTable: React.FC<Props> = (props) => {
   const { data } = props;
+  const { windowWidth } = useWindowSize();
 
   return (
     <Container>
@@ -35,6 +37,9 @@ const HighScoreTable: React.FC<Props> = (props) => {
                 avatarUri={itemData.avatarUri}
               />
             ))}
+            {windowWidth > ui.WIDTH_BREAK_POINTS[0] && (
+              <SpacerTableRow> </SpacerTableRow>
+            )}
           </tbody>
         </StyledTable>
       </InnerContainer>
@@ -85,4 +90,10 @@ const StyledInfoBox = styled(InfoBox)`
   @media (max-width: ${ui.WIDTH_BREAK_POINTS[0]}px) {
     top: 50%;
   }
+`;
+
+const SpacerTableRow = styled.tr`
+  position: relative;
+  width: 100%;
+  height: 200px;
 `;
