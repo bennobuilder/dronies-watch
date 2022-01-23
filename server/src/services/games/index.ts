@@ -50,6 +50,7 @@ export async function getRecentHighScores(
           .select('MAX("score")', 'max_score')
           .addSelect('player_id')
           .where('game_type = :gameType', { gameType })
+          .andWhere('played_at > :date', { date: endIncludeDate })
           .groupBy('player_id'),
       'best_game',
       'best_game.player_id = gameLog.player_id', // = ON best_game.player_id = gameLog.player_id
@@ -57,7 +58,6 @@ export async function getRecentHighScores(
     // https://stackoverflow.com/questions/65644410/typeorm-leftjoin-with-3-tables
     .leftJoinAndSelect('gameLog.player', 'user', 'user.id = gameLog.player_id')
     .where('best_game.max_score = gameLog.score')
-    .andWhere('gameLog.played_at > :date', { date: endIncludeDate })
     .distinctOn(['gameLog.score']) // https://stackoverflow.com/questions/3800551/select-first-row-in-each-group-by-group
     .orderBy('gameLog.score', 'DESC')
     .limit(limit);
