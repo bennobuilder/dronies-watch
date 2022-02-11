@@ -37,7 +37,8 @@ export async function getRecentHighScores(
      */
 
   const endIncludeDate = new Date();
-  endIncludeDate.setDate(endIncludeDate.getDate() - 7);
+  const timespanToInclude = 365; // days
+  endIncludeDate.setDate(endIncludeDate.getDate() - timespanToInclude);
 
   // Query all GameLogs in the specified game window and game type
   const recentGameLogsQb = gameLogRepository
