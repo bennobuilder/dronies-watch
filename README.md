@@ -2,6 +2,9 @@
 
 > Created for the [Dronies Contest](https://twitter.com/DroniesNFT/status/1471944344009543682) (Category: `Coding/Web`)
 
+**Note: the backend was shut down as I couldn't afford to keep it running.**
+However the games are still playable but without a highscore list.
+
 <img src="https://raw.githubusercontent.com/bennodev19/dronies-watch/master/static/website-capture.png" alt="Website Image">
 
 #### 🕐 Time spent building this project
